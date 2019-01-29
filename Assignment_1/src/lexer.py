@@ -9,15 +9,22 @@ tokens = ('INT','OCT','HEX','FLOAT','STR','IMAGINARY','RUNE','BREAK','CASE','CHA
 'COMMA','DOT','SEMI_COLON','COLON','IDENTIFIER')
 
 
-keywords = {'BREAK','CASE','CHAN','CONST','CONTINUE','DEFAULT','DEFER','ELSE','FALLTHROUGH','FOR','FUNC','GO','GOTO','IF','IMPORT','INTERFACE','MAP','PACKAGE','RANGE','RETURN','SELECT','STRUCT','SWITCH','TYPE','VAR'}
+keywords = {'BREAK','CASE','CHAN','CONST','CONTINUE','DEFAULT','DEFER','ELSE',
+'FALLTHROUGH','FOR','FUNC','GO','GOTO','IF','IMPORT','INTERFACE','MAP','PACKAGE','RANGE','RETURN','SELECT','STRUCT','SWITCH','TYPE','VAR'}
 
+operators ={'ADD','SUB','MULT','DIV','MOD','ASSIGN','INC','DEC','EQ','NEQ','GT','LT','LEQ','GEQ','LOG_AND','LOG_OR','LOG_XOR','BIT_AND','BIT_OR','LSHIFT',
+'RSHIFT','PLUS_ASSIGN','MINUS_ASSIGN','MULT_ASSIGN','DIV_ASSIGN','MOD_ASSIGN','LSHIFT_ASSIGN','RSHIFT_ASSIGN','AND_ASSIGN',
+'XOR_ASSIGN','OR_ASSIGN'}
 
-# operators = {'ADD','SUB','MULT','DIV','MOD','ASSIGN','INC','DEC','EQ',NEQ,GT,LT,LEQ,GEQ,LOG_AND,LOG_OR,LOG_XOT,BIT_AND,BIT_OR,LSHIFT,RSHIFT,PLUS_ASSIGN,MINUS_ASSIGN,MULT_ASSIGN,DIV_ASSIGN,MOD_ASSIGN,LSHIFT_ASSIGN,RSHIFT_ASSIGN,AND_ASSIGN,XOR_ASSIGN,OR_ASSIGN,LEFT_PARANTHESIS,RIGHT_PARANTHESIS,LEFT_BRACKET,RIGHT_BRACKET,LEFT_BRACES,RIGHT_BRACES,COMMA,DOT,SEMI_COLON}
+separators = {'LEFT_PARANTHESIS','RIGHT_PARANTHESIS','LEFT_BRACKET','RIGHT_BRACKET','LEFT_BRACES','RIGHT_BRACES',
+'COMMA','DOT','SEMI_COLON','COLON'}
 
 reserved_keywords = {}
 
 for r in keywords:
     reserved_keywords[r.lower()] = r
+
+
 
 
 
@@ -80,42 +87,42 @@ identifier_lit = "[_a-zA-Z]+[a-zA-Z0-9_]*"
 
 @lex.TOKEN(dec_lit)
 def t_INT(t):
-    t.value = int(t.value)
+    # t.value = int(t.value)
     return t
 
 
 @lex.TOKEN(oct_lit)
 def t_OCT(t):
-    t.value = int(t.value, 8)
+    # t.value = int(t.value, 8)
     return t
 
 
 @lex.TOKEN(hex_lit)
 def t_HEX(t):
-    t.value = int(t.value, 16)
+    # t.value = int(t.value, 16)
     return t
 
 
 @lex.TOKEN(float_lit)
 def t_FLOAT(t):
-    t.value = float(t.value)
+    # t.value = float(t.value)
     return t
 
 
 @lex.TOKEN(str_lit)
 def t_STR(t):
-    t.value = t.value[1:-1]
+    # t.value = t.value[1:-1]
     return t
 
 
 @lex.TOKEN(img_lit)
 def t_IMAGINARY(t):
-    t.value = complex(t.value.replace('i', 'j'))    
+    # t.value = complex(t.value.replace('i', 'j'))    
     return t
 
 @lex.TOKEN(rune_lit)
 def t_RUNE(t):
-    t.value = ord(t.value[1:-1])
+    # t.value = ord(t.value[1:-1])
     return t
 
 
@@ -140,28 +147,114 @@ lexer = lex.lex()
 
 
 
-data='''package main
+# data='''package main
 
-import "fmt"+++
+# import "fmt"+++
 
-func main() {
-    fmt.Println("Hello")
-}'''
-
-
-
-lexer.input(data)
+# func main() {
+#     fmt.Println("Hello")
+# }'''
 
 
 
+# data=""
+
+# with open('data.txt', 'r') as myfile:
+#     data=myfile.read()
+
+# print(data)
 
 
-# Tokenize
-while True:
- tok = lexer.token()
- if not tok: 
-     break      # No more input
- print(tok)
+file= open('config.txt','r')
+colors=list(file)
+file.close()
+
+print(colors)
+
+colour={}
+
+for j in range(len(colors)):
+    key = ""
+    c =""
+    f =0
+    color = colors[j]
+    for i in range(len(color)-1):
+        if(color[i]==','):
+            f =1
+            continue
+        if(f):
+            c+=color[i]
+        else:
+            key+=color[i]
+# print(key)
+    colour[key] = c
+
+
+print(colour['operators'])
+
+def find_color(tok):
+    for op in operators:
+        if(tok.type==op):
+            return colour['operators']
+    for key in keywords:
+        if(tok.type==key):
+            return colour['keywords']
+    for sep in separators:
+        if(tok.type==sep):
+            return colour['separators']
+
+
+
+
+
+f = open('data.txt','r')
+lines = list(f)
+
+print(lines)
+
+outF = open("out1.html", "w")
+outF.write("<!DOCTYPE html>\n")
+outF.write("<html>\n")
+outF.write("<body>\n")
+
+
+for line in lines:
+    lexer.input(line)
+    a=[]
+    while(True):
+        tok = lexer.token()
+        if not tok:
+            break
+        a.append(tok)
+    cunt=0
+    s=""
+    i=0
+    # print(len(a))
+    while(i<len(line)):
+        if(cunt<len(a) and i==a[cunt].lexpos):
+            # print(i)
+            dum="<span style=\"color: %s\">" % find_color(a[cunt])
+            outF.write(dum)
+            while(i<a[cunt].lexpos+len(a[cunt].value)):
+                outF.write(line[i])
+                i+=1
+            outF.write("</span>")
+            cunt+=1
+        else:
+            outF.write(line[i])
+            i+=1
+
+
+    # outF.write(line)
+    outF.write('<br/>')
+
+
+
+outF.write("</body>\n")
+outF.write("</html>\n")
+outF.close()
+
+
 
 
 
