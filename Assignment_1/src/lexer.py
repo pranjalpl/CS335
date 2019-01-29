@@ -1,5 +1,5 @@
 import ply.lex as lex
-
+import argparse
 
 tokens = ('INT','OCT','HEX','FLOAT','STR','IMAGINARY','RUNE','BREAK','CASE','CHAN','CONST','CONTINUE','DEFAULT','DEFER','ELSE','FALLTHROUGH','FOR','FUNC','GO','GOTO','IF',
 'IMPORT','INTERFACE','MAP','PACKAGE','RANGE','RETURN','SELECT','STRUCT','SWITCH','TYPE','VAR','ADD','SUB','MULT','DIV',
@@ -146,30 +146,18 @@ def t_error(t):
 lexer = lex.lex()
 
 
+parser = argparse.ArgumentParser()
+parser.add_argument("--config",default="config.txt")
+parser.add_argument("--input",default="data.txt")
+parser.add_argument("--output",default="out.html")
+args = parser.parse_args()
 
-# data='''package main
-
-# import "fmt"+++
-
-# func main() {
-#     fmt.Println("Hello")
-# }'''
-
+print(args.config)
 
 
-# data=""
-
-# with open('data.txt', 'r') as myfile:
-#     data=myfile.read()
-
-# print(data)
-
-
-file= open('config.txt','r')
+file= open(args.config,'r')
 colors=list(file)
 file.close()
-
-print(colors)
 
 colour={}
 
@@ -186,11 +174,7 @@ for j in range(len(colors)):
             c+=color[i]
         else:
             key+=color[i]
-# print(key)
     colour[key] = c
-
-
-print(colour['operators'])
 
 def find_color(tok):
     for op in operators:
@@ -203,16 +187,10 @@ def find_color(tok):
         if(tok.type==sep):
             return colour['separators']
 
-
-
-
-
-f = open('data.txt','r')
+f = open(args.input,'r')
 lines = list(f)
 
-print(lines)
-
-outF = open("out1.html", "w")
+outF = open(args.output, "w")
 outF.write("<!DOCTYPE html>\n")
 outF.write("<html>\n")
 outF.write("<body>\n")
@@ -229,10 +207,8 @@ for line in lines:
     cunt=0
     s=""
     i=0
-    # print(len(a))
     while(i<len(line)):
         if(cunt<len(a) and i==a[cunt].lexpos):
-            # print(i)
             dum="<span style=\"color: %s\">" % find_color(a[cunt])
             outF.write(dum)
             while(i<a[cunt].lexpos+len(a[cunt].value)):
@@ -243,12 +219,7 @@ for line in lines:
         else:
             outF.write(line[i])
             i+=1
-
-
-    # outF.write(line)
     outF.write('<br/>')
-
-
 
 outF.write("</body>\n")
 outF.write("</html>\n")
