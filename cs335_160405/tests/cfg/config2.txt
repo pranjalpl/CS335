@@ -1,0 +1,10 @@
+operators, blue
+keywords, yellow
+separators, orange
+string_literal, lime
+hex_literal, magenta
+oct_literal, green
+dec_literal, red
+float_literal, gray
+comments, purple
+identifier,cyan

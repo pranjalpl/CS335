@@ -80,11 +80,6 @@ img_lit = "(" + dec_lit + "|" + float_lit + ")i"
 rune_lit = "\'(.|(\\[abfnrtv]))\'"
 identifier_lit = "[_a-zA-Z]+[a-zA-Z0-9_]*"
 
-
-# def t_COMMENT(t):
-#     r'(/\*([^*]|\n|(\*+([^*/]|\n])))*\*+/)|(//.*)'
-#     return t
-
 # ill_pos=[]
 @lex.TOKEN(str_lit)
 def t_STR(t):
@@ -149,13 +144,13 @@ lexer = lex.lex()
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--config", default="config.txt")
-parser.add_argument("--input", default="data.txt")
+parser.add_argument("--cfg", default="tests/cfg/config1.txt tests/input/fund.go")
 parser.add_argument("--output", default="out.html")
 args = parser.parse_args()
+config_file = args.cfg.split()[0]
+input_file = args.cfg.split()[1]
 
-
-file = open(args.config, 'r')
+file = open(config_file, 'r')
 colors = list(file)
 file.close()
 
@@ -205,7 +200,7 @@ def find_color(tok):
     return 'black'
 
 
-f = open(args.input, 'r')
+f = open(input_file, 'r')
 lines = list(f)
 
 outF = open(args.output, "w")
@@ -215,7 +210,7 @@ outF.write("<head><style>* {font-family: 'Consolas'}</style></head>")
 outF.write("<body>\n")
 
 
-fi=open(args.input,'r')
+fi=open(input_file,'r')
 s=fi.read()
 linestarts = [0]
 for i in range(len(s)):
@@ -263,35 +258,6 @@ while(pos < len(s)):
             writ = s[pos]
         outF.write(writ)
         pos += 1
-        
-
-
-# for line in lines:
-#     lexer.input(line)
-#     a = []
-#     while(True):
-#         tok = lexer.token()
-#         if not tok:
-#             break
-#         a.append(tok)
-#     cont = 0
-#     s = ""
-#     i = 0
-#     indentation = get_indentation_width(line)
-#     outF.write('&nbsp' * indentation)
-#     while(i < len(line)):
-#         if(cont < len(a) and i == a[cont].lexpos):
-#             dum = "<span style=\"color: %s\">" % find_color(a[cont])
-#             outF.write(dum)
-#             while(i < a[cont].lexpos+len(a[cont].value)):
-#                 outF.write(line[i])
-#                 i += 1
-#             outF.write("</span>")
-#             cont += 1
-#         else:
-#             outF.write(line[i])
-#             i += 1
-#     outF.write('<br/>')
 
 outF.write("</body>\n")
 outF.write("</html>\n")
