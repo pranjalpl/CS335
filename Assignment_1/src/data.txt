@@ -4,12 +4,68 @@ import (
 	"fmt"
 	"os"
 )
+/*
 
+    multilinea
+    asdf
+    asdfas
+    df
+    sadf
+    sadf
+
+
+`asjkdfsadjfasdfdsjf;ksdjfds/*asdfj*/
+//asdfasdf
+sdfasdfsdf`
+
+???
 /*asdf*/
 func main() {
 	var t int
 	var g int
 	var i int
 	var n int
-	var q = 0.4e10
+	var q int
+
+	_, err := fmt.Scanf("%d", &t)
+	if err != nil {
+		os.Exit(1)
+        `
+        himo,k
+        asdfkjlsdf mulyiline
+        `
+	}
+
+	for j := 0; j < t; j++ {
+		_, err := fmt.Scanf("%d", &g) //coment
+		if err != nil {
+			os.Exit(1)
+		}
+
+		for k := 0; k < g; k++ {
+			_, err = fmt.Scanf("%d %d %d", &i, &n, &q)
+			if err != nil {
+				os.Exit(1)
+			}
+
+			initial_side := n / 2
+			flipped_side := n - initial_side
+
+			if (q == 1 && i == 1) || (q == 2 && i == 2) {
+				fmt.Println(initial_side)
+			} else if (q == 1 && i == 2) || (q == 2 && i == 1) {
+				fmt.Println(flipped_side)
+			}
+		}
+	}
 }
+
+/**
+asoidjfoiasjdopimecr
+;asdcf;ilsdjlaf
+
+
+
+
+
+

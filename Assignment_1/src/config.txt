@@ -7,3 +7,4 @@ oct_literal, cyan
 dec_literal, orange
 float_literal, purple
 comments, gray
+identifier,green

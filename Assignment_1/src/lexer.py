@@ -29,7 +29,7 @@ for r in keywords:
 
 
 t_ignore = ' \t'
-# t_COMMENT = r'(/\*([^*]|\n|(\*+([^*/]|\n])))*\*+/)|(//.*)'
+t_COMMENT = r'(/\*([^*]|\n|(\*+([^*/]|\n])))*\*+/)|(//.*)'
 t_INC = r'\+\+'
 t_DEC = r'--'
 t_EQ = r'=='
@@ -75,16 +75,21 @@ dec_lit = "(0|([1-9][0-9]*))"
 oct_lit = "(0[0-7]*)"
 hex_lit = "(0x|0X)[0-9a-fA-F]+"
 float_lit = "[0-9]*\.[0-9]+([eE][-+]?[0-9]+)?"
-str_lit = """("[^"]*")"""
+str_lit = """("[^"]*")|(`[^`]*`)"""
 img_lit = "(" + dec_lit + "|" + float_lit + ")i"
 rune_lit = "\'(.|(\\[abfnrtv]))\'"
 identifier_lit = "[_a-zA-Z]+[a-zA-Z0-9_]*"
 
 
-def t_COMMENT(t):
-    r'(/\*([^*]|\n|(\*+([^*/]|\n])))*\*+/)|(//.*)'
-    return t
+# def t_COMMENT(t):
+#     r'(/\*([^*]|\n|(\*+([^*/]|\n])))*\*+/)|(//.*)'
+#     return t
 
+# ill_pos=[]
+@lex.TOKEN(str_lit)
+def t_STR(t):
+    # t.value = t.value[1:-1]
+    return t
 
 @lex.TOKEN(hex_lit)
 def t_HEX(t):
@@ -101,12 +106,6 @@ def t_FLOAT(t):
 @lex.TOKEN(oct_lit)
 def t_OCT(t):
     # t.value = int(t.value, 8)
-    return t
-
-
-@lex.TOKEN(str_lit)
-def t_STR(t):
-    # t.value = t.value[1:-1]
     return t
 
 
@@ -140,7 +139,9 @@ def t_newline(t):
 
 
 def t_error(t):
-    print("Illegal Character")
+    print("Illegal Token")
+    # print(t.lexpos)
+    # ill_pos.append(t)
     t.lexer.skip(1)
 
 
@@ -152,8 +153,6 @@ parser.add_argument("--config", default="config.txt")
 parser.add_argument("--input", default="data.txt")
 parser.add_argument("--output", default="out.html")
 args = parser.parse_args()
-
-print(args.config)
 
 
 file = open(args.config, 'r')
@@ -179,7 +178,7 @@ for j in range(len(colors)):
 
 
 def find_color(tok):
-    print(tok)
+    # print(tok)
     for op in operators:
         if(tok.type == op):
             return colour['operators']
@@ -201,6 +200,8 @@ def find_color(tok):
         return colour['float_literal']
     if(tok.type == 'COMMENT'):
         return colour['comments']
+    if(tok.type == 'IDENTIFIER'):
+        return colour['identifier']
     return 'black'
 
 
@@ -214,44 +215,83 @@ outF.write("<head><style>* {font-family: 'Consolas'}</style></head>")
 outF.write("<body>\n")
 
 
-def get_indentation_width(line):
-    i = 0
-    ind = 0
-    while line[i] == ' ' or line[i] == '\t':
-        i = i + 1
-        if line[i] == ' ':
-            ind = ind + 1
+fi=open(args.input,'r')
+s=fi.read()
+linestarts = [0]
+for i in range(len(s)):
+    if(s[i]=='\n'):
+        linestarts = linestarts + [i+1]
+
+lexer.input(s)
+a = []
+while(True):
+    tok = lexer.token()
+    if not tok:
+        break
+    a.append(tok)
+cont = 0
+line_count = 0
+pos = 0
+
+while(pos < len(s)):
+    if(cont < len(a) and pos == a[cont].lexpos):
+        dum = "<span style=\"color: %s\">" % find_color(a[cont])
+        outF.write(dum)
+        for i in range(pos, pos + len(a[cont].value)):
+            writ = ''
+            if s[i] == '\n':
+                writ = '<br>\n'
+            elif s[i] == ' ':
+                writ = '&nbsp;'
+            elif s[i] == '\t':
+                writ = '&nbsp;&nbsp;&nbsp;&nbsp;'
+            else:
+                writ = s[i]
+            pos += 1
+            outF.write(writ)
+        outF.write('</span>')
+        cont += 1
+    else:
+        writ = ''
+        if s[pos] == '\n':
+            writ = '<br>\n'
+        elif s[pos] == ' ':
+            writ = '&nbsp;'
+        elif s[pos] == '\t':
+            writ = '&nbsp;&nbsp;&nbsp;&nbsp;'
         else:
-            ind = ind + 4
-    return ind
+            writ = s[pos]
+        outF.write(writ)
+        pos += 1
+        
 
 
-for line in lines:
-    lexer.input(line)
-    a = []
-    while(True):
-        tok = lexer.token()
-        if not tok:
-            break
-        a.append(tok)
-    cont = 0
-    s = ""
-    i = 0
-    indentation = get_indentation_width(line)
-    outF.write('&nbsp' * indentation)
-    while(i < len(line)):
-        if(cont < len(a) and i == a[cont].lexpos):
-            dum = "<span style=\"color: %s\">" % find_color(a[cont])
-            outF.write(dum)
-            while(i < a[cont].lexpos+len(a[cont].value)):
-                outF.write(line[i])
-                i += 1
-            outF.write("</span>")
-            cont += 1
-        else:
-            outF.write(line[i])
-            i += 1
-    outF.write('<br/>')
+# for line in lines:
+#     lexer.input(line)
+#     a = []
+#     while(True):
+#         tok = lexer.token()
+#         if not tok:
+#             break
+#         a.append(tok)
+#     cont = 0
+#     s = ""
+#     i = 0
+#     indentation = get_indentation_width(line)
+#     outF.write('&nbsp' * indentation)
+#     while(i < len(line)):
+#         if(cont < len(a) and i == a[cont].lexpos):
+#             dum = "<span style=\"color: %s\">" % find_color(a[cont])
+#             outF.write(dum)
+#             while(i < a[cont].lexpos+len(a[cont].value)):
+#                 outF.write(line[i])
+#                 i += 1
+#             outF.write("</span>")
+#             cont += 1
+#         else:
+#             outF.write(line[i])
+#             i += 1
+#     outF.write('<br/>')
 
 outF.write("</body>\n")
 outF.write("</html>\n")
