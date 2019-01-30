@@ -6,7 +6,7 @@ tokens = ('INT', 'OCT', 'HEX', 'FLOAT', 'STR', 'IMAGINARY', 'RUNE', 'BREAK', 'CA
           'MOD', 'ASSIGN', 'INC', 'DEC', 'EQ', 'NEQ', 'GT', 'LT', 'LEQ', 'GEQ', 'LOG_AND', 'LOG_OR', 'LOG_XOR', 'BIT_AND', 'BIT_OR', 'LSHIFT',
           'RSHIFT', 'PLUS_ASSIGN', 'MINUS_ASSIGN', 'MULT_ASSIGN', 'DIV_ASSIGN', 'MOD_ASSIGN', 'LSHIFT_ASSIGN', 'RSHIFT_ASSIGN', 'AND_ASSIGN',
           'XOR_ASSIGN', 'OR_ASSIGN', 'LEFT_PARANTHESIS', 'RIGHT_PARANTHESIS', 'LEFT_BRACKET', 'RIGHT_BRACKET', 'LEFT_BRACES', 'RIGHT_BRACES',
-          'COMMA', 'DOT', 'SEMI_COLON', 'COLON', 'IDENTIFIER')
+          'COMMA', 'DOT', 'SEMI_COLON', 'COLON', 'IDENTIFIER', 'COMMENT')
 
 
 keywords = {'BREAK', 'CASE', 'CHAN', 'CONST', 'CONTINUE', 'DEFAULT', 'DEFER', 'ELSE',
@@ -20,16 +20,16 @@ separators = {'LEFT_PARANTHESIS', 'RIGHT_PARANTHESIS', 'LEFT_BRACKET', 'RIGHT_BR
               'COMMA', 'DOT', 'SEMI_COLON', 'COLON'}
 
 separators = {'LEFT_PARANTHESIS', 'RIGHT_PARANTHESIS', 'LEFT_BRACKET', 'RIGHT_BRACKET', 'LEFT_BRACES', 'RIGHT_BRACES',
-                'COMMA', 'DOT', 'SEMI_COLON', 'COLON'}
+              'COMMA', 'DOT', 'SEMI_COLON', 'COLON'}
 
 reserved_keywords = {}
 
 for r in keywords:
     reserved_keywords[r.lower()] = r
 
-t_ignore_COMMENT = r'(/\*([^*]|\n|(\*+([^*/]|\n])))*\*+/)|(//.*)'
+
 t_ignore = ' \t'
-# t_ADD=r'\+'
+# t_COMMENT = r'(/\*([^*]|\n|(\*+([^*/]|\n])))*\*+/)|(//.*)'
 t_INC = r'\+\+'
 t_DEC = r'--'
 t_EQ = r'=='
@@ -81,6 +81,11 @@ rune_lit = "\'(.|(\\[abfnrtv]))\'"
 identifier_lit = "[_a-zA-Z]+[a-zA-Z0-9_]*"
 
 
+def t_COMMENT(t):
+    r'(/\*([^*]|\n|(\*+([^*/]|\n])))*\*+/)|(//.*)'
+    return t
+
+
 @lex.TOKEN(hex_lit)
 def t_HEX(t):
     # t.value = int(t.value, 16)
@@ -91,6 +96,7 @@ def t_HEX(t):
 def t_FLOAT(t):
     # t.value = float(t.value)
     return t
+
 
 @lex.TOKEN(oct_lit)
 def t_OCT(t):
@@ -193,6 +199,8 @@ def find_color(tok):
         return colour['dec_literal']
     if(tok.type == 'FLOAT'):
         return colour['float_literal']
+    if(tok.type == 'COMMENT'):
+        return colour['comments']
     return 'black'
 
 
@@ -205,16 +213,18 @@ outF.write("<html>\n")
 outF.write("<head><style>* {font-family: 'Consolas'}</style></head>")
 outF.write("<body>\n")
 
+
 def get_indentation_width(line):
     i = 0
     ind = 0
-    while line[i]==' ' or line[i]=='\t':
+    while line[i] == ' ' or line[i] == '\t':
         i = i + 1
-        if line[i]==' ':
+        if line[i] == ' ':
             ind = ind + 1
         else:
             ind = ind + 4
     return ind
+
 
 for line in lines:
     lexer.input(line)

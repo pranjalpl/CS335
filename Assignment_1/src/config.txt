@@ -6,3 +6,4 @@ hex_literal, yellow
 oct_literal, cyan
 dec_literal, orange
 float_literal, purple
+comments, gray

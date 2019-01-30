@@ -5,6 +5,7 @@ import (
 	"os"
 )
 
+/*asdf*/
 func main() {
 	var t int
 	var g int
