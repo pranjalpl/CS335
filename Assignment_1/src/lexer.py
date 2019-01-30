@@ -19,6 +19,9 @@ operators = {'ADD', 'SUB', 'MULT', 'DIV', 'MOD', 'ASSIGN', 'INC', 'DEC', 'EQ', '
 separators = {'LEFT_PARANTHESIS', 'RIGHT_PARANTHESIS', 'LEFT_BRACKET', 'RIGHT_BRACKET', 'LEFT_BRACES', 'RIGHT_BRACES',
               'COMMA', 'DOT', 'SEMI_COLON', 'COLON'}
 
+separators = {'LEFT_PARANTHESIS', 'RIGHT_PARANTHESIS', 'LEFT_BRACKET', 'RIGHT_BRACKET', 'LEFT_BRACES', 'RIGHT_BRACES',
+                'COMMA', 'DOT', 'SEMI_COLON', 'COLON'}
+
 reserved_keywords = {}
 
 for r in keywords:
@@ -68,7 +71,6 @@ t_DOT = r'\.'
 t_SEMI_COLON = r';'
 t_COLON = r':'
 
-
 dec_lit = "(0|([1-9][0-9]*))"
 oct_lit = "(0[0-7]*)"
 hex_lit = "(0x|0X)[0-9a-fA-F]+"
@@ -77,18 +79,6 @@ str_lit = """("[^"]*")"""
 img_lit = "(" + dec_lit + "|" + float_lit + ")i"
 rune_lit = "\'(.|(\\[abfnrtv]))\'"
 identifier_lit = "[_a-zA-Z]+[a-zA-Z0-9_]*"
-
-
-@lex.TOKEN(dec_lit)
-def t_INT(t):
-    # t.value = int(t.value)
-    return t
-
-
-@lex.TOKEN(oct_lit)
-def t_OCT(t):
-    # t.value = int(t.value, 8)
-    return t
 
 
 @lex.TOKEN(hex_lit)
@@ -102,10 +92,21 @@ def t_FLOAT(t):
     # t.value = float(t.value)
     return t
 
+@lex.TOKEN(oct_lit)
+def t_OCT(t):
+    # t.value = int(t.value, 8)
+    return t
+
 
 @lex.TOKEN(str_lit)
 def t_STR(t):
     # t.value = t.value[1:-1]
+    return t
+
+
+@lex.TOKEN(dec_lit)
+def t_INT(t):
+    # t.value = int(t.value)
     return t
 
 
@@ -172,6 +173,7 @@ for j in range(len(colors)):
 
 
 def find_color(tok):
+    print(tok)
     for op in operators:
         if(tok.type == op):
             return colour['operators']
@@ -181,6 +183,16 @@ def find_color(tok):
     for sep in separators:
         if(tok.type == sep):
             return colour['separators']
+    if(tok.type == 'STR'):
+        return colour['string_literal']
+    if(tok.type == 'HEX'):
+        return colour['hex_literal']
+    if(tok.type == 'OCT'):
+        return colour['oct_literal']
+    if(tok.type == 'INT'):
+        return colour['dec_literal']
+    if(tok.type == 'FLOAT'):
+        return colour['float_literal']
     return 'black'
 
 
@@ -190,6 +202,7 @@ lines = list(f)
 outF = open(args.output, "w")
 outF.write("<!DOCTYPE html>\n")
 outF.write("<html>\n")
+outF.write("<head><style>* {font-family: 'Consolas'}</style></head>")
 outF.write("<body>\n")
 
 def get_indentation_width(line):

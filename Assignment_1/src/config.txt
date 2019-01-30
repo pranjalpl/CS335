@@ -1,3 +1,8 @@
 operators, lime
 keywords, magenta
-separators, blue
+separators, red
+string_literal, blue
+hex_literal, yellow
+oct_literal, cyan
+dec_literal, orange
+float_literal, purple

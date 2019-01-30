@@ -1,5 +1,14 @@
 package main
-import "fmt"
+
+import (
+	"fmt"
+	"os"
+)
+
 func main() {
-    fmt.Println("hello world")
+	var t int
+	var g int
+	var i int
+	var n int
+	var q = 0.4e10
 }
