@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head><style>* {font-family: 'Consolas'}</style></head><body>
+<span style="color: gray">package</span>&nbsp;<span style="color: lime">main</span><br>
+&nbsp;<br>
+<span style="color: gray">import</span>&nbsp;<span style="color: purple">(</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: orange">"fmt"</span><br>
+<span style="color: purple">)</span><br>
+&nbsp;<br>
+<span style="color: gray">type</span>&nbsp;<span style="color: lime">Salary</span>&nbsp;<span style="color: gray">struct</span>&nbsp;<span style="color: purple">{</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">Basic</span><span style="color: purple">,</span>&nbsp;<span style="color: lime">HRA</span><span style="color: purple">,</span>&nbsp;<span style="color: lime">TA</span>&nbsp;<span style="color: lime">float64</span><br>
+<span style="color: purple">}</span><br>
+&nbsp;<br>
+<span style="color: gray">type</span>&nbsp;<span style="color: lime">Employee</span>&nbsp;<span style="color: gray">struct</span>&nbsp;<span style="color: purple">{</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">FirstName</span><span style="color: purple">,</span>&nbsp;<span style="color: lime">LastName</span><span style="color: purple">,</span>&nbsp;<span style="color: lime">Email</span>&nbsp;<span style="color: lime">string</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">Age</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">int</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">MonthlySalary</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: purple">[</span><span style="color: purple">]</span><span style="color: lime">Salary</span><br>
+<span style="color: purple">}</span><br>
+&nbsp;<br>
+<span style="color: gray">func</span>&nbsp;<span style="color: purple">(</span><span style="color: lime">e</span>&nbsp;<span style="color: lime">Employee</span><span style="color: purple">)</span>&nbsp;<span style="color: lime">EmpInfo</span><span style="color: purple">(</span><span style="color: purple">)</span>&nbsp;<span style="color: lime">string</span>&nbsp;<span style="color: purple">{</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">fmt</span><span style="color: purple">.</span><span style="color: lime">Println</span><span style="color: purple">(</span><span style="color: lime">e</span><span style="color: purple">.</span><span style="color: lime">FirstName</span><span style="color: purple">,</span>&nbsp;<span style="color: lime">e</span><span style="color: purple">.</span><span style="color: lime">LastName</span><span style="color: purple">)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">fmt</span><span style="color: purple">.</span><span style="color: lime">Println</span><span style="color: purple">(</span><span style="color: lime">e</span><span style="color: purple">.</span><span style="color: lime">Age</span><span style="color: purple">)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">fmt</span><span style="color: purple">.</span><span style="color: lime">Println</span><span style="color: purple">(</span><span style="color: lime">e</span><span style="color: purple">.</span><span style="color: lime">Email</span><span style="color: purple">)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: gray">for</span>&nbsp;<span style="color: lime">_</span><span style="color: purple">,</span>&nbsp;<span style="color: lime">info</span>&nbsp;<span style="color: purple">:</span><span style="color: green">=</span>&nbsp;<span style="color: gray">range</span>&nbsp;<span style="color: lime">e</span><span style="color: purple">.</span><span style="color: lime">MonthlySalary</span>&nbsp;<span style="color: purple">{</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">fmt</span><span style="color: purple">.</span><span style="color: lime">Println</span><span style="color: purple">(</span><span style="color: orange">"==================="</span><span style="color: purple">)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">fmt</span><span style="color: purple">.</span><span style="color: lime">Println</span><span style="color: purple">(</span><span style="color: lime">info</span><span style="color: purple">.</span><span style="color: lime">Basic</span><span style="color: purple">)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">fmt</span><span style="color: purple">.</span><span style="color: lime">Println</span><span style="color: purple">(</span><span style="color: lime">info</span><span style="color: purple">.</span><span style="color: lime">HRA</span><span style="color: purple">)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">fmt</span><span style="color: purple">.</span><span style="color: lime">Println</span><span style="color: purple">(</span><span style="color: lime">info</span><span style="color: purple">.</span><span style="color: lime">TA</span><span style="color: purple">)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: purple">}</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: gray">return</span>&nbsp;<span style="color: orange">"----------------------"</span><br>
+<span style="color: purple">}</span><br>
+<span style="color: gray">func</span>&nbsp;<span style="color: lime">main</span><span style="color: purple">(</span><span style="color: purple">)</span>&nbsp;<span style="color: purple">{</span><br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">e</span>&nbsp;<span style="color: purple">:</span><span style="color: green">=</span>&nbsp;<span style="color: lime">Employee</span><span style="color: purple">{</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">FirstName</span><span style="color: purple">:</span>&nbsp;<span style="color: orange">"Mark"</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">LastName</span><span style="color: purple">:</span>&nbsp;&nbsp;<span style="color: orange">"Jones"</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">Email</span><span style="color: purple">:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: orange">"mark@gmail.com"</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">Age</span><span style="color: purple">:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue">25</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">MonthlySalary</span><span style="color: purple">:</span>&nbsp;<span style="color: purple">[</span><span style="color: purple">]</span><span style="color: lime">Salary</span><span style="color: purple">{</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">Salary</span><span style="color: purple">{</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">Basic</span><span style="color: purple">:</span>&nbsp;<span style="color: red">15000.00</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">HRA</span><span style="color: purple">:</span>&nbsp;&nbsp;&nbsp;<span style="color: red">5000.00</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">TA</span><span style="color: purple">:</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red">2000.00</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: purple">}</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">Salary</span><span style="color: purple">{</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">Basic</span><span style="color: purple">:</span>&nbsp;<span style="color: red">16000.00</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">HRA</span><span style="color: purple">:</span>&nbsp;&nbsp;&nbsp;<span style="color: red">5000.00</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">TA</span><span style="color: purple">:</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red">2100.00</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: purple">}</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">Salary</span><span style="color: purple">{</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">Basic</span><span style="color: purple">:</span>&nbsp;<span style="color: red">17000.00</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">HRA</span><span style="color: purple">:</span>&nbsp;&nbsp;&nbsp;<span style="color: red">5000.00</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">TA</span><span style="color: purple">:</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red">2200.00</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: purple">}</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: purple">}</span><span style="color: purple">,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: purple">}</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: lime">fmt</span><span style="color: purple">.</span><span style="color: lime">Println</span><span style="color: purple">(</span><span style="color: lime">e</span><span style="color: purple">.</span><span style="color: lime">EmpInfo</span><span style="color: purple">(</span><span style="color: purple">)</span><span style="color: purple">)</span><br>
+<span style="color: purple">}</span></body>
+</html>
