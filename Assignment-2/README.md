@@ -1,11 +1,13 @@
 # CS335: Compiler Design
 
-## Assignment 1
+## Assignment 2
 
-### To run the lexer
+### To run the parser
 
-* Type `python src/lexer.py --cfg="tests/cfg/configX.txt tests/input/inputY.go" --output="tests/output/some-file.html"`
+* Type `python src/parser.py --input="tests/input/some-file.html"`
 
-* Make sure that the value to cfg argument are in double quotes so that the input filename is not skipped.
+### To create graph
 
-* There are 3 config files and 5 input files.
+* Type ``dot -Tpng filename.dot -o output_filename.png ``
+
+* There are 5 input files.
