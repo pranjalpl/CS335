@@ -1082,4 +1082,8 @@ t.write("}")
 t.write("\n")
 t.close()
 
+out_file = input_file.split('/')[2] + ".png"
+command = "dot -Tpng " + filename + " -o " + out_file
+os.system(command)
+
 print(result)
