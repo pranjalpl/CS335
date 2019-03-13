@@ -22,7 +22,10 @@ class symbolTable:
     # Returns the argument list of the variable else returns None
     # Note that type is always a key in argument list
     def getInfo(self, name):
-        return (self.lookUp(name)) ? (self.table)[name] : None
+        if (self.lookUp(name)):
+            return (self.table)[name]
+        else:
+            return None
 
     # Updates the variable of NAME name with arg list of KEY key with VALUE value
     def updateArgList(self, name, key, value):
