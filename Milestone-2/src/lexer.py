@@ -148,7 +148,7 @@ def t_error(t):
 lexer = lex.lex()
 
 arg_parser = argparse.ArgumentParser()
-arg_parser.add_argument("--input", default="tests/input/fund.go")
+arg_parser.add_argument("--input", default="../tests/input/test3.go")
 args = arg_parser.parse_args()
 input_file = args.input
 

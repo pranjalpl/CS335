@@ -1,0 +1,28 @@
+1, goto, label0
+2, label, label1
+3, pop, 0, var0
+4, pop, 1, var1
+5, retvoid
+6, label, label2
+7, =, var3, 3
+8, =, var5, 1
+9, =, var6, 2
+10, push, var5
+11, push, var6
+12, callvoid, label1
+13, =, var4, label1
+14, +=, var3, label1
+15, label, label3
+16, =, var8, asdf
+17, =, var10, 1
+18, =, var11, 2
+19, push, var10
+20, push, var11
+21, callvoid, label1
+22, =, var9, label1
+23, =, var13, 10.01
+24, =, var12, var13
+25, +=, var8, label1
+26, label, label0
+27, =, var14, 1
+28, retint, var14

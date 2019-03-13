@@ -1,17 +1,24 @@
 package maie;
 
 import "fmt";
-func test(a, b int_t) float_t;
 
+func test(a, b int_t) {
+	return;
+};
 
-func main() {
+func notmain() {
 	var i int_t =3;
 	var j int_t = test(1,2);
 	i  += j;
-	print(i);
+};
+func noatmain() {
+	var i int_t = "asdf";
+	var j int_t = test(1,2);
+	const a int_t = 10.01;
+	i  += j;
+};
+func main() {
+	return 1;
 };
 
-func test(a, b int_t) int_t {
-	return a;
-};
 
