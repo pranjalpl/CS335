@@ -3,67 +3,72 @@
 import sys
 import ply.lex as lex
 import re
-import argparse
 
-tokens = (
-    'STRUCT', 'FUNC', 'CONST', 'TYPE', 'VAR', 'IF', 'ELSE', 'SWITCH', 'CASE', 'DEFAULT', 'FOR', 'RANGE', 'RETURN', 'BREAK', 'CONTINUE', 'GOTO', 'PACKAGE', 'IMPORT', 'INT_T', 'FLOAT_T', 'UINT_T',
-    'COMPLEX_T', 'RUNE_T', 'BOOL_T', 'STRING_T', 'TYPECAST', 'ADD', 'SUB', 'MULT', 'DIV', 'MOD', 'ASSIGN', 'AND', 'LOG_AND', 'INC', 'DEC', 'LEFT_PARANTHESIS', 'RIGHT_PARANTHESIS', 'OR', 'XOR',
-    'LSHIFT', 'RSHIFT', 'PLUS_ASSIGN', 'MINUS_ASSIGN', 'MULT_ASSIGN', 'DIV_ASSIGN', 'MOD_ASSIGN', 'AND_ASSIGN', 'OR_ASSIGN', 'XOR_ASSIGN', 'LSHIFT_ASSIGN', 'RSHIFT_ASSIGN', 'LOG_OR', 'EQ', 'LT', 'GT',
-    'NOT', 'NEQ', 'LEQ', 'GEQ', 'QUICK_ASSIGN', 'LEFT_BRACKET', 'RIGHT_BRACKET', 'LEFT_BRACES', 'RIGHT_BRACES', 'COMMA', 'DOT', 'SEMICOLON', 'COLON', 'INTEGER', 'OCTAL', 'HEX', 'FLOAT', 'STRING', 'IMAGINARY',
-    'RUNE', 'IDENTIFIER'
-)
-
-keywords = {'STRUCT', 'FUNC', 'CONST', 'TYPE', 'VAR', 'IF', 'ELSE', 'SWITCH', 'CASE',
+keywords = {'STRUCT', 'FUNC', 'CONST', 'TYPE', 'VAR', 'IF', 'ELSE', 'SWITCH', 'CASE', 'PRINT', 'SCAN',
             'DEFAULT', 'FOR', 'RANGE', 'RETURN', 'BREAK', 'CONTINUE', 'GOTO', 'PACKAGE', 'IMPORT', 'INT_T', 'FLOAT_T', 'UINT_T', 'COMPLEX_T', 'RUNE_T', 'BOOL_T', 'STRING_T', 'TYPECAST'}
+
+operators = {'PLUS', 'MINUS', 'STAR', 'DIVIDE', 'MOD', 'ASSIGN', 'AND', 'LOGICAL_AND', 'INCR', 'DECR', 'LPAREN', 'RPAREN', 'OR', 'XOR', 'LSHIFT', 'RSHIFT', 'PLUS_ASSIGN', 'MINUS_ASSIGN', 'STAR_ASSIGN', 'DIVIDE_ASSIGN', 'MOD_ASSIGN', 'AND_ASSIGN', 'OR_ASSIGN', 'XOR_ASSIGN', 'LSHIFT_ASSIGN', 'RSHIFT_ASSIGN', 'LOGICAL_OR', 'EQUALS', 'LESSER', 'GREATER', 'NOT', 'NOT_ASSIGN', 'LESS_EQUALS', 'MORE_EQUALS', 'QUICK_ASSIGN', 'LSQUARE', 'RSQUARE', 'LCURL',
+             'RCURL', 'COMMA', 'DOT', 'SEMICOLON', 'COLON'}
 
 reserved = {}
 for r in keywords:
 	reserved[r.lower()] = r
 
+types = {'INTEGER', 'OCTAL', 'HEX', 'FLOAT', 'STRING', 'IMAGINARY', 'RUNE'}
+
+identity = {'IDENTIFIER'}
+
+tokens = list(operators) + list(types) + \
+              list(identity) + list(reserved.values())
+
 # Token definitions
 
 t_ignore_COMMENT = r'(/\*([^*]|\n|(\*+([^*/]|\n])))*\*+/)|(//.*)'
 t_ignore = ' \t'
-t_ADD = r'\+'
-t_SUB = r'-'
-t_MULT = r'\*'
-t_DIV = r'/'
+t_PLUS = r'\+'
+#t_UPLUS = r'\+'
+t_MINUS = r'-'
+#t_UMINUS = r'-'
+t_STAR = r'\*'
+#t_USTAR = r'\*'
+t_DIVIDE = r'/'
 t_MOD = r'%'
 t_ASSIGN = r'='
 t_AND = r'&'
-t_LOG_AND = r'&&'
-t_INC = r'\+\+'
-t_DEC = r'--'
-t_LEFT_PARANTHESIS = r'\('
-t_RIGHT_PARANTHESIS = r'\)'
+#t_UAND = r'&'
+t_LOGICAL_AND = r'&&'
+t_INCR = r'\+\+'
+t_DECR = r'--'
+t_LPAREN = r'\('
+t_RPAREN = r'\)'
 t_OR = r'\|'
 t_XOR = r'\^'
 t_LSHIFT = r'<<'
 t_RSHIFT = r'>>'
 t_PLUS_ASSIGN = r'\+='
 t_MINUS_ASSIGN = r'-='
-t_MULT_ASSIGN = r'\*='
-t_DIV_ASSIGN = r'/='
+t_STAR_ASSIGN = r'\*='
+t_DIVIDE_ASSIGN = r'/='
 t_MOD_ASSIGN = r'%='
 t_AND_ASSIGN = r'&='
 t_OR_ASSIGN = r'\|='
 t_XOR_ASSIGN = r'\^='
 t_LSHIFT_ASSIGN = r'<<='
 t_RSHIFT_ASSIGN = r'>>='
-t_LOG_OR = r'\|\|'
-t_EQ = r'=='
-t_LT = r'<'
-t_GT = r'>'
+t_LOGICAL_OR = r'\|\|'
+t_EQUALS = r'=='
+t_LESSER = r'<'
+t_GREATER = r'>'
 t_NOT = r'!'
 #t_UNOT = r'!'
-t_NEQ = r'!='
-t_LEQ = r'<='
-t_GEQ = r'>='
+t_NOT_ASSIGN = r'!='
+t_LESS_EQUALS = r'<='
+t_MORE_EQUALS = r'>='
 t_QUICK_ASSIGN = r':='
-t_LEFT_BRACKET = r'\['
-t_RIGHT_BRACKET = r'\]'
-t_LEFT_BRACES = r'\{'
-t_RIGHT_BRACES = r'\}'
+t_LSQUARE = r'\['
+t_RSQUARE = r'\]'
+t_LCURL = r'\{'
+t_RCURL = r'\}'
 t_COMMA = r','
 t_DOT = r'\.'
 t_SEMICOLON = r';'
@@ -147,10 +152,43 @@ def t_error(t):
 
 lexer = lex.lex()
 
-arg_parser = argparse.ArgumentParser()
-arg_parser.add_argument("--input", default="tests/input/fund.go")
-args = arg_parser.parse_args()
-input_file = args.input
+Toks={}
+for a in tokens:
+    Toks[a]=[a,0]
 
-fi=open(input_file,'r')
-data=fi.read()
+# Scanning the file name
+if (len(sys.argv) == 1):
+    file_name = input("Input a .go filename: ")
+else:
+    file_name = sys.argv[1]
+
+try:
+    lexer = lex.lex()
+    with open(file_name) as fp:
+        data = fp.read()
+        data += '\n'
+        lexer.input(data)
+
+        while True:
+            tok = lexer.token()
+            if not tok:
+                break
+            Toks[tok.type][1]=Toks[tok.type][1]+1
+            if tok.value in Toks[tok.type][2:]:
+                continue
+            Toks[tok.type].append(tok.value)
+
+        print("TOKEN\t\t\tOCCURANCES\t\tLEXEMES")
+        print("-"*64)
+        for i in Toks:
+            if Toks[i][1]==0:
+                continue
+            if len(Toks[i][0]) <= 6:
+                print(Toks[i][0], "\t\t\t", Toks[i][1], "\t\t\t", Toks[i][2])
+            else:
+                print(Toks[i][0], "\t\t", Toks[i][1], "\t\t\t", Toks[i][2])
+            for x in range(3, len(Toks[i])):
+                print("\t\t\t\t\t\t", Toks[i][x])
+
+except IOError as e:
+    print("I/O error({0}): " + "Cannot open file " + file_name + " . Does it Exists? Check permissionsi!")
