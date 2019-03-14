@@ -138,7 +138,8 @@ class IRNode:
         self.placelist = []
         self.extra = {}
     def __repr__(self):
-        return 'idList: ' + str(self.idList) + '\n\ttypeList: ' + str(self.typeList) + '\n\textra: ' + str(self.extra) + '\n'
+        return '\n\tidList: ' + str(self.idList) + '\n\ttypeList: ' + str(self.typeList) + \
+            '\n\tplacelist: ' + str(self.placelist) + '\n\textra: ' + str(self.extra) + '\n'
 # ----------------------------------------
 
 
@@ -179,6 +180,7 @@ def p_type(p):
         p[0] = p[2]
     else:
         p[0] = p[1]
+    print('\t\ttypes: ' + str(p[0].typeList))
 
 
 def p_type_name(p):
@@ -186,6 +188,7 @@ def p_type_name(p):
                 | QualifiedIdent'''
     print(inspect.stack()[0][3])
     p[0] = p[1]
+    print('\t\ttypes: ' + str(p[0].typeList))
 
 
 def p_type_token(p):
@@ -206,6 +209,7 @@ def p_type_token(p):
             p[0].typeList.append(find_info(p[2], 0)['type'])
     else:
         p[0].typeList.append(p[1])
+        print('\t\ttypes: ' + str(p[0].typeList))
 
 
 def p_type_lit(p):
@@ -486,6 +490,7 @@ def p_identifier_list(p):
     print(inspect.stack()[0][3])
     p[0] = p[2]
     p[0].idList = [p[1]] + p[0].idList
+    print('\t\ttypes: ' + str(p[2].typeList))
     if isUsed(p[1], "."):
         raise NameError("Error: " + p[1] + " already exists")
     else:
@@ -533,6 +538,7 @@ def p_expr_rep(p):
         p[0].code += p[3].code
         p[0].placelist += p[3].placelist
         p[0].typeList += p[3].typeList
+        print('\t\ttypes: ' + p[0].typeList)
         if 'AddrList' not in p[3].extra:
             p[3].extra['AddrList'] = ['None']
         p[0].extra['AddrList'] += p[3].extra['AddrList']

@@ -2,7 +2,7 @@
 2, label, label0
 3, =, var1, 1
 4, =, var3, 2
-5, =, var5, asdf
+5, =, var5, 1
 lol
 TABLE:{'maie': {'type': 'package'}, 'main': {'type': 'func', 'retType': 'void', 'label': 'label0', 'child': TABLE:{'i': {'type': 'float_t', 'place': 'var1'}, 'j': {'type': 'int_t', 'place': 'var3'}, 'a': {'type': 'string_t', 'place': 'var5'}}
 GLobal Symbols: ['i', 'j', 'a']
