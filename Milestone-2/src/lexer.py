@@ -10,10 +10,10 @@ tokens = (
     'COMPLEX_T', 'RUNE_T', 'BOOL_T', 'STRING_T', 'TYPECAST', 'ADD', 'SUB', 'MULT', 'DIV', 'MOD', 'ASSIGN', 'AND', 'LOG_AND', 'INC', 'DEC', 'LEFT_PARANTHESIS', 'RIGHT_PARANTHESIS', 'OR', 'XOR',
     'LSHIFT', 'RSHIFT', 'PLUS_ASSIGN', 'MINUS_ASSIGN', 'MULT_ASSIGN', 'DIV_ASSIGN', 'MOD_ASSIGN', 'AND_ASSIGN', 'OR_ASSIGN', 'XOR_ASSIGN', 'LSHIFT_ASSIGN', 'RSHIFT_ASSIGN', 'LOG_OR', 'EQ', 'LT', 'GT',
     'NOT', 'NEQ', 'LEQ', 'GEQ', 'QUICK_ASSIGN', 'LEFT_BRACKET', 'RIGHT_BRACKET', 'LEFT_BRACES', 'RIGHT_BRACES', 'COMMA', 'DOT', 'SEMICOLON', 'COLON', 'INTEGER', 'OCTAL', 'HEX', 'FLOAT', 'STRING', 'IMAGINARY',
-    'RUNE', 'IDENTIFIER'
+    'RUNE', 'IDENTIFIER', 'PRINT', 'SCAN'
 )
 
-keywords = {'STRUCT', 'FUNC', 'CONST', 'TYPE', 'VAR', 'IF', 'ELSE', 'SWITCH', 'CASE',
+keywords = {'STRUCT', 'FUNC', 'CONST', 'TYPE', 'VAR', 'IF', 'ELSE', 'SWITCH', 'CASE', 'PRINT', 'SCAN',
             'DEFAULT', 'FOR', 'RANGE', 'RETURN', 'BREAK', 'CONTINUE', 'GOTO', 'PACKAGE', 'IMPORT', 'INT_T', 'FLOAT_T', 'UINT_T', 'COMPLEX_T', 'RUNE_T', 'BOOL_T', 'STRING_T', 'TYPECAST'}
 
 reserved = {}
@@ -85,6 +85,8 @@ rune_lit = "\'(.|(\\[abfnrtv]))\'"
 
 identifier_lit = "[_a-zA-Z]+[a-zA-Z0-9_]*"
 
+# t_PRINT = r'print'
+# t_SCAN = r'scan'
 
 @lex.TOKEN(identifier_lit)
 def t_IDENTIFIER(t):

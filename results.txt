@@ -1,0 +1,163 @@
+package maie;
+
+import "fmt";
+
+// func test(a, b int_t) {
+// 	return;
+// };
+
+// func notmain() {
+// 	var i int_t =3;
+// 	var j int_t = test(1,2);
+// 	i  += j;
+// };
+// func noatmain() {
+// 	var i int_t = "asdf";
+// 	var j int_t = test(1,2);
+// 	const a int_t = 10.01;
+// 	i  += j;
+// };
+func main() {
+	var i float_t = 1;
+	var j int_t = 2;
+	var a string_t = "asdf";
+	a = 1;
+	// if i == 1 {
+	// 	return 2;
+	// };
+	// print i;
+	// return 1 + 2;
+};
+
+
+
+p_package_name
+p_package_clause
+p_empty
+p_import_decl_rep
+p_empty
+p_package_name_dot_opt
+p_import_path
+p_import_spec
+p_import_decl
+p_import_decl_rep
+p_empty
+p_toplevel_decl_rep
+p_func_name
+p_create_scope
+p_empty
+p_param_list_opt
+p_params
+p_empty
+p_type_opt
+p_sign
+p_empty
+p_stat_rep
+p_empty
+p_identifier_rep
+p_identifier_list
+p_type_token
+p_type_name
+p_type
+p_I
+p_basic_lit
+p_literal
+p_literal
+p_operand
+p_prim_expr
+p_unary_expr
+p_expr
+p_empty
+p_expr_rep
+p_expr_list_opt
+p_var_spec
+Type Checking: idList: ['i']
+	typeList: []
+	extra: {}
+ idList: []
+	typeList: ['litint_t']
+	extra: {'AddrList': ['None']}
+
+p_var_decl
+p_decl
+p_statement
+p_stat_rep
+p_empty
+p_identifier_rep
+p_identifier_list
+p_type_token
+p_type_name
+p_type
+p_I
+p_basic_lit
+p_literal
+p_literal
+p_operand
+p_prim_expr
+p_unary_expr
+p_expr
+p_empty
+p_expr_rep
+p_expr_list_opt
+p_var_spec
+Type Checking: idList: ['j']
+	typeList: []
+	extra: {}
+ idList: []
+	typeList: ['litint_t']
+	extra: {'AddrList': ['None']}
+
+p_var_decl
+p_decl
+p_statement
+p_stat_rep
+p_empty
+p_identifier_rep
+p_identifier_list
+p_type_token
+p_type_name
+p_type
+p_S
+p_basic_lit
+p_literal
+p_literal
+p_operand
+p_prim_expr
+p_unary_expr
+p_expr
+p_empty
+p_expr_rep
+p_expr_list_opt
+p_var_spec
+Type Checking: idList: ['a']
+	typeList: []
+	extra: {}
+ idList: []
+	typeList: ['litstring_t']
+	extra: {'AddrList': ['None']}
+
+p_var_decl
+p_decl
+p_statement
+p_stat_rep
+p_operand_name
+p_operand
+p_prim_expr
+p_unary_expr
+p_expr
+p_empty
+p_expr_rep
+p_AssignOp
+p_assign_op
+p_I
+p_basic_lit
+p_literal
+p_literal
+p_operand
+p_prim_expr
+p_unary_expr
+p_expr
+p_empty
+p_expr_rep
+p_assignment
+	Comparing types string_t litint_t False

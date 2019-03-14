@@ -40,3 +40,6 @@ class symbolTable:
     def updateExtra(self,key,value):
         self.extra[key]=value
 
+    def __repr__(self):
+        return 'TABLE:' + str(self.table) + '\nGLobal Symbols: ' + str(self.globalSymbolList) + '\nParent: ' + str(self.parent) + '\nExtras: ' + str(self.extra)
+
