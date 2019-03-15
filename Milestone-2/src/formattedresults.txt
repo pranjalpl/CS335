@@ -1,0 +1,102 @@
+1, goto, label0
+2, label, label1
+3, pop, 0, var0
+4, pop, 1, var1
+5, retvoid
+6, label, label2
+7, =, var3, 3
+8, =, var5, 1
+9, =, var6, 2
+10, push, var5
+11, push, var6
+12, callvoid, label1
+13, =, var4, label1
+14, +=, var3, label1
+15, label, label3
+16, =, var8, asdf
+17, =, var10, 1
+18, =, var11, 2
+19, push, var10
+20, push, var11
+21, callvoid, label1
+22, =, var9, label1
+23, =, var13, 10.01
+24, =, var12, var13
+25, +=, var8, label1
+26, label, label0
+27, =, var15, 1
+28, =, var16, 1
+29, ==, var17, var15, var16
+30, =, var19, var17
+31, =, var20, 1
+32, -, var19, var20, var19
+33, goto, var19, label5
+34, =, var18, 2
+35, retint, var18
+36, goto, label6
+37, label, label5
+38, label, label6
+39, print, var15
+40, =, var21, 1
+41, =, var22, 2
+42, +, var23, var21, var22
+43, retint, var23
+lol
+TABLE:
+{
+    'maie': {'type': 'package'},
+    'test': {
+        'type': 'func',
+        'retType': 'void',
+        'label': 'label1',
+        'child':
+            TABLE:{
+                'b': {'type': 'int_t', 'place': 'var0'},
+                'a': {'type': 'int_t', 'place': 'var1'}
+            }
+            GLobal Symbols: ['b', 'a']
+            Parent: 0
+            Extras: {}
+    },
+    'notmain': {
+        'type': 'func',
+        'retType': 'void',
+        'label': 'label2',
+        'child':
+            TABLE:{
+                'i': {'type': 'int_t', 'place': 'var3'},
+                'j': {'type': 'int_t', 'place': 'label1'}
+            }
+            GLobal Symbols: ['i', 'j']
+            Parent: 0
+            Extras: {}
+    },
+    'noatmain': {
+        'type': 'func',
+        'retType': 'void',
+        'label': 'label3',
+        'child':
+            TABLE:{
+                'i': {'type': 'int_t', 'place': 'var8'},
+                'j': {'type': 'int_t', 'place': 'label1'},
+                'a': {'type': 'int_t', 'place': 'var13'}
+            }
+            GLobal Symbols: ['i', 'j', 'a']
+            Parent: 0
+            Extras: {}
+    },
+    'main': {
+        'type': 'func',
+        'retType': 'void',
+        'label': 'label0',
+        'child': TABLE:{
+            'i': {'type': 'int_t', 'place': 'var15'}
+        }
+        GLobal Symbols: ['i']
+        Parent: 0
+        Extras: {}
+    }
+}
+GLobal Symbols: ['maie', 'test', 'notmain', 'noatmain', 'main']
+Parent: None
+Extras: {}

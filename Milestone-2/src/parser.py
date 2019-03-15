@@ -2,6 +2,7 @@ import ply.yacc as yacc
 import sys
 import os
 from lexer import *
+from valid_assignments import *
 from pprint import pprint
 import inspect
 
@@ -538,7 +539,7 @@ def p_expr_rep(p):
         p[0].code += p[3].code
         p[0].placelist += p[3].placelist
         p[0].typeList += p[3].typeList
-        print('\t\ttypes: ' + p[0].typeList)
+        print('\t\ttypes: ' + str(p[0].typeList))
         if 'AddrList' not in p[3].extra:
             p[3].extra['AddrList'] = ['None']
         p[0].extra['AddrList'] += p[3].extra['AddrList']
@@ -662,26 +663,29 @@ def p_var_spec(p):
                 p[0].code.append(["=", p[1].placelist[x], p[3].placelist[x]])
             p[1].placelist[x] = p[3].placelist[x]
 
-            # TODO typelist check required
-            for i in range(0, len(p[1].typeList)):
-                print('\tComparing types', p[1].typeList[i], p[3].typeList[i], p[1].typeList[i] == p[3].typeList[i])
-                if p[1].typeList[i] != p[3].typeList[i]:
-                    raise ValueError("Type of " + str(p[1].placeList[i]) + " & " + str(p[3].placeList[i]) + " is not same")
-            print('Type Checking:', p[1], p[3])
-
-
             scope = find_scope(p[1].idList[x])
             scopeDict[scope].updateArgList(
                 p[1].idList[x], 'place', p[1].placelist[x])
             scopeDict[scope].updateArgList(
                 p[1].idList[x], 'type', p[2].typeList[0])
 
+            # TODO typelist check required
+            currType = p[2].typeList[0]
+            for i in range(0, len(p[3].typeList)):
+                comp = p[3].typeList[i]
+                if comp.startswith('lit'):
+                    comp = comp[3:]
+                print('\tComparing types', currType, comp, isValidAssignment(currType, comp))
+                if not isValidAssignment(currType, comp):
+                    raise ValueError("Type of " + comp + " cannot be assigned to " + currType)
+            print('Type Checking:', p[3], currType)
 
 def p_expr_list_opt(p):
     '''ExpressionListOpt : ASSIGN ExpressionList
                          | epsilon'''
     print(inspect.stack()[0][3])
     if len(p) == 3:
+        print('\t\t' + str(p[2]))
         p[0] = p[2]
     else:
         p[0] = p[1]
@@ -813,6 +817,7 @@ def p_basic_lit(p):
     p[0].code.append(["=", name, p[2]])
     p[0].placelist.append(name)
     p[0].typeList.append('lit' + p[1])
+    print('\t\ttypes: ' + str(p[0].typeList))
 
 
 def p_I(p):
@@ -989,7 +994,21 @@ def p_expr(p):
         newPlace = new_temp()
         p[0].code.append([findBinaryOp(p[2]), newPlace, p[1].placelist[0], p[3].placelist[0]])
         p[0].placelist = [newPlace]
+
         # TODO typechecking based on typeList and update type of p[0]
+        left = p[1].typeList[0]
+        if left.startswith('lit'):
+            left = left[3:]
+        right = p[3].typeList[0]
+        if right.startswith('lit'):
+            right = right[3:]
+        op = findBinaryOp(p[2])
+        print('Typechecking exprss', op, left, right)
+        isValid = isValidBinaryOp(op, left, right)
+        if isValid == -1:
+            raise ValueError(op + " is not applicable to types: " + left + " and " + right)
+        else:
+            p[0].typeList.append(validBinaryOps[isValid]['returns'])
     else:
         p[0] = p[1]
 
@@ -1215,11 +1234,25 @@ def p_assignment(p):
             p[0].code.append(
                 ['load', p[1].extra['AddrList'][x], p[1].placelist[x]])
     # TODO type checking
+    # for i in range(0, len(p[1].typeList)):
+    #     print('\tComparing types', p[1].typeList[i], p[3].typeList[i], p[1].typeList[i] == p[3].typeList[i])
+    #     if p[1].typeList[i] != p[3].typeList[i]:
+    #         raise ValueError("Type of " + str(p[1]) + " & " + str(p[3]) + " is not same")
+    # print('Type Checking:', p[3], scopeDict[0].getInfo(p[3].placelist[0]))
+
+    
+    # TODO typelist check required
     for i in range(0, len(p[1].typeList)):
-        print('\tComparing types', p[1].typeList[i], p[3].typeList[i], p[1].typeList[i] == p[3].typeList[i])
-        if p[1].typeList[i] != p[3].typeList[i]:
-            raise ValueError("Type of " + str(p[1].placelist[i]) + " & " + str(p[3].placelist[i]) + " is not same")
-    print('Type Checking:', p[3], scopeDict[0].getInfo(p[3].placelist[0]))
+        currType = p[1].typeList[i]
+        comp = p[3].typeList[i]
+        if comp.startswith('lit'):
+            comp = comp[3:]
+        if currType.startswith('lit'):
+            currType = currType[3:]
+        print('\tComparing types', currType, comp, isValidAssignment(currType, comp))
+        if not isValidAssignment(currType, comp):
+            raise ValueError("Type of " + comp + " cannot be assigned to " + currType)
+        print('Type Checking:', p[3], currType)
 
 
 def p_assign_op(p):

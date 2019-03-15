@@ -16,8 +16,8 @@ class symbolTable:
             (self.table)[name] = {}
             self.globalSymbolList.append(name)
             (self.table)[name]["type"] = typeOf
-        else:
-            raise NameError(name + ' is already defined')
+        # else:
+        #     raise NameError(name + ' is already defined')
 
     # Returns the argument list of the variable else returns None
     # Note that type is always a key in argument list
