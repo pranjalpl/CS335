@@ -3,27 +3,42 @@
 3, =, var4, 0
 4, retint, var4
 5, label, label0
-6, =, var7, 3
-7, =, var8, 4
-8, x, var9, var7, var8
-9, +, var10, var5, var9
-10, *, var11, var10
-11, =, var12, 3
-12, =, var11, var12
-13, load, var10, var11
-14, =, var18, 2
-15, =, var20, 3
-16, =, var21, 4
-17, x, var22, var20, var21
-18, +, var23, var5, var22
-19, *, var24, var23
-20, =, var19, var24
-21, =, var26, 1
-22, =, var25, var26
-23, =, var16, var14
-24, print, var27
-25, print, var28
-26, print, var18
+6, =, var10, 1
+7, =, var11, 4
+8, x, var12, var10, var11
+9, +, var13, var7, var12
+10, *, var14, var13
+11, =, var15, 1
+12, =, var16, 4
+13, x, var17, var15, var16
+14, +, var18, var14, var17
+15, *, var19, var18
+16, =, var20, 1
+17, =, var21, 4
+18, x, var22, var20, var21
+19, +, var23, var19, var22
+20, *, var24, var23
+21, =, var25, 3
+22, =, var26, 4
+23, x, var27, var25, var26
+24, +, var28, var5, var27
+25, *, var29, var28
+26, =, var30, 3
+27, =, var29, var30
+28, load, var28, var29
+29, =, var36, 2
+30, =, var38, 3
+31, =, var39, 4
+32, x, var40, var38, var39
+33, +, var41, var5, var40
+34, *, var42, var41
+35, =, var37, var42
+36, =, var44, 1
+37, =, var43, var44
+38, =, var34, var32
+39, print, var45
+40, print, var46
+41, print, var36
 lol
 TABLE:{'math': {'type': 'package'}, 'Vertex': {'type': 'typeVertex', 'child': TABLE:{'i': {'type': 'int_t', 'place': 'var0'}, 'j': {'type': 'int_t', 'place': 'var1'}}
 GLobal Symbols: ['i', 'j']
@@ -34,8 +49,8 @@ Parent: 0
 Extras: {}}, 'temp': {'type': 'func', 'retType': 'int_t', 'label': 'label1', 'child': TABLE:{}
 GLobal Symbols: []
 Parent: 0
-Extras: {}}, 'main': {'type': 'func', 'retType': 'void', 'label': 'label0', 'child': TABLE:{'a': {'type': '*int_t', 'place': 'var5'}, 'e': {'type': 'typeVertex', 'place': 'var13'}, 'd': {'type': 'typeVertex', 'place': 'var14'}, 'm': {'type': 'typeVertex', 'place': 'var15'}, 'n': {'type': 'typeVertex', 'place': 'var16'}, 'i': {'type': 'int_t', 'place': 'var18'}, 'd.i': {'type': 'int_t', 'place': 'var27'}, 'e.i': {'type': 'int_t', 'place': 'var28'}}
-GLobal Symbols: ['a', 'e', 'd', 'm', 'n', 'i', 'd.i', 'e.i']
+Extras: {}}, 'main': {'type': 'func', 'retType': 'void', 'label': 'label0', 'child': TABLE:{'a': {'type': '*int_t', 'place': 'var5'}, 'b': {'type': '**int_t', 'place': 'var7'}, 'e': {'type': 'typeVertex', 'place': 'var31'}, 'd': {'type': 'typeVertex', 'place': 'var32'}, 'm': {'type': 'typeVertex', 'place': 'var33'}, 'n': {'type': 'typeVertex', 'place': 'var34'}, 'i': {'type': 'int_t', 'place': 'var36'}, 'd.i': {'type': 'int_t', 'place': 'var45'}, 'e.i': {'type': 'int_t', 'place': 'var46'}}
+GLobal Symbols: ['a', 'b', 'e', 'd', 'm', 'n', 'i', 'd.i', 'e.i']
 Parent: 0
 Extras: {}}}
 GLobal Symbols: ['math', 'Vertex', 'Node', 'temp', 'main']

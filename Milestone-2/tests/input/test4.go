@@ -16,6 +16,8 @@ func temp() int_t {
 };
 func main() {
 	var a[33] int_t;
+	var b[33][34] int_t;
+	b[1][1][1];
 	a[3] = 3;
 	var d,e type Vertex;
 	var n,m type Vertex;

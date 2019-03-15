@@ -23,8 +23,14 @@ validAssignments = [
 ]
 
 def isValidAssignment(lhs, rhs):
+    # Handle structs
     if lhs.startswith('type'):
         return lhs == rhs
+    
+    # Handle arrays
+    if lhs.startswith('*') and rhs.startswith('*'):
+        return isValidAssignment(lhs[1:], rhs[1:])
+
     for x in validAssignments:
         if x['left'] == lhs and x['right'] == rhs:
             return True
