@@ -28,6 +28,10 @@ def isValidAssignment(lhs, rhs):
         return lhs == rhs
     
     # Handle arrays
+    if lhs.startswith('*') and not rhs.startswith('*'):
+        return False
+    if not lhs.startswith('*') and rhs.startswith('*'):
+        return False
     if lhs.startswith('*') and rhs.startswith('*'):
         return isValidAssignment(lhs[1:], rhs[1:])
 
