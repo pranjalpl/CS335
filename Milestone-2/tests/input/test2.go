@@ -1,18 +1,15 @@
-package main;
+package maie;
 
-import (
-	"fmt";
-	"time";
-);
-
-func f(a int_t, b int_t)
+func f(a int_t) int_t
 {
-	fmt.Println("Hello");
+	if(a==1 || a==0){
+		return 1;
+	};
+	return f(a-1) + f(a-2);
 };
 
 func main() {
-	fmt.Println("Welcome to the playground!");
-	var b int_t = 4;
 	var a int_t=5;
-	f(b, a);
+	print(f(a));
+	a=a+1;
 };

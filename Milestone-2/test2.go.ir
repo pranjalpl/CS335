@@ -1,0 +1,52 @@
+1, goto, label0
+2, label, label1
+3, pop, 0, var0
+4, =, var1, 1
+5, =, var2, 0
+6, ==, var3, var0, var2
+7, ||, var4, var1, var3
+8, ==, var5, var0, var4
+9, =, var7, var5
+10, =, var8, 1
+11, -, var7, var8, var7
+12, goto, var7, label2
+13, =, var6, 1
+14, retint, var6
+15, goto, label3
+16, label, label2
+17, label, label3
+18, save_registers
+19, =, var9, 1
+20, -, var10, var0, var9
+21, push, var10
+22, call, var11, label1
+23, restore_registers
+24, save_registers
+25, =, var12, 2
+26, -, var13, var0, var12
+27, push, var13
+28, call, var14, label1
+29, restore_registers
+30, +, var15, var11, var14
+31, retint, var15
+32, label, label0
+33, =, var17, 5
+34, save_registers
+35, push, var17
+36, call, var18, label1
+37, restore_registers
+38, print, var18
+39, =, var19, 1
+40, +, var20, var17, var19
+41, =, var17, var20
+lol
+TABLE:{'maie': {'type': 'package'}, 'f': {'type': 'func', 'retType': 'int_t', 'label': 'label1', 'child': TABLE:{'a': {'type': 'int_t', 'place': 'var0'}}
+GLobal Symbols: ['a']
+Parent: 0
+Extras: {}}, 'main': {'type': 'func', 'retType': 'void', 'label': 'label0', 'child': TABLE:{'a': {'type': 'int_t', 'place': 'var17'}}
+GLobal Symbols: ['a']
+Parent: 0
+Extras: {}}}
+GLobal Symbols: ['maie', 'f', 'main']
+Parent: None
+Extras: {}

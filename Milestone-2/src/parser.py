@@ -772,6 +772,8 @@ def p_func(p):
         info = find_info(p[-2][1])
         info['type'] = 'func'
     else:
+        print(scopeDict)
+        print(scopeStack)
         raise NameError('no signature for ' + p[-2][1] + '!')
 
 
@@ -907,6 +909,7 @@ def p_prim_expr(p):
 
     elif p[2] == '(':
         p[0] = p[1]
+        p[0].code.append(['save_registers'])
         p[0].code += p[3].code
         if len(p[3].placelist):
             for x in p[3].placelist:
@@ -918,7 +921,9 @@ def p_prim_expr(p):
         else:
             newPlace = new_temp()
             p[0].placelist = [newPlace]
-            p[0].code.append(['callint', newPlace, info['label']])
+            # p[0].code.append(['save_registers'])
+            p[0].code.append(['call', newPlace, info['label']])
+            p[0].code.append(['restore_registers'])
         # TODO type checking
         p[0].typeList = [p[1].typeList[0]]
     else:
@@ -1713,6 +1718,7 @@ def p_empty(p):
 def p_error(p):
     print("Syntax error in input!")
     print(p)
+    exit()
 
 # Build the parser
 parser = yacc.yacc()

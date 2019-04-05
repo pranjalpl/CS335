@@ -17,5 +17,10 @@ func main() {
 	scan(b);
 	var c =gcd(a,b);
 	print(c);
+	if (a>b) {
+		print(a);
+	} else {
+		print(b);
+	};
 	return;
 };

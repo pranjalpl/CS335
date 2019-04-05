@@ -1,0 +1,52 @@
+1, goto, label0
+2, label, label1
+3, pop, 0, var0
+4, pop, 1, var1
+5, =, var2, 0
+6, ==, var3, var0, var2
+7, =, var4, var3
+8, =, var5, 1
+9, -, var4, var5, var4
+10, goto, var4, label2
+11, retint, var1
+12, goto, label3
+13, label, label2
+14, label, label3
+15, save_registers
+16, %, var6, var1, var0
+17, push, var0
+18, push, var6
+19, call, var7, label1
+20, restore_registers
+21, retint, var7
+22, label, label0
+23, scan, var9
+24, scan, var8
+25, save_registers
+26, push, var9
+27, push, var8
+28, call, var11, label1
+29, restore_registers
+30, print, var11
+31, >, var12, var9, var8
+32, =, var13, var12
+33, =, var14, 1
+34, -, var13, var14, var13
+35, goto, var13, label5
+36, print, var9
+37, goto, label6
+38, label, label5
+39, print, var8
+40, label, label6
+41, retvoid
+lol
+TABLE:{'madn': {'type': 'package'}, 'gcd': {'type': 'func', 'retType': 'int_t', 'label': 'label1', 'child': TABLE:{'b': {'type': 'int_t', 'place': 'var0'}, 'a': {'type': 'int_t', 'place': 'var1'}}
+GLobal Symbols: ['b', 'a']
+Parent: 0
+Extras: {}}, 'main': {'type': 'func', 'retType': 'void', 'label': 'label0', 'child': TABLE:{'b': {'type': 'int_t', 'place': 'var8'}, 'a': {'type': 'int_t', 'place': 'var9'}, 'c': {'type': 'int_t', 'place': 'var11'}}
+GLobal Symbols: ['b', 'a', 'c']
+Parent: 0
+Extras: {}}}
+GLobal Symbols: ['madn', 'gcd', 'main']
+Parent: None
+Extras: {}
