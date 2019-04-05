@@ -1,3 +1,5 @@
+// Non trivial GCD program
+
 package madn;
 
 import "fmt";
@@ -18,6 +20,7 @@ func main() {
 	var c =gcd(a,b);
 	print(c);
 	if (a>b) {
+		// whoa recursion!
 		print(a);
 	} else {
 		print(b);

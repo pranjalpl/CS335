@@ -1,3 +1,6 @@
+// The typechecking and stuff
+// 
+
 package maie;
 
 import "fmt";

@@ -5,6 +5,7 @@ from lexer import *
 from valid_assignments import *
 from pprint import pprint
 import inspect
+import json
 
 from symbol_table import *
 
@@ -314,6 +315,8 @@ def p_sign(p):
     '''Signature : Parameters TypeOpt'''
     print(inspect.stack()[0][3])
     p[0] = p[1]
+    p[0].paramTypeList = p[1].typeList
+    print('params list', p[1].typeList)
     scopeDict[0].insert(p[-2][1], 'signatureType')
     if len(p[2].typeList) == 0:
         scopeDict[0].updateArgList(p[-2][1], 'retType', 'void')
@@ -370,8 +373,9 @@ def p_param_decl_comma_rep(p):
                              | ParameterDecl COMMA ParameterDecl'''
     print(inspect.stack()[0][3])
     p[0] = p[1]
+    # XXX: Erroneous code? shouldnt it be p[1].typeList + p[3].typeList instead of p[3].typeList alone
     p[0].idList += p[3].idList
-    p[0].typeList += p[3].typeList
+    p[0].typeList += p[1].typeList + p[3].typeList
     p[0].placelist += p[3].placelist
 
 
@@ -384,6 +388,9 @@ def p_param_decl(p):
         for x in p[1].idList:
             scopeDict[currentScope].updateArgList(x, 'type', p[2].typeList[0])
             p[0].typeList.append(p[2].typeList[0])
+        p[0].typeList = p[2].typeList
+    else:
+        p[0].typeList = p[1].typeList
 # ---------------------------------------------------------
 
 
@@ -724,8 +731,10 @@ def p_func_decl(p):
         firstFunc = False
         p[0].code = [["goto", "label0"]]
     info = find_info(p[2][1])
+    # print('hehe', info)
+    # info['paramTypeList'] = 
     label = info['label']
-    p[0].code.append(['label', label])
+    p[0].code.append([label + ':'])
     p[0].code += p[4].code
 
 
@@ -756,7 +765,7 @@ def p_func_name(p):
 def p_func(p):
     '''Function : Signature FunctionBody'''
     print(inspect.stack()[0][3])
-    # TODO typechecking of return type. It should be same as defined in signature
+    # DONE typechecking of return type. It should be same as defined in signature
     p[0] = p[2]
     for x in range(len(p[1].idList)):
         info = find_info(p[1].idList[x])
@@ -771,6 +780,7 @@ def p_func(p):
 
         info = find_info(p[-2][1])
         info['type'] = 'func'
+        info['paramsTypeList'] = p[1].typeList
     else:
         print(scopeDict)
         print(scopeStack)
@@ -855,6 +865,10 @@ def p_operand_name(p):
     info = find_info(p[1])
     if info['type'] == 'func' or info['type'] == 'signatureType':
         p[0].typeList = [info['retType']]
+        # # TODO type check here
+        # for i in range(len(p[0].typeList)):
+        #     if p[0].typeList[i] != 1:
+
         p[0].placelist.append(info['label'])
     else:
         p[0].typeList = [info['type']]
@@ -871,6 +885,18 @@ def p_quali_ident(p):
         raise NameError("Package " + p[1] + " not included")
     p[0] = IRNode()
     p[0].typeList.append(p[1] + p[2] + p[3].typeList[0])
+    
+    # '''QualifiedIdent : IDENTIFIER DOT TypeName'''
+    # print(inspect.stack()[0][3])
+    # typ = scopeDict[0].getInfo(p[1][4:])
+    # a = p[1].idList[0].startswith('type')
+    # b = isUsed(p[1], "package")
+    # if not a and not b:
+    #     raise NameError("Package " + p[1] + " not included")
+    # if a:
+    #     c = typ['child']['table'].keys()
+    #     if not p[1] in c:
+    #         raise TypeError('%s does not contain the member %s'%())
 # -------------------------------------------------------
 
 # ------------------PRIMARY EXPRESSIONS--------------------
@@ -916,12 +942,19 @@ def p_prim_expr(p):
                 p[0].code.append(['push', x])
 
         info = find_info(p[1].idList[0], 0)
+        paramsTypes = info['paramsTypeList']
+        # TODO: Overload here
+        if len(paramsTypes) != len(p[3].typeList):
+            raise Exception('Argument number mismatch: %d v/s %d'%(len(paramsTypes), len(p[3].typeList)))
+        for i in range(len(paramsTypes)):
+            if not isValidAssignment(paramsTypes[i], p[3].typeList[i]):
+                raise Exception('Incompatible argument types %s v/s %s:'%(paramsTypes[i], p[3].typeList[i]))
+
         if info['retType'] == 'void':
-            p[0].code.append(['callvoid', info['label']])
+            p[0].code.append(['call', info['label']])
         else:
             newPlace = new_temp()
             p[0].placelist = [newPlace]
-            # p[0].code.append(['save_registers'])
             p[0].code.append(['call', newPlace, info['label']])
             p[0].code.append(['restore_registers'])
         # TODO type checking
@@ -943,7 +976,7 @@ def p_selector(p):
     infoStruct = find_info(structName, 0)
     newScopeTable = infoStruct['child']
     if p[2] not in newScopeTable.table:
-        raise NameError("struct " + structName + "has no member " + p[2])
+        raise NameError("struct " + structName + " has no member " + p[2])
 
     s = p[-1].idList[0] + "." + p[2]
     if isUsed(s, 'current'):
@@ -1044,6 +1077,9 @@ def p_unary_expr(p):
             newPlace2 = new_temp()
             p[0].append(['=', newPlace2, 0])
             p[0].append([p[1][1], newPlace, newPlace2, p[2].placelist[0]])
+        elif p[1][1] == "&":
+            p[0].code.append([p[1][1], newPlace, p[2].placelist[0]])
+            p[0].typeList[0] = ('*' + p[0].typeList[0])
         else:
             p[0].code.append([p[1][1], newPlace, p[2].placelist[0]])
         p[0].placelist = [newPlace]
@@ -1733,7 +1769,7 @@ if not s:
 
 
 result = parser.parse(s)
-filename = input_file.split('/')[2] + ".ir"
+filename = './results/' + input_file.split('/')[-1] + ".ir"
 t = open(filename, 'w+')
 
 print(result)
@@ -1755,12 +1791,11 @@ def printList(node):
     for i in range(0, len(rootNode.code)):
         if len(rootNode.code[i]) > 0:
             toPrint = ""
-            toPrint += str(counter)
+            # toPrint += str(counter)
             for j in range(0, len(rootNode.code[i])):
                 toPrint += ", " + str(rootNode.code[i][j])
-            print(toPrint)
+            print(toPrint[1:].strip())
             counter += 1
 
 printList(rootNode)
-print('lol')
 print(scopeDict[0])

@@ -1,0 +1,114 @@
+goto, label0
+label1:
+pop, 0, var0
+pop, 1, var1
+retvoid
+label2:
+=, var3, 3
+=, var5, 5
++=, var3, var5
+label3:
+=, var7, 1
+=, var9, 5
+=, var11, 10.01
+=, var10, var11
++=, var7, var9
+label0:
+=, var13, 3.1254
+=, var14, 1
+retint, var14
+{
+	'table': {
+		'maie': {
+			'type': 'package',
+		},
+		'test': {
+			'type': 'func',
+			'retType': 'void',
+			'label': 'label1',
+			'child': {
+				'table': {
+					'b': {
+						'type': 'int_t',
+						'place': 'var0',
+					},
+					'a': {
+						'type': 'int_t',
+						'place': 'var1',
+					},
+				},
+				'global_symbols': ['b', 'a'],
+				'parent': 0,
+				'extras': {
+				},
+			},
+		},
+		'notmain': {
+			'type': 'func',
+			'retType': 'void',
+			'label': 'label2',
+			'child': {
+				'table': {
+					'i': {
+						'type': 'int_t',
+						'place': 'var3',
+					},
+					'j': {
+						'type': 'int_t',
+						'place': 'var5',
+					},
+				},
+				'global_symbols': ['i', 'j'],
+				'parent': 0,
+				'extras': {
+				},
+			},
+		},
+		'noatmain': {
+			'type': 'func',
+			'retType': 'void',
+			'label': 'label3',
+			'child': {
+				'table': {
+					'i': {
+						'type': 'int_t',
+						'place': 'var7',
+					},
+					'j': {
+						'type': 'int_t',
+						'place': 'var9',
+					},
+					'a': {
+						'type': 'float_t',
+						'place': 'var11',
+					},
+				},
+				'global_symbols': ['i', 'j', 'a'],
+				'parent': 0,
+				'extras': {
+				},
+			},
+		},
+		'main': {
+			'type': 'func',
+			'retType': 'void',
+			'label': 'label0',
+			'child': {
+				'table': {
+					'a': {
+						'type': 'float_t',
+						'place': 'var13',
+					},
+				},
+				'global_symbols': ['a'],
+				'parent': 0,
+				'extras': {
+				},
+			},
+		},
+	},
+	'global_symbols': ['maie', 'test', 'notmain', 'noatmain', 'main'],
+	'parent': None,
+	'extras': {
+	},
+}

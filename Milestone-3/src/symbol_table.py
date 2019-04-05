@@ -1,5 +1,6 @@
+import json
+printerTab = 1
 class symbolTable:
-
     def __init__(self):
         self.table = {}
         self.globalSymbolList = []
@@ -40,6 +41,31 @@ class symbolTable:
     def updateExtra(self,key,value):
         self.extra[key]=value
 
+    def formatToJSON(self, d):
+        global printerTab
+        s = ['{\n']
+        for k,v in d.items():
+            if isinstance(v, dict):
+                printerTab = printerTab + 1
+                v = self.formatToJSON(v)
+                printerTab = printerTab - 1
+            else:
+                if k == 'child':
+                    printerTab = printerTab + 1
+                v = repr(v)
+                if k == 'child':
+                    printerTab = printerTab - 1
+
+            s.append('%s%r: %s,\n' % ('\t'*printerTab, k, v))
+        s.append('%s}' % ('\t'*(printerTab-1)))
+        return ''.join(s)
+    
     def __repr__(self):
-        return 'TABLE:' + str(self.table) + '\nGLobal Symbols: ' + str(self.globalSymbolList) + '\nParent: ' + str(self.parent) + '\nExtras: ' + str(self.extra)
+        ret = {
+            'table': (self.table),
+            'global_symbols': self.globalSymbolList,
+            'parent': self.parent,
+            'extras': self.extra
+        }
+        return self.formatToJSON(ret)
 
