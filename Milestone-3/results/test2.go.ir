@@ -1,0 +1,88 @@
+goto, label0
+label1:
+pop, 0, var0
+=, var1, 1
+=, var2, 0
+==, var3, var0, var2
+||, var4, var1, var3
+==, var5, var0, var4
+=, var7, var5
+=, var8, 1
+-, var7, var8, var7
+goto, var7, label2
+=, var6, 1
+retint, var6
+goto, label3
+label, label2
+label, label3
+save_registers
+=, var9, 1
+-, var10, var0, var9
+push, var10
+call, var11, label1
+restore_registers
+save_registers
+=, var12, 2
+-, var13, var0, var12
+push, var13
+call, var14, label1
+restore_registers
++, var15, var11, var14
+retint, var15
+label0:
+=, var17, 5
+save_registers
+push, var17
+call, var18, label1
+restore_registers
+print, var18
+=, var19, 1
++, var20, var17, var19
+=, var17, var20
+{
+	'table': {
+		'maie': {
+			'type': 'package',
+		},
+		'f': {
+			'type': 'func',
+			'retType': 'int_t',
+			'label': 'label1',
+			'child': {
+				'table': {
+					'a': {
+						'type': 'int_t',
+						'place': 'var0',
+					},
+				},
+				'global_symbols': ['a'],
+				'parent': 0,
+				'extras': {
+				},
+			},
+			'paramsTypeList': ['int_t'],
+		},
+		'main': {
+			'type': 'func',
+			'retType': 'void',
+			'label': 'label0',
+			'child': {
+				'table': {
+					'a': {
+						'type': 'int_t',
+						'place': 'var17',
+					},
+				},
+				'global_symbols': ['a'],
+				'parent': 0,
+				'extras': {
+				},
+			},
+			'paramsTypeList': [],
+		},
+	},
+	'global_symbols': ['maie', 'f', 'main'],
+	'parent': None,
+	'extras': {
+	},
+}

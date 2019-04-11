@@ -26,7 +26,10 @@ def isValidAssignment(lhs, rhs):
     # Handle structs
     if lhs.startswith('type'):
         return lhs == rhs
-    
+    if lhs.startswith('lit'):
+        lhs = lhs[3:]
+    if rhs.startswith('lit'):
+        rhs = rhs[3:]
     # Handle arrays
     if lhs.startswith('*') and not rhs.startswith('*'):
         return False

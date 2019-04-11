@@ -316,7 +316,6 @@ def p_sign(p):
     print(inspect.stack()[0][3])
     p[0] = p[1]
     p[0].paramTypeList = p[1].typeList
-    print('params list', p[1].typeList)
     scopeDict[0].insert(p[-2][1], 'signatureType')
     if len(p[2].typeList) == 0:
         scopeDict[0].updateArgList(p[-2][1], 'retType', 'void')
@@ -328,6 +327,7 @@ def p_sign(p):
         labeln = new_label()
         scopeDict[0].updateArgList(p[-2][1], 'label', labeln)
         scopeDict[0].updateArgList(p[-2][1], 'child', scopeDict[currentScope])
+        info['paramsTypeList'] = p[1].typeList
 
 # XXX
 
@@ -375,11 +375,12 @@ def p_param_decl_comma_rep(p):
     p[0] = p[1]
     # XXX: Erroneous code? shouldnt it be p[1].typeList + p[3].typeList instead of p[3].typeList alone
     p[0].idList += p[3].idList
-    p[0].typeList += p[1].typeList + p[3].typeList
+    p[0].typeList += p[3].typeList
     p[0].placelist += p[3].placelist
 
 
 def p_param_decl(p):
+    # '''ParameterDecl : IdentifierList Type'''
     '''ParameterDecl : IdentifierList Type
                      | Type'''
     print(inspect.stack()[0][3])
@@ -388,7 +389,6 @@ def p_param_decl(p):
         for x in p[1].idList:
             scopeDict[currentScope].updateArgList(x, 'type', p[2].typeList[0])
             p[0].typeList.append(p[2].typeList[0])
-        p[0].typeList = p[2].typeList
     else:
         p[0].typeList = p[1].typeList
 # ---------------------------------------------------------
@@ -531,6 +531,7 @@ def p_expr_list(p):
     p[0] = p[2]
     p[0].code = p[1].code+p[0].code
     p[0].placelist = p[1].placelist + p[0].placelist
+    print(p.lexer.lineno, 'qwer', p[1].typeList, p[0].typeList)
     p[0].typeList = p[1].typeList + p[0].typeList
     if 'AddrList' not in p[1].extra:
         p[1].extra['AddrList'] = ['None']
@@ -780,7 +781,7 @@ def p_func(p):
 
         info = find_info(p[-2][1])
         info['type'] = 'func'
-        info['paramsTypeList'] = p[1].typeList
+        print('inside function->signature body', p.lexer.lineno, p[-1])
     else:
         print(scopeDict)
         print(scopeStack)
@@ -910,7 +911,7 @@ def p_prim_expr(p):
                    | PrimaryExpr Slice
                    | PrimaryExpr TypeAssertion
                    | PrimaryExpr LEFT_PARANTHESIS ExpressionListTypeOpt RIGHT_PARANTHESIS'''
-    print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3], p)
     if len(p) == 2:
         p[0] = p[1]
     elif p[2] == '[':
@@ -942,10 +943,12 @@ def p_prim_expr(p):
                 p[0].code.append(['push', x])
 
         info = find_info(p[1].idList[0], 0)
+        print(info, p.lexer.lineno, p[-1])
         paramsTypes = info['paramsTypeList']
         # TODO: Overload here
         if len(paramsTypes) != len(p[3].typeList):
-            raise Exception('Argument number mismatch: %d v/s %d'%(len(paramsTypes), len(p[3].typeList)))
+            print(paramsTypes, p[3].typeList, p.lexer.lineno, 'asdf')
+            raise Exception('Argument number mismatch: %d v/s %d Line: %d'%(len(paramsTypes), len(p[3].typeList), p.lexer.lineno))
         for i in range(len(paramsTypes)):
             if not isValidAssignment(paramsTypes[i], p[3].typeList[i]):
                 raise Exception('Incompatible argument types %s v/s %s:'%(paramsTypes[i], p[3].typeList[i]))
@@ -1046,7 +1049,8 @@ def p_expr(p):
         if isValid == -1:
             raise ValueError(op + " is not applicable to types: " + left + " and " + right)
         else:
-            p[0].typeList.append(validBinaryOps[isValid]['returns'])
+            print(p[0].typeList, 'poiu')
+            p[0].typeList = [validBinaryOps[isValid]['returns']]
     else:
         p[0] = p[1]
 
