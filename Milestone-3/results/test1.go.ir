@@ -158,38 +158,46 @@ retint, var23
 						'place': 'var15',
 						'offset': 16,
 					},
+					'var16': {
+						'type': 'int_t',
+						'offset': 20,
+					},
 					'c': {
 						'type': '*int_t',
 						'place': 'var17',
-						'offset': 20,
+						'offset': 24,
 					},
 					'd': {
 						'type': '*int_t',
 						'place': 'var18',
-						'offset': 24,
+						'offset': 28,
 					},
 					'b': {
 						'type': '*int_t',
 						'place': 'var19',
-						'offset': 28,
+						'offset': 32,
+					},
+					'var20': {
+						'type': 'int_t',
+						'offset': 36,
 					},
 					'e': {
 						'type': 'int_t',
 						'place': 'var22',
-						'offset': 72,
+						'offset': 80,
 					},
 					'var22': {
 						'type': 'int_t',
 						'place': 'var22',
-						'offset': 76,
+						'offset': 84,
 					},
 					'var23': {
 						'type': 'int_t',
 						'place': 'var23',
-						'offset': 80,
+						'offset': 88,
 					},
 				},
-				'global_symbols': ['f', 'var12', 'a', 'var14', 'var15', 'c', 'd', 'b', 'e', 'var22', 'var23'],
+				'global_symbols': ['f', 'var12', 'a', 'var14', 'var15', 'var16', 'c', 'd', 'b', 'var20', 'e', 'var22', 'var23'],
 				'parent': 0,
 				'extras': {
 				},

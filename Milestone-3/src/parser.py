@@ -250,6 +250,9 @@ def p_array_length(p):
     p[0] = ["BasicLit", str(p[1])]
     p[0] = IRNode()
     name = new_temp()
+    scopeDict[currentScope].insert(name, 'int_t')
+    scopeDict[currentScope].updateArgList(name, 'offset', scopeDict[currentScope].currOffset + 4)
+    scopeDict[currentScope].currOffset += 4
     p[0].code.append(["=", name, p[2]])
     p[0].placelist.append(name)
     p[0].typeList.append('lit' + p[1])
@@ -515,21 +518,8 @@ def p_identifier_list(p):
         nameTemp = new_temp()
         p[0].placelist = [nameTemp] + p[0].placelist
         scopeDict[currentScope].updateArgList(p[1], 'place', nameTemp)
-        inf = scopeDict[currentScope].getInfo(p[1])
-        print('asdfj;lk', inf)
-        t = inf.get('type', '')
-        o = 0
-        if t.startswith('lit'):
-            t = t[3:]
-        if t.startswith('type'):
-            t = t[4:]
-        if t in ['int_t', 'float_t']:
-            o = 4
-        else:
-            raise TypeError('Unsupported type')
-        scopeDict[currentScope].updateArgList(p[1], 'offset', scopeDict[currentScope].currOffset + o)
-        scopeDict[currentScope].currOffset += o
-        print('asdf', scopeDict[currentScope])
+        scopeDict[currentScope].updateArgList(p[1], 'offset', scopeDict[currentScope].currOffset + 4)
+        scopeDict[currentScope].currOffset += 4
 
 
 def p_identifier_rep(p):
@@ -546,20 +536,8 @@ def p_identifier_rep(p):
             p[0].placelist = p[0].placelist + [nameTemp]
             scopeDict[currentScope].updateArgList(p[3], 'place', nameTemp)
             p[0].idList.append(p[3])
-            inf = scopeDict[currentScope].getInfo(p[3])
-            t = inf.get('type', '')
-            o = 0
-            if t.startswith('lit'):
-                t = t[3:]
-            if t.startswith('type'):
-                t = t[4:]
-            if t in ['int_t', 'float_t']:
-                o = 4
-            else:
-                raise TypeError('Unsupported type')
-            scopeDict[currentScope].updateArgList(p[3], 'offset', scopeDict[currentScope].currOffset + o)
-            scopeDict[currentScope].currOffset += o
-            print('asdf', scopeDict[currentScope])
+            scopeDict[currentScope].updateArgList(p[3], 'offset', scopeDict[currentScope].currOffset + 4)
+            scopeDict[currentScope].currOffset += 4
     else:
         p[0] = p[1]
 
@@ -748,6 +726,9 @@ def p_short_var_decl(p):
         scopeDict[currentScope].insert(p[1], None)
     p[0] = IRNode()
     newVar = new_temp()
+    scopeDict[currentScope].insert(newVar, 'int_t')
+    scopeDict[currentScope].updateArgList(newVar, 'offset', scopeDict[currentScope].currOffset + 4)
+    scopeDict[currentScope].currOffset += 4
     p[0].code = p[3].code
     p[0].code.append(['=', newVar, p[3].placelist[0]])
     scopeDict[currentScope].updateArgList(p[1], 'place', newVar)
@@ -1026,6 +1007,9 @@ def p_prim_expr(p):
             p[0].placelist = [newPlace]
             p[0].code.append(['call', newPlace, info['label']])
             p[0].code.append(['restore_registers'])
+            scopeDict[currentScope].insert(newPlace, 'int_t')
+            scopeDict[currentScope].updateArgList(newPlace, 'offset', scopeDict[currentScope].currOffset + 4)
+            scopeDict[currentScope].currOffset += 4
         # TODO type checking
         p[0].typeList = [p[1].typeList[0]]
     else:
@@ -1053,7 +1037,11 @@ def p_selector(p):
         p[0].placelist = [info['place']]
         p[0].typeList = [info['type']]
     else:
-        p[0].placelist = [new_temp()]
+        newPlace = new_temp()
+        p[0].placelist = [newPlace]
+        scopeDict[currentScope].insert(newPlace, 'int_t')
+        scopeDict[currentScope].updateArgList(newPlace, 'offset', scopeDict[currentScope].currOffset + 4)
+        scopeDict[currentScope].currOffset += 4
         typedata = newScopeTable.getInfo(p[2])
         p[0].typeList = [typedata['type']]
         scopeDict[currentScope].insert(s, p[0].typeList[0])
@@ -1101,8 +1089,10 @@ def p_expr(p):
         newPlace = new_temp()
         p[0].code.append([findBinaryOp(p[2]), newPlace, p[1].placelist[0], p[3].placelist[0]])
         p[0].placelist = [newPlace]
+        scopeDict[currentScope].insert(newPlace, 'int_t')
+        scopeDict[currentScope].updateArgList(newPlace, 'offset', scopeDict[currentScope].currOffset + 4)
+        scopeDict[currentScope].currOffset += 4
 
-        # TODO typechecking based on typeList and update type of p[0]
         left = p[1].typeList[0]
         if left.startswith('lit'):
             left = left[3:]
@@ -1110,12 +1100,10 @@ def p_expr(p):
         if right.startswith('lit'):
             right = right[3:]
         op = findBinaryOp(p[2])
-        print('Typechecking exprss', op, left, right)
         isValid = isValidBinaryOp(op, left, right)
         if isValid == -1:
             raise ValueError(op + " is not applicable to types: " + left + " and " + right)
         else:
-            print(p[0].typeList, 'poiu')
             p[0].typeList = [validBinaryOps[isValid]['returns']]
     else:
         p[0] = p[1]
@@ -1138,13 +1126,22 @@ def p_unary_expr(p):
     elif p[1] == "!":
         p[0] = p[2]
         newPlace = new_temp()
+        scopeDict[currentScope].insert(newPlace, 'int_t')
+        scopeDict[currentScope].updateArgList(newPlace, 'offset', scopeDict[currentScope].currOffset + 4)
+        scopeDict[currentScope].currOffset += 4
         p[0].code.append(["!", newPlace, p[2].placelist[0]])
         p[0].placelist = [newPlace]
     else:
         p[0] = p[2]
         newPlace = new_temp()
+        scopeDict[currentScope].insert(newPlace, 'int_t')
+        scopeDict[currentScope].updateArgList(newPlace, 'offset', scopeDict[currentScope].currOffset + 4)
+        scopeDict[currentScope].currOffset += 4
         if p[1][1] == "-" or p[1][1] == '+':
             newPlace2 = new_temp()
+            scopeDict[currentScope].insert(newPlace2, 'int_t')
+            scopeDict[currentScope].updateArgList(newPlace2, 'offset', scopeDict[currentScope].currOffset + 4)
+            scopeDict[currentScope].currOffset += 4
             p[0].append(['=', newPlace2, 0])
             p[0].append([p[1][1], newPlace, newPlace2, p[2].placelist[0]])
         elif p[1][1] == "&":
@@ -1395,8 +1392,14 @@ def p_if_statement(p):
     p[0].code = p[2].code
     label1 = new_label()
     newVar = new_temp()
+    scopeDict[currentScope].insert(newVar, 'int_t')
+    scopeDict[currentScope].updateArgList(newVar, 'offset', scopeDict[currentScope].currOffset + 4)
+    scopeDict[currentScope].currOffset += 4
     p[0].code += [['=', newVar, p[2].placelist[0]]]
     newVar2 = new_temp()
+    scopeDict[currentScope].insert(newVar2, 'int_t')
+    scopeDict[currentScope].updateArgList(newVar2, 'offset', scopeDict[currentScope].currOffset + 4)
+    scopeDict[currentScope].currOffset += 4
     p[0].code += [['=', newVar2, '1']]
     p[0].code += [['-', newVar, newVar2, newVar]]
     p[0].code += [['goto', newVar, label1]]
@@ -1455,6 +1458,9 @@ def p_expr_switch_stmt(p):
             defaultLabel = p[6].extra['labelList'][i]
         else:
             varNew = new_temp()
+            scopeDict[currentScope].insert(varNew, 'int_t')
+            scopeDict[currentScope].updateArgList(varNew, 'offset', scopeDict[currentScope].currOffset + 4)
+            scopeDict[currentScope].currOffset += 4
             p[0].code += [['==', varNew, p[2].placelist[0], p[6].placelist[i]]]
             p[0].code += [['ifgoto', varNew, p[6].extra['labelList'][i]]]
     if defaultLabel is not None:
@@ -1635,6 +1641,12 @@ def p_forclause(p):
     if len(p[3].placelist) != 0:
         newVar = new_temp()
         newVar2 = new_temp()
+        scopeDict[currentScope].insert(newVar, 'int_t')
+        scopeDict[currentScope].updateArgList(newVar, 'offset', scopeDict[currentScope].currOffset + 4)
+        scopeDict[currentScope].currOffset += 4
+        scopeDict[currentScope].insert(newVar2, 'int_t')
+        scopeDict[currentScope].updateArgList(newVar2, 'offset', scopeDict[currentScope].currOffset + 4)
+        scopeDict[currentScope].currOffset += 4
         p[0].code += [['=', newVar, p[3].placelist[0]], ['=', newVar2, '1'],
                       ['-', newVar, newVar2, newVar], ['ifgoto', newVar, label2]]
     p[0].code += p[5].code
