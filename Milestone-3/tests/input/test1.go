@@ -20,7 +20,8 @@ func noatmain() {
 func main() {
 	var f float_t = 1;
 	var a float_t = test(2, 1);
-	var b, c, d[10] int_t;
+	var b, c int_t;
+	var d[10] int_t;
 	var e int_t = 1;
 	return 1;
 };

@@ -22,9 +22,9 @@ push, var15
 call, var16, label1
 restore_registers
 =, var13, var16
+=, var21, 1
 =, var22, 1
-=, var23, 1
-retint, var23
+retint, var22
 {
 	'table': {
 		'maie': {
@@ -163,27 +163,28 @@ retint, var23
 						'offset': 20,
 					},
 					'c': {
-						'type': '*int_t',
+						'type': 'int_t',
 						'place': 'var17',
 						'offset': 24,
 					},
-					'd': {
-						'type': '*int_t',
+					'b': {
+						'type': 'int_t',
 						'place': 'var18',
 						'offset': 28,
 					},
-					'b': {
+					'd': {
 						'type': '*int_t',
 						'place': 'var19',
 						'offset': 32,
 					},
-					'var20': {
-						'type': 'int_t',
-						'offset': 36,
-					},
 					'e': {
 						'type': 'int_t',
-						'place': 'var22',
+						'place': 'var21',
+						'offset': 76,
+					},
+					'var21': {
+						'type': 'int_t',
+						'place': 'var21',
 						'offset': 80,
 					},
 					'var22': {
@@ -191,13 +192,8 @@ retint, var23
 						'place': 'var22',
 						'offset': 84,
 					},
-					'var23': {
-						'type': 'int_t',
-						'place': 'var23',
-						'offset': 88,
-					},
 				},
-				'global_symbols': ['f', 'var12', 'a', 'var14', 'var15', 'var16', 'c', 'd', 'b', 'var20', 'e', 'var22', 'var23'],
+				'global_symbols': ['f', 'var12', 'a', 'var14', 'var15', 'var16', 'c', 'b', 'd', 'e', 'var21', 'var22'],
 				'parent': 0,
 				'extras': {
 				},

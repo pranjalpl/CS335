@@ -236,9 +236,9 @@ def p_array_type(p):
     print(inspect.stack()[0][3])
     p[0] = ["ArrayType", "[", p[2], "]", p[4]]
     p[0] = IRNode()
-    p[0].code = p[2].code
+    # p[0].code = p[2].code
     p[0].typeList.append("*" + p[4].typeList[0])
-    scopeDict[currentScope].currOffset += 4*int(p[2].extra['value'])
+    scopeDict[currentScope].currOffset += 4*int(p[2])
 
 # TODO: Modify this to accept only integers
 def p_array_length(p):
@@ -247,16 +247,7 @@ def p_array_length(p):
                     | I HEX
                     | I RUNE'''
     print(inspect.stack()[0][3])
-    p[0] = ["BasicLit", str(p[1])]
-    p[0] = IRNode()
-    name = new_temp()
-    scopeDict[currentScope].insert(name, 'int_t')
-    scopeDict[currentScope].updateArgList(name, 'offset', scopeDict[currentScope].currOffset + 4)
-    scopeDict[currentScope].currOffset += 4
-    p[0].code.append(["=", name, p[2]])
-    p[0].placelist.append(name)
-    p[0].typeList.append('lit' + p[1])
-    p[0].extra['value'] = int(p[2])
+    p[0] = int(p[2])
 
 def p_element_type(p):
     ''' ElementType : Type '''
