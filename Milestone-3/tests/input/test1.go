@@ -3,7 +3,7 @@ package maie;
 
 import "fmt";
 
-func test(a, b, c int_t) float_t {
+func test(b, c int_t) float_t {
 	return 1;
 };
 
@@ -15,12 +15,13 @@ func notmain() {
 func noatmain() {
 	var i int_t = 1;
 	var j int_t = 5;
-	const a float_t = 10.01;
 	i  += j;
 };
 func main() {
 	var f float_t = 1;
-	var a int_t = test(1,2, 1);
+	var a float_t = test(2, 1);
+	var b, c, d[10] int_t;
+	var e int_t = 1;
 	return 1;
 };
 

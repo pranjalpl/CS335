@@ -6,6 +6,7 @@ class symbolTable:
         self.globalSymbolList = []
         self.parent = None
         self.extra = {}
+        self.currOffset = -4
 
     # Checks whether "name" lies in the symbol table
     def lookUp(self, name):

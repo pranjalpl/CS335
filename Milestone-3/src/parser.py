@@ -238,13 +238,22 @@ def p_array_type(p):
     p[0] = IRNode()
     p[0].code = p[2].code
     p[0].typeList.append("*" + p[4].typeList[0])
+    scopeDict[currentScope].currOffset += 4*int(p[2].extra['value'])
 
-
+# TODO: Modify this to accept only integers
 def p_array_length(p):
-    ''' ArrayLength : Expression '''
+    '''ArrayLength :  I INTEGER
+                    | I OCTAL
+                    | I HEX
+                    | I RUNE'''
     print(inspect.stack()[0][3])
-    p[0] = p[1]
-
+    p[0] = ["BasicLit", str(p[1])]
+    p[0] = IRNode()
+    name = new_temp()
+    p[0].code.append(["=", name, p[2]])
+    p[0].placelist.append(name)
+    p[0].typeList.append('lit' + p[1])
+    p[0].extra['value'] = int(p[2])
 
 def p_element_type(p):
     ''' ElementType : Type '''
@@ -502,10 +511,25 @@ def p_identifier_list(p):
     if isUsed(p[1], "."):
         raise NameError("Error: " + p[1] + " already exists")
     else:
-        scopeDict[currentScope].insert(p[1], None)
+        scopeDict[currentScope].insert(p[1], 'int_t')
         nameTemp = new_temp()
         p[0].placelist = [nameTemp] + p[0].placelist
         scopeDict[currentScope].updateArgList(p[1], 'place', nameTemp)
+        inf = scopeDict[currentScope].getInfo(p[1])
+        print('asdfj;lk', inf)
+        t = inf.get('type', '')
+        o = 0
+        if t.startswith('lit'):
+            t = t[3:]
+        if t.startswith('type'):
+            t = t[4:]
+        if t in ['int_t', 'float_t']:
+            o = 4
+        else:
+            raise TypeError('Unsupported type')
+        scopeDict[currentScope].updateArgList(p[1], 'offset', scopeDict[currentScope].currOffset + o)
+        scopeDict[currentScope].currOffset += o
+        print('asdf', scopeDict[currentScope])
 
 
 def p_identifier_rep(p):
@@ -517,11 +541,25 @@ def p_identifier_rep(p):
             raise NameError("ERROR: " + p[3] + " already exists")
         else:
             p[0] = p[1]
-            scopeDict[currentScope].insert(p[3], None)
+            scopeDict[currentScope].insert(p[3], 'int_t')
             nameTemp = new_temp()
             p[0].placelist = p[0].placelist + [nameTemp]
             scopeDict[currentScope].updateArgList(p[3], 'place', nameTemp)
             p[0].idList.append(p[3])
+            inf = scopeDict[currentScope].getInfo(p[3])
+            t = inf.get('type', '')
+            o = 0
+            if t.startswith('lit'):
+                t = t[3:]
+            if t.startswith('type'):
+                t = t[4:]
+            if t in ['int_t', 'float_t']:
+                o = 4
+            else:
+                raise TypeError('Unsupported type')
+            scopeDict[currentScope].updateArgList(p[3], 'offset', scopeDict[currentScope].currOffset + o)
+            scopeDict[currentScope].currOffset += o
+            print('asdf', scopeDict[currentScope])
     else:
         p[0] = p[1]
 
