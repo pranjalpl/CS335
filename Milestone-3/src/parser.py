@@ -868,6 +868,13 @@ def p_basic_lit(p):
     p[0].code.append(["=", name, p[2]])
     p[0].placelist.append(name)
     p[0].typeList.append('lit' + p[1])
+    
+    scopeDict[currentScope].insert(name, p[1])
+    scopeDict[currentScope].updateArgList(name, 'place', name)
+    scopeDict[currentScope].updateArgList(name, 'type', p[1])
+    scopeDict[currentScope].updateArgList(name, 'offset', scopeDict[currentScope].currOffset + 4)
+    scopeDict[currentScope].currOffset += 4
+
     print('\t\ttypes: ' + str(p[0].typeList))
 
 
@@ -967,6 +974,27 @@ def p_prim_expr(p):
 
         newPlace2 = new_temp()
         p[0].code.append(['*', newPlace2, newPlace])
+
+    
+        scopeDict[currentScope].insert(p[0], 'int_t')
+        scopeDict[currentScope].updateArgList(newPlace4, 'place', newPlace4)
+        scopeDict[currentScope].updateArgList(newPlace4, 'offset', scopeDict[currentScope].currOffset + 4)
+        scopeDict[currentScope].currOffset += 4
+    
+        scopeDict[currentScope].insert(p[0], 'int_t')
+        scopeDict[currentScope].updateArgList(newPlace3, 'place', newPlace3)
+        scopeDict[currentScope].updateArgList(newPlace3, 'offset', scopeDict[currentScope].currOffset + 4)
+        scopeDict[currentScope].currOffset += 4
+
+        scopeDict[currentScope].insert(p[0], 'int_t')
+        scopeDict[currentScope].updateArgList(newPlace, 'place', newPlace)
+        scopeDict[currentScope].updateArgList(newPlace, 'offset', scopeDict[currentScope].currOffset + 4)
+        scopeDict[currentScope].currOffset += 4
+    
+        scopeDict[currentScope].insert(p[0], 'int_t')
+        scopeDict[currentScope].updateArgList(newPlace2, 'place', newPlace2)
+        scopeDict[currentScope].updateArgList(newPlace2, 'offset', scopeDict[currentScope].currOffset + 4)
+        scopeDict[currentScope].currOffset += 4
 
         p[0].extra['AddrList'] = [newPlace]
         p[0].placelist = [newPlace2]

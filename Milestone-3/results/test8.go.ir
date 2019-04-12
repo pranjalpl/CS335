@@ -1,0 +1,51 @@
+goto, label0
+label0:
+=, var1, 5
+=, var2, 0
+=, var3, var2
+label, label2
+<, var4, var3, var1
+=, var5, var4
+=, var6, 1
+-, var5, var6, var5
+ifgoto, var5, label3
+++, var3
+print, var3
+goto, label2
+label, label3
+retvoid
+{
+	'table': {
+		'math': {
+			'type': 'package',
+		},
+		'main': {
+			'type': 'func',
+			'retType': 'void',
+			'label': 'label0',
+			'child': {
+				'table': {
+					'i': {
+						'type': 'int_t',
+						'place': 'var1',
+						'offset': 0,
+					},
+					'var1': {
+						'type': 'int_t',
+						'place': 'var1',
+						'offset': 4,
+					},
+				},
+				'global_symbols': ['i', 'var1'],
+				'parent': 0,
+				'extras': {
+				},
+			},
+			'paramsTypeList': [],
+		},
+	},
+	'global_symbols': ['math', 'main'],
+	'parent': None,
+	'extras': {
+	},
+}
