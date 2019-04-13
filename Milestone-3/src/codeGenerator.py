@@ -197,8 +197,28 @@ for instr in IR:
         off1= offsets[instr[1]]
         off2= offsets[instr[2]]
         genInstr('movl -%d(%%ebp), %%eax' % (off2))
-        genInstr('movl (%%eax), %%ebx')
+        genInstr('movl (%eax), %ebx')
         genInstr('movl %%ebx, -%d(%%ebp)'%(off1))
+
+    elif instr[0] == 'addr+':
+        arrayBase= offsets[instr[2]]
+        off= offsets[instr[3]]
+        dest = offsets[instr[1]]
+        genInstr('movl $%d, %%eax' % (arrayBase)) 
+        genInstr('movl %ebp, %ebx')
+        genInstr('subl %eax, %ebx')
+        genInstr('movl -%d(%%ebp), %%ecx' % (off))
+        genInstr('addl %ecx, %ebx')
+        genInstr('movl %%ebx, -%d(%%ebp)' % (dest))
+
+    elif instr[0] == 'store':
+        address_offset = offsets[instr[1]]
+        var_offset = offsets[instr[2]]
+        genInstr('movl -%d(%%ebp), %%eax' % (address_offset))
+        genInstr('movl -%d(%%ebp), %%ebx' % (var_offset))
+        genInstr('movl %ebx, (%eax)')
+
+
     elif instr[0] == '++':
         off = offsets[instr[1]]
         genInstr('incl -%d(%%ebp)' % (off))

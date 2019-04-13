@@ -985,7 +985,7 @@ def p_prim_expr(p):
         p[0].code.append(['*', newPlace3, p[3].placelist[0], newPlace4])
 
         newPlace = new_temp()
-        p[0].code.append(['+', newPlace, p[0].placelist[0], newPlace3])
+        p[0].code.append(['addr+', newPlace, p[0].placelist[0], newPlace3])
 
         newPlace2 = new_temp()
         p[0].code.append(['deref', newPlace2, newPlace])
@@ -1373,8 +1373,9 @@ def p_assignment(p):
     for x in range(len(p[1].placelist)):
         p[0].code.append([p[2][1][1], p[1].placelist[x], p[3].placelist[x]])
         if p[1].extra['AddrList'][x] != 'None':
+            print(p[1], 'poqwieru')
             p[0].code.append(
-                ['load', p[1].extra['AddrList'][x], p[1].placelist[x]])
+                ['store', p[1].extra['AddrList'][x], p[1].placelist[x]])
     # TODO type checking
     # for i in range(0, len(p[1].typeList)):
     #     print('\tComparing types', p[1].typeList[i], p[3].typeList[i], p[1].typeList[i] == p[3].typeList[i])
