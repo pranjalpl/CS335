@@ -199,5 +199,5 @@ for instr in IR:
         off2= offsets[instr[2]]
         genInstr('movl -%d(%%ebp), %%eax' % (off2))
         genInstr('movl (%%eax), %%ebx')
-        genInstr('movl %%ebx, -%d(%%ebp)'%(destoffset))
+        genInstr('movl %%ebx, -%d(%%ebp)'%(off1))
 closeFile()
