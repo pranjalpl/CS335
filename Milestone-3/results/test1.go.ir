@@ -1,131 +1,15 @@
 goto, label0
-label1:
-pop, 0, var0
-pop, 1, var1
-=, var2, 1
-retint, var2
-label2:
-=, var4, 3
-=, var6, 5
-+=, var4, var6
-label3:
-=, var8, 1
-=, var10, 5
-+=, var8, var10
 label0:
-=, var12, 1
-save_registers
-=, var14, 2
-=, var15, 1
-push, var14
-push, var15
-call, var16, label1
-restore_registers
-=, var13, var16
-=, var21, 1
-=, var22, 1
-retint, var22
+=, var1, 1
+=, var3, 1
++, var5, var1, var3
+=, var4, var5
+=, var6, 1
+retint, var6
 {
 	'table': {
 		'maie': {
 			'type': 'package',
-		},
-		'test': {
-			'type': 'func',
-			'retType': 'float_t',
-			'label': 'label1',
-			'child': {
-				'table': {
-					'c': {
-						'type': 'int_t',
-						'place': 'var0',
-						'offset': 0,
-					},
-					'b': {
-						'type': 'int_t',
-						'place': 'var1',
-						'offset': 4,
-					},
-					'var2': {
-						'type': 'int_t',
-						'place': 'var2',
-						'offset': 8,
-					},
-				},
-				'global_symbols': ['c', 'b', 'var2'],
-				'parent': 0,
-				'extras': {
-				},
-			},
-			'paramsTypeList': ['int_t', 'int_t'],
-		},
-		'notmain': {
-			'type': 'func',
-			'retType': 'void',
-			'label': 'label2',
-			'child': {
-				'table': {
-					'i': {
-						'type': 'int_t',
-						'place': 'var4',
-						'offset': 0,
-					},
-					'var4': {
-						'type': 'int_t',
-						'place': 'var4',
-						'offset': 4,
-					},
-					'j': {
-						'type': 'int_t',
-						'place': 'var6',
-						'offset': 8,
-					},
-					'var6': {
-						'type': 'int_t',
-						'place': 'var6',
-						'offset': 12,
-					},
-				},
-				'global_symbols': ['i', 'var4', 'j', 'var6'],
-				'parent': 0,
-				'extras': {
-				},
-			},
-			'paramsTypeList': [],
-		},
-		'noatmain': {
-			'type': 'func',
-			'retType': 'void',
-			'label': 'label3',
-			'child': {
-				'table': {
-					'i': {
-						'type': 'int_t',
-						'place': 'var8',
-						'offset': 0,
-					},
-					'var8': {
-						'type': 'int_t',
-						'place': 'var8',
-						'offset': 4,
-					},
-					'j': {
-						'type': 'int_t',
-						'place': 'var10',
-						'offset': 8,
-					},
-					'var10': {
-						'type': 'int_t',
-						'place': 'var10',
-						'offset': 12,
-					},
-				},
-				'global_symbols': ['i', 'var8', 'j', 'var10'],
-				'parent': 0,
-				'extras': {
-				},
-			},
-			'paramsTypeList': [],
 		},
 		'main': {
 			'type': 'func',
@@ -133,67 +17,42 @@ retint, var22
 			'label': 'label0',
 			'child': {
 				'table': {
-					'f': {
-						'type': 'float_t',
-						'place': 'var12',
+					'a': {
+						'type': 'int_t',
+						'place': 'var1',
 						'offset': 0,
 					},
-					'var12': {
+					'var1': {
 						'type': 'int_t',
-						'place': 'var12',
+						'place': 'var1',
 						'offset': 4,
-					},
-					'a': {
-						'type': 'float_t',
-						'place': 'var16',
-						'offset': 8,
-					},
-					'var14': {
-						'type': 'int_t',
-						'place': 'var14',
-						'offset': 12,
-					},
-					'var15': {
-						'type': 'int_t',
-						'place': 'var15',
-						'offset': 16,
-					},
-					'var16': {
-						'type': 'int_t',
-						'offset': 20,
-					},
-					'c': {
-						'type': 'int_t',
-						'place': 'var17',
-						'offset': 24,
 					},
 					'b': {
 						'type': 'int_t',
-						'place': 'var18',
-						'offset': 28,
+						'place': 'var3',
+						'offset': 8,
 					},
-					'd': {
-						'type': '*int_t',
-						'place': 'var19',
-						'offset': 32,
-					},
-					'e': {
+					'var3': {
 						'type': 'int_t',
-						'place': 'var21',
-						'offset': 76,
+						'place': 'var3',
+						'offset': 12,
 					},
-					'var21': {
+					'c': {
 						'type': 'int_t',
-						'place': 'var21',
-						'offset': 80,
+						'place': 'var5',
+						'offset': 16,
 					},
-					'var22': {
+					'var5': {
 						'type': 'int_t',
-						'place': 'var22',
-						'offset': 84,
+						'offset': 20,
+					},
+					'var6': {
+						'type': 'int_t',
+						'place': 'var6',
+						'offset': 24,
 					},
 				},
-				'global_symbols': ['f', 'var12', 'a', 'var14', 'var15', 'var16', 'c', 'b', 'd', 'e', 'var21', 'var22'],
+				'global_symbols': ['a', 'var1', 'b', 'var3', 'c', 'var5', 'var6'],
 				'parent': 0,
 				'extras': {
 				},
@@ -201,7 +60,7 @@ retint, var22
 			'paramsTypeList': [],
 		},
 	},
-	'global_symbols': ['maie', 'test', 'notmain', 'noatmain', 'main'],
+	'global_symbols': ['maie', 'main'],
 	'parent': None,
 	'extras': {
 	},
