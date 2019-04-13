@@ -1883,8 +1883,6 @@ for s in scopeDict:
 
 print(get_offset(scopeDict))
 
-for s in scopeDict:
-    print(scopeDict[s])
 sys.stdout = sys.__stdout__
 IR = rootNode.code
 

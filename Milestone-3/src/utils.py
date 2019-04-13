@@ -21,17 +21,20 @@ def get_offset(scopeDict):
     offset = []
     offset = offset+[0]*(cunt)
     # print(cunt)
+    print(cunt)
     var_offset = {}
     for i in range(cunt):
         if(i==0):
             continue
         maxx = 0
         for k , v  in scopeDict[i].table.items():
-            print('poiqwnceo', k, v, file=sys.__stdout__)
             var_offset[k] = offset[scopeDict[i].parent]+v['offset']
-            maxx = v['offset']
-        if(scopeDict[i].parent != 0):
-            offset[scopeDict[i].parent]+=maxx+100
+            maxx = offset[scopeDict[i].parent] + v['offset']
+        curr = i
+        while(scopeDict[curr].parent != 0):
+            offset[scopeDict[curr].parent]=maxx+100
+            curr = scopeDict[curr].parent
         offset[i]=maxx+100
-
+    print('poiqwnceo', k, v, file=sys.__stdout__) 
+    # print(check_unique)       
     return var_offset
