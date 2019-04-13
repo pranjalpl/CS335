@@ -512,6 +512,9 @@ def p_identifier_list(p):
         scopeDict[currentScope].updateArgList(p[1], 'place', nameTemp)
         scopeDict[currentScope].updateArgList(p[1], 'offset', scopeDict[currentScope].currOffset + 4)
         scopeDict[currentScope].currOffset += 4
+        scopeDict[currentScope].insert(nameTemp, 'int_t')
+        scopeDict[currentScope].updateArgList(nameTemp, 'offset', scopeDict[currentScope].currOffset + 4)
+        scopeDict[currentScope].currOffset += 4
 
 
 def p_identifier_rep(p):
@@ -529,6 +532,9 @@ def p_identifier_rep(p):
             scopeDict[currentScope].updateArgList(p[3], 'place', nameTemp)
             p[0].idList.append(p[3])
             scopeDict[currentScope].updateArgList(p[3], 'offset', scopeDict[currentScope].currOffset + 4)
+            scopeDict[currentScope].currOffset += 4
+            scopeDict[currentScope].insert(nameTemp, 'int_t')
+            scopeDict[currentScope].updateArgList(nameTemp, 'offset', scopeDict[currentScope].currOffset + 4)
             scopeDict[currentScope].currOffset += 4
     else:
         p[0] = p[1]

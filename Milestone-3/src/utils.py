@@ -9,6 +9,6 @@ def genVarListFromSymTable(st, arr):
             genVarListFromSymTable(v['child'], arr)
 
 def offsetOf(name, l):
-    for x in l:
+    for x in l[0]:
         if x['name'] == name:
             return x['offset']
