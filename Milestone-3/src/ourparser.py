@@ -717,7 +717,7 @@ def p_var_spec(p):
                 p[1].idList[x], 'type', p[2].typeList[0])
             scopeDict[scope].updateArgList(
                 p[1].placelist[x], 'type', p[2].typeList[0])
-            if 'sizeOfArray' in dict.keys(p[2]):
+            if 'sizeOfArray' in dict.keys(p[2].extra):
                 scopeDict[scope].updateArgList(p[1].idList[x], 'size', p[2]['sizeOfArray'])
                 scopeDict[scope].updateArgList(p[1].placelist[x], 'size', p[2]['sizeOfArray'])
 
@@ -1908,9 +1908,12 @@ def printList(node):
 
 printList(rootNode)
 
+for s in scopeDict:
+    print(scopeDict[s])
 
-
-print(get_offset(scopeDict))
+var_offset ,max_size=get_offset(scopeDict) 
+print(var_offset,max_size)
+# print(get_max_offset(scopeDict,var_offset))
 
 sys.stdout = sys.__stdout__
 IR = rootNode.code

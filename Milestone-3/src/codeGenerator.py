@@ -31,8 +31,8 @@ def check_int(s):
     return s.isdigit()
 
 initializeGlobals()
-offsets = get_offset(scopeDict)
-
+# offsets = get_offset(scopeDict)
+offsets,no_use=get_offset(scopeDict)
 for instr in IR:
     estr = '#'
     for i in instr:
