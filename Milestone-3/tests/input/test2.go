@@ -6,10 +6,6 @@ import (
 
 func main() {
 	var a[10] int_t;
-	print(
-		a
-		[
-			10
-			]
-			);
+	a[1] = 1;
+	print(a[1]);
 };

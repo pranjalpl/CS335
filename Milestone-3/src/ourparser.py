@@ -973,7 +973,7 @@ def p_prim_expr(p):
         p[0] = p[1]
         p[0].code += p[3].code
         t = p[1].typeList[0]
-        size - 4
+        size = 4
         #  TODO: Complete this type checking
         if t == '*int_t':
             size = 4
