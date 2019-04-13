@@ -65,3 +65,45 @@ retint, var6
 	'extras': {
 	},
 }
+{
+	'table': {
+		'a': {
+			'type': 'int_t',
+			'place': 'var1',
+			'offset': 0,
+		},
+		'var1': {
+			'type': 'int_t',
+			'place': 'var1',
+			'offset': 4,
+		},
+		'b': {
+			'type': 'int_t',
+			'place': 'var3',
+			'offset': 8,
+		},
+		'var3': {
+			'type': 'int_t',
+			'place': 'var3',
+			'offset': 12,
+		},
+		'c': {
+			'type': 'int_t',
+			'place': 'var5',
+			'offset': 16,
+		},
+		'var5': {
+			'type': 'int_t',
+			'offset': 20,
+		},
+		'var6': {
+			'type': 'int_t',
+			'place': 'var6',
+			'offset': 24,
+		},
+	},
+	'global_symbols': ['a', 'var1', 'b', 'var3', 'c', 'var5', 'var6'],
+	'parent': 0,
+	'extras': {
+	},
+}

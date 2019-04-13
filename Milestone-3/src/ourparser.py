@@ -6,7 +6,7 @@ from valid_assignments import *
 from pprint import pprint
 import inspect
 import json
-
+from utils import *
 from symbol_table import *
 
 # ----------------- SYMBOL TABLE HELPER FUNCTIONS -----------------------
@@ -1872,7 +1872,17 @@ def printList(node):
             counter += 1
 
 printList(rootNode)
+# print(len(scopeDict[3]))
+
+# print(scopeDict[2])
+
+
+print(get_offset(scopeDict))
+
 for s in scopeDict:
     print(scopeDict[s])
 sys.stdout = sys.__stdout__
 IR = rootNode.code
+
+# S = get_offset(scopeDict)
+# print(S)
