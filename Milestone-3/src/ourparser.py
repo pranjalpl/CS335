@@ -1425,18 +1425,18 @@ def p_if_statement(p):
     p[0] = IRNode()
     p[0].code = p[2].code
     label1 = new_label()
-    newVar = new_temp()
-    scopeDict[currentScope].insert(newVar, 'int_t')
-    scopeDict[currentScope].updateArgList(newVar, 'offset', scopeDict[currentScope].currOffset + 4)
-    scopeDict[currentScope].currOffset += 4
-    p[0].code += [['=', newVar, p[2].placelist[0]]]
-    newVar2 = new_temp()
-    scopeDict[currentScope].insert(newVar2, 'int_t')
-    scopeDict[currentScope].updateArgList(newVar2, 'offset', scopeDict[currentScope].currOffset + 4)
-    scopeDict[currentScope].currOffset += 4
-    p[0].code += [['=', newVar2, '1']]
-    p[0].code += [['-', newVar, newVar2, newVar]]
-    p[0].code += [['ifgoto', newVar, label1]]
+    #newVar = new_temp()
+    #scopeDict[currentScope].insert(newVar, 'int_t')
+    #scopeDict[currentScope].updateArgList(newVar, 'offset', scopeDict[currentScope].currOffset + 4)
+    #scopeDict[currentScope].currOffset += 4
+    #p[0].code += [['=', newVar, p[2].placelist[0]]]
+    #newVar2 = new_temp()
+    #scopeDict[currentScope].insert(newVar2, 'int_t')
+    #scopeDict[currentScope].updateArgList(newVar2, 'offset', scopeDict[currentScope].currOffset + 4)
+    #scopeDict[currentScope].currOffset += 4
+    #p[0].code += [['=', newVar2, '1']]
+    #p[0].code += [['-', newVar, newVar2, newVar]]
+    p[0].code += [['ifgoto', p[2].placelist[0], label1]]
     p[0].code += p[4].code
     label2 = new_label()
     p[0].code += [['goto', label2]]
@@ -1672,7 +1672,7 @@ def p_forclause(p):
 
     p[0].extra['after'] = label2
     if len(p[3].placelist) != 0:
-        newVar = new_temp()
+        '''newVar = new_temp()
         newVar2 = new_temp()
         scopeDict[currentScope].insert(newVar, 'int_t')
         scopeDict[currentScope].updateArgList(newVar, 'offset', scopeDict[currentScope].currOffset + 4)
@@ -1681,7 +1681,8 @@ def p_forclause(p):
         scopeDict[currentScope].updateArgList(newVar2, 'offset', scopeDict[currentScope].currOffset + 4)
         scopeDict[currentScope].currOffset += 4
         p[0].code += [['=', newVar, p[3].placelist[0]], ['=', newVar2, '1'],
-                      ['-', newVar, newVar2, newVar], ['ifgoto', newVar, label2]]
+                      ['-', newVar, newVar2, newVar], ['ifgoto', newVar, label2]]'''
+        p[0].code += [['ifgoto', p[3].placelist[0], label2]]
     p[0].extra['afterCode'] = p[5].code
 
 

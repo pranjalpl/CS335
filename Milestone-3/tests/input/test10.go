@@ -1,7 +1,9 @@
 package mai;
 import "fmt";
 func main() {
-	print(5==3);
-	print(3!=5);
-	print(3==3);
+	if((5>3)){
+		print(1);
+	}else{
+		print(2);
+	};
 };
