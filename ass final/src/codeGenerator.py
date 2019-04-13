@@ -224,11 +224,6 @@ def codeGeneratorPerLine(lineNo, nextUseTable):
 		# 		if regDes[x] == ir[lineNo].src2:
 		# 			regDes[x] = None
 
-
-
-
-
-
 	elif ir[lineNo].type in type_3:
 
 		## ifgoto type
@@ -495,10 +490,6 @@ def codeGeneratorPerLine(lineNo, nextUseTable):
 			else:
 					genAsm.genInstr('popl %'+ regDst)
 					addrDes[ir[lineNo].dst]['memory'] = False
-
-
-
-
 
 	elif ir[lineNo].type in type_1:
 		genAsm.genInstr("leave")
