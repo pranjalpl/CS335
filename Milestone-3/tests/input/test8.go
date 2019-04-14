@@ -13,17 +13,8 @@ func main() {
 	var l int_t = 1;
 	var one int_t = 1;
 	var sum int_t = 0;
-	var sum1 int_t = 0;
-
-	// for j = one; j<=n; j = j + one {
-	// 	for i=one; i<=n; i = i + one {
-			for k=one; k<=n; k = k + one {
-				for l=one; l<=n; l = l + one {
-					sum = sum + 10;
-				};
-			};
-	// 	};
-	// };
-	print(j);
+	scan(k);
+	var new int_t = 5;
+	print(new);
 	return;
 };

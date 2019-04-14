@@ -787,7 +787,7 @@ def p_func(p):
     p[0] = p[2]
     for x in range(len(p[1].idList)):
         info = find_info(p[1].idList[x])
-        p[0].code = [['pop', len(p[1].idList) - x - 1,
+        p[0].code = [['pop-param', len(p[1].idList) - x - 1,
                       info['place']]] + p[0].code
 
     if isUsed(p[-2][1], "signatureType"):
@@ -983,9 +983,9 @@ def p_prim_expr(p):
         p[0] = p[1]
         p[0].code.append(['save_registers'])
         p[0].code += p[3].code
-        if len(p[3].placelist):
-            for x in p[3].placelist:
-                p[0].code.append(['push', x])
+        # if len(p[3].placelist):
+        #     for x in p[3].placelist:
+        #         p[0].code.append(['push', x])
 
         info = find_info(p[1].idList[0], 0)
         print(info, p.lexer.lineno, p[-1])
@@ -999,11 +999,11 @@ def p_prim_expr(p):
                 raise Exception('Incompatible argument types %s v/s %s:'%(paramsTypes[i], p[3].typeList[i]))
 
         if info['retType'] == 'void':
-            p[0].code.append(['call', info['label']])
+            p[0].code.append(['callvoid', info['label']] + p[3].placelist)
         else:
             newPlace = new_temp()
             p[0].placelist = [newPlace]
-            p[0].code.append(['call', newPlace, info['label']])
+            p[0].code.append(['callint', newPlace, info['label']] + p[3].placelist)
             p[0].code.append(['restore_registers'])
             scopeDict[currentScope].insert(newPlace, 'int_t')
             scopeDict[currentScope].updateArgList(newPlace, 'offset', scopeDict[currentScope].currOffset + 4)

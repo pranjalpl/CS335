@@ -32,6 +32,7 @@ def check_int(s):
 
 initializeGlobals()
 offsets = get_offset(scopeDict)
+max_offsets = get_max_offset(scopeDict,offsets)
 
 for instr in IR:
     estr = '#'
@@ -132,30 +133,61 @@ for instr in IR:
     
     elif instr[0] == 'label':
         genLabel(instr[1])
+
+    elif instr[0][-1] == ':':
+        off = max_offsets[instr[0][:-1]]
+        genLabel(instr[0][:-1])
+        genInstr("# Function Prologue")
+        genInstr("pushl %ebp")
+        genInstr("movl %esp,  %ebp")
+        genInstr("sub $%d, %%esp" % (off))    
     
+    elif instr[0] == 'callint':
+        params = instr[3:]
+        for p in params[::-1]:
+            offset = offsets[p]
+            genInstr('pushl -%d(%%ebp)' % (offset))
+        genInstr('call %s' % (instr[2]))
+        # TODO Change this: Assuming 4 byte params
+        genInstr('addl $%d, %%esp' % (4*len(params)))
+        off = offsets[instr[1]]
+        genInstr('movl %%eax, -%d(%%ebp)' % (off))
+    
+    elif instr[0] == 'pop-param':
+        srcoff = instr[1] * 4 + 8
+        destoff = offsets[instr[2]]
+        genInstr("movl %d(%%ebp), %%eax" %(srcoff))
+        genInstr("movl %%eax, -%d(%%ebp)" % (destoff))
+    
+    elif instr[0] == 'retvoid':
+        genInstr('movl %ebp, %esp')
+        genInstr('pop %ebp')
+        genInstr('ret')
+
+    elif instr[0] == 'retint':
+        off = offsets[instr[1]]
+        genInstr('movl -%d(%%ebp), %%eax' % (off))
+        genInstr('movl %ebp, %esp')
+        genInstr('pop %ebp')
+        genInstr('ret')
+
     elif instr[0] == 'print':
         off = offsets[instr[1]]
-        genInstr('pushl %eax')
-        genInstr('pushl %ecx')
-        genInstr('pushl %edx')
-        genInstr('pushl -%d(%%ebp)' % (off))
-        genInstr('pushl $outFormatInt')
+        genInstr('push -%d(%%ebp)' % (off))
+        genInstr('push $outFormatInt')
         genInstr('call printf')
         genInstr('addl $8, %esp')
-        genInstr('popl %edx')
-        genInstr('popl %ecx')
-        genInstr('popl %eax')
 
     elif instr[0] == 'scan':
         off = offsets[instr[1]]
-        genInstr('pushl -%d(%%ebp)' % (off))
-        genInstr('pushl $inFormat')
+        genInstr('lea -%d(%%ebp), %%eax' % (off))
+        genInstr('push %eax')
+        genInstr('push $inFormat')
         genInstr('call scanf')
         genInstr('addl $8, %esp')
 
     elif instr[0] == 'goto':
-        if instr[1] != 'label0':
-            genInstr('jmp %s' % (instr[1]))
+        genInstr('jmp %s' % (instr[1]))
     
     elif instr[0] == 'ifgoto':
         off = offsets[instr[1]]

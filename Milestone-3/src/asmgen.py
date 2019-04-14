@@ -8,15 +8,15 @@ def initializeGlobals():
     for x in symbolList:
         if scopeDict[0].table[x]["type"] == "int_t":
             f.write( x +":\n\t.int\t0\n")
-    f.write('outFormatInt:\n\t.asciz\t"%d\\n"\n')
-    f.write('outFormatStr:\n\t.asciz\t"%s\\n"\n')
-    f.write('inFormat:\n\t.ascii\t"%d"\n')
+    f.write('outFormatInt:\n\t.string\t"%d\\n"\n')
+    f.write('outFormatStr:\n\t.string\t"%s\\n"\n')
+    f.write('inFormat:\n\t.string\t"%d"\n')
     f.write('\n.text\n\n.global main\n\nmain:\n\n')
     genInstr("call mainDriver")
     genInstr("jmp exit")
     f.write('\n\nmainDriver:\n\n')
-    genInstr('pushl %ebp')
-    genInstr('movl %esp, %ebp')
+    #genInstr('pushl %ebp')
+    #genInstr('movl %esp, %ebp')
 
 
 def genInstr(instr):
