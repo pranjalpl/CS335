@@ -31,55 +31,56 @@ def check_int(s):
     return s.isdigit()
 
 initializeGlobals()
-scopeVarList = []
-for i in range(0, len(scopeDict)):
-    scopeVarList.append([])
-    genVarListFromSymTable(scopeDict[0], scopeVarList[-1])
+offsets = get_offset(scopeDict)
 
 for instr in IR:
+    estr = '#'
+    for i in instr:
+        estr += str(i) + ','
+    genInstr(estr)
     if instr[0] == '+':
-        op1offset = offsetOf(instr[2], scopeVarList)
-        op2offset = offsetOf(instr[3], scopeVarList)
-        destoffset = offsetOf(instr[1], scopeVarList)
+        op1offset = offsets[instr[2]]
+        op2offset = offsets[instr[3]]
+        destoffset = offsets[instr[1]]
         genInstr('movl -%d(%%ebp), %%eax'%(op1offset))
         genInstr('movl -%d(%%ebp), %%ebx'%(op2offset))
         genInstr('addl %eax, %ebx')
         genInstr('movl %%ebx, -%d(%%ebp)'%(destoffset))
     
     elif instr[0] == '-':
-        op1offset = offsetOf(instr[2], scopeVarList)
-        op2offset = offsetOf(instr[3], scopeVarList)
-        destoffset = offsetOf(instr[1], scopeVarList)
+        op1offset = offsets[instr[2]]
+        op2offset = offsets[instr[3]]
+        destoffset = offsets[instr[1]]
         genInstr('movl -%d(%%ebp), %%eax'%(op1offset))
         genInstr('movl -%d(%%ebp), %%ebx'%(op2offset))
-        genInstr('subl %%eax, %%ebx')
+        genInstr('subl %eax, %ebx')
         genInstr('movl %%ebx, -%d(%%ebp)'%(destoffset))
 
-    elif instr[0] == 'x':
-        op1offset = offsetOf(instr[2], scopeVarList)
-        op2offset = offsetOf(instr[3], scopeVarList)
-        destoffset = offsetOf(instr[1], scopeVarList)
+    elif instr[0] == '*':
+        op1offset = offsets[instr[2]]
+        op2offset = offsets[instr[3]]
+        destoffset = offsets[instr[1]]
         genInstr('movl -%d(%%ebp), %%eax'%(op1offset))
         genInstr('movl -%d(%%ebp), %%ebx'%(op2offset))
-        genInstr('imul %%eax, %%ebx')
+        genInstr('imul %eax, %ebx')
         genInstr('movl %%ebx, -%d(%%ebp)'%(destoffset))
     
     elif instr[0] == '/':
-        op1offset = offsetOf(instr[2], scopeVarList)
-        op2offset = offsetOf(instr[3], scopeVarList)
-        destoffset = offsetOf(instr[1], scopeVarList)
+        op1offset = offsets[instr[2]]
+        op2offset = offsets[instr[3]]
+        destoffset = offsets[instr[1]]
         genInstr('movl -%d(%%ebp), %%eax'%(op1offset))
         genInstr('movl -%d(%%ebp), %%ebx'%(op2offset))
-        genInstr('idiv %%ebx')
+        genInstr('idiv %ebx')
         genInstr('movl %%eax, -%d(%%ebp)'%(destoffset))
 
     elif instr[0] == '%':
-        op1offset = offsetOf(instr[2], scopeVarList)
-        op2offset = offsetOf(instr[3], scopeVarList)
-        destoffset = offsetOf(instr[1], scopeVarList)
+        op1offset = offsets[instr[2]]
+        op2offset = offsets[instr[3]]
+        destoffset = offsets[instr[1]]
         genInstr('movl -%d(%%ebp), %%eax'%(op1offset))
         genInstr('movl -%d(%%ebp), %%ebx'%(op2offset))
-        genInstr('idiv %%ebx')
+        genInstr('idiv %ebx')
         genInstr('movl %%edx, -%d(%%ebp)'%(destoffset))
         
     elif instr[0] in ['&', '|', '^', '&&', '||']:
@@ -88,9 +89,9 @@ for instr in IR:
             op = 'or'
         elif instr[0] == '^':
             op = 'xor'
-        op1offset = offsetOf(instr[2], scopeVarList)
-        op2offset = offsetOf(instr[3], scopeVarList)
-        destoffset = offsetOf(instr[1], scopeVarList)
+        op1offset = offsets[instr[2]]
+        op2offset = offsets[instr[3]]
+        destoffset = offsets[instr[1]]
         genInstr('movl -%d(%%ebp), %%eax'%(op1offset))
         genInstr('movl -%d(%%ebp), %%ebx'%(op2offset))
         genInstr('%s %%eax, %%ebx' % (op))
@@ -105,28 +106,60 @@ for instr in IR:
             '==': 'sete',
             '!=': 'setne',
         }
-        op1offset = offsetOf(instr[2], scopeVarList)
-        op2offset = offsetOf(instr[3], scopeVarList)
-        destoffset = offsetOf(instr[1], scopeVarList)
+        op1offset = offsets[instr[2]]
+        op2offset = offsets[instr[3]]
+        destoffset = offsets[instr[1]]
         genInstr('movl -%d(%%ebp), %%eax'%(op1offset))
         genInstr('movl -%d(%%ebp), %%ebx'%(op2offset))
         genInstr('cmp %eax, %ebx')
         genInstr('%s %%al' % (d[instr[0]]))
         genInstr('movzbl %al, %eax')
-        if not instr[0] in ['==', '!=']:
-            genInstr('movl $1, %ecx')
-            genInstr('subl %ecx, %eax')
-        genInstr('movl %%ecx, -%d(%%ebp)' % (destoffset))
+        # if not instr[0] in ['==', '!=']:
+        #     genInstr('movl $1, %ecx')
+        #     genInstr('subl %eax, %ecx')
+        genInstr('movl %%eax, -%d(%%ebp)' % (destoffset))
 
     elif instr[0] == '=':
         print(instr)
-        destoffset = offsetOf(instr[1], scopeVarList)
+        destoffset = offsets[instr[1]]
         print('got', destoffset)
         if str(instr[2]).startswith('var'):
-            srcoffset = offsetOf(instr[2], scopeVarList)
+            srcoffset = offsets[instr[2]]
             genInstr('movl -%d(%%ebp), %%eax' % (srcoffset))
             genInstr('movl %%eax, -%d(%%ebp)' % (destoffset))  
         else:
             genInstr('movl $%d, -%d(%%ebp)'%(int(instr[2]), destoffset))
+    
+    elif instr[0] == 'label':
+        genLabel(instr[1])
+    
+    elif instr[0] == 'print':
+        off = offsets[instr[1]]
+        genInstr('pushl %eax')
+        genInstr('pushl %ecx')
+        genInstr('pushl %edx')
+        genInstr('pushl -%d(%%ebp)' % (off))
+        genInstr('pushl $outFormatInt')
+        genInstr('call printf')
+        genInstr('addl $8, %esp')
+        genInstr('popl %edx')
+        genInstr('popl %ecx')
+        genInstr('popl %eax')
 
+    elif instr[0] == 'scan':
+        off = offsets[instr[1]]
+        genInstr('pushl -%d(%%ebp)' % (off))
+        genInstr('pushl $inFormat')
+        genInstr('call scanf')
+        genInstr('addl $8, %esp')
+
+    elif instr[0] == 'goto':
+        if instr[1] != 'label0':
+            genInstr('jmp %s' % (instr[1]))
+    
+    elif instr[0] == 'ifgoto':
+        off = offsets[instr[1]]
+        genInstr('movl -%d(%%ebp), %%eax' % (off))
+        genInstr('cmp $0, %eax')
+        genInstr('je %s' % (instr[2]))
 closeFile()

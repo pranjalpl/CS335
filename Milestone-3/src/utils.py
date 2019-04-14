@@ -1,4 +1,4 @@
-
+import sys
 def genVarListFromSymTable(st, arr):
     d = st.table
     for k, v in dict.items(d):
@@ -27,6 +27,7 @@ def get_offset(scopeDict):
             continue
         maxx = 0
         for k , v  in scopeDict[i].table.items():
+            print('poiqwnceo', k, v, file=sys.__stdout__)
             var_offset[k] = offset[scopeDict[i].parent]+v['offset']
             maxx = v['offset']
         if(scopeDict[i].parent != 0):

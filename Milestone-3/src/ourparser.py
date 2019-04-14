@@ -1400,7 +1400,7 @@ def p_if_statement(p):
     scopeDict[currentScope].currOffset += 4
     p[0].code += [['=', newVar2, '1']]
     p[0].code += [['-', newVar, newVar2, newVar]]
-    p[0].code += [['goto', newVar, label1]]
+    p[0].code += [['ifgoto', newVar, label1]]
     p[0].code += p[4].code
     label2 = new_label()
     p[0].code += [['goto', label2]]
@@ -1878,9 +1878,8 @@ def printList(node):
             counter += 1
 
 printList(rootNode)
-# print(len(scopeDict[3]))
-
-# print(scopeDict[2])
+for s in scopeDict:
+    print(scopeDict[s])
 
 
 print(get_offset(scopeDict))
