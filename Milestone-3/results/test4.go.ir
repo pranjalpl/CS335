@@ -1,65 +1,105 @@
 goto, label0
-label1:
-pop, 0, var2
-+, var5, var3, var4
-retint, var5
-label0:
+label2:
+pop-param, 0, var1
+=, var2, 0
+==, var3, var1, var2
+ifgoto, var3, label3
+=, var4, 0
+retint, var4
+goto, label4
+label, label3
 save_registers
-=, var7, 1.28974
-=, var8, 1
-push, var7
-push, var8
-call, var9, label1
+=, var5, 1
+-, var6, var1, var5
+callint, var7, label1, var6
 restore_registers
+retint, var7
+label, label4
+label1:
+pop-param, 0, var8
+=, var9, 0
+==, var10, var8, var9
+ifgoto, var10, label5
+=, var11, 1
+retint, var11
+goto, label6
+label, label5
+save_registers
+=, var12, 1
+-, var13, var8, var12
+callint, var14, label2, var13
+restore_registers
+retint, var14
+label, label6
+label0:
+scan, var15
+save_registers
+callint, var16, label1, var15
+restore_registers
+print, var16
+save_registers
+callint, var17, label2, var15
+restore_registers
+print, var17
 {
 	'table': {
 		'math': {
 			'type': 'package',
 		},
-		'Node': {
-			'type': 'typeNode',
-			'child': {
-				'table': {
-					'i': {
-						'type': 'int_t',
-						'place': 'var0',
-					},
-					'j': {
-						'type': 'int_t',
-						'place': 'var1',
-					},
-				},
-				'global_symbols': ['i', 'j'],
-				'parent': 0,
-				'extras': {
-				},
-			},
-		},
-		'temp': {
+		'even': {
 			'type': 'func',
 			'retType': 'int_t',
 			'label': 'label1',
 			'child': {
 				'table': {
-					'a': {
-						'type': 'typeNode',
-						'place': 'var2',
-					},
-					'a.i': {
+					'n': {
 						'type': 'int_t',
-						'place': 'var3',
+						'place': 'var0',
+						'offset': 0,
 					},
-					'a.j': {
+					'var0': {
 						'type': 'int_t',
-						'place': 'var4',
+						'offset': 4,
 					},
 				},
-				'global_symbols': ['a', 'a.i', 'a.j'],
+				'global_symbols': ['n', 'var0'],
 				'parent': 0,
 				'extras': {
 				},
 			},
-			'paramsTypeList': ['typeNode'],
+			'paramsTypeList': ['int_t'],
+		},
+		'odd': {
+			'type': 'func',
+			'retType': 'int_t',
+			'label': 'label2',
+			'child': {
+				'table': {
+					'n': {
+						'type': 'int_t',
+						'place': 'var1',
+						'offset': 0,
+					},
+					'var1': {
+						'type': 'int_t',
+						'offset': 4,
+					},
+					'var2': {
+						'type': 'int_t',
+						'place': 'var2',
+						'offset': 8,
+					},
+					'var3': {
+						'type': 'int_t',
+						'offset': 12,
+					},
+				},
+				'global_symbols': ['n', 'var1', 'var2', 'var3'],
+				'parent': 0,
+				'extras': {
+				},
+			},
+			'paramsTypeList': ['int_t'],
 		},
 		'main': {
 			'type': 'func',
@@ -68,11 +108,24 @@ restore_registers
 			'child': {
 				'table': {
 					'n': {
-						'type': 'typeNode',
-						'place': 'var6',
+						'type': 'int_t',
+						'place': 'var15',
+						'offset': 0,
+					},
+					'var15': {
+						'type': 'int_t',
+						'offset': 4,
+					},
+					'var16': {
+						'type': 'int_t',
+						'offset': 8,
+					},
+					'var17': {
+						'type': 'int_t',
+						'offset': 12,
 					},
 				},
-				'global_symbols': ['n'],
+				'global_symbols': ['n', 'var15', 'var16', 'var17'],
 				'parent': 0,
 				'extras': {
 				},
@@ -80,8 +133,172 @@ restore_registers
 			'paramsTypeList': [],
 		},
 	},
-	'global_symbols': ['math', 'Node', 'temp', 'main'],
+	'global_symbols': ['math', 'even', 'odd', 'main'],
 	'parent': None,
 	'extras': {
 	},
 }
+{
+	'table': {
+		'n': {
+			'type': 'int_t',
+			'place': 'var0',
+			'offset': 0,
+		},
+		'var0': {
+			'type': 'int_t',
+			'offset': 4,
+		},
+	},
+	'global_symbols': ['n', 'var0'],
+	'parent': 0,
+	'extras': {
+	},
+}
+{
+	'table': {
+		'n': {
+			'type': 'int_t',
+			'place': 'var1',
+			'offset': 0,
+		},
+		'var1': {
+			'type': 'int_t',
+			'offset': 4,
+		},
+		'var2': {
+			'type': 'int_t',
+			'place': 'var2',
+			'offset': 8,
+		},
+		'var3': {
+			'type': 'int_t',
+			'offset': 12,
+		},
+	},
+	'global_symbols': ['n', 'var1', 'var2', 'var3'],
+	'parent': 0,
+	'extras': {
+	},
+}
+{
+	'table': {
+		'var4': {
+			'type': 'int_t',
+			'place': 'var4',
+			'offset': 0,
+		},
+	},
+	'global_symbols': ['var4'],
+	'parent': 2,
+	'extras': {
+	},
+}
+{
+	'table': {
+		'var5': {
+			'type': 'int_t',
+			'place': 'var5',
+			'offset': 0,
+		},
+		'var6': {
+			'type': 'int_t',
+			'offset': 4,
+		},
+		'var7': {
+			'type': 'int_t',
+			'offset': 8,
+		},
+	},
+	'global_symbols': ['var5', 'var6', 'var7'],
+	'parent': 2,
+	'extras': {
+	},
+}
+{
+	'table': {
+		'n': {
+			'type': 'int_t',
+			'place': 'var8',
+			'offset': 0,
+		},
+		'var8': {
+			'type': 'int_t',
+			'offset': 4,
+		},
+		'var9': {
+			'type': 'int_t',
+			'place': 'var9',
+			'offset': 8,
+		},
+		'var10': {
+			'type': 'int_t',
+			'offset': 12,
+		},
+	},
+	'global_symbols': ['n', 'var8', 'var9', 'var10'],
+	'parent': 0,
+	'extras': {
+	},
+}
+{
+	'table': {
+		'var11': {
+			'type': 'int_t',
+			'place': 'var11',
+			'offset': 0,
+		},
+	},
+	'global_symbols': ['var11'],
+	'parent': 5,
+	'extras': {
+	},
+}
+{
+	'table': {
+		'var12': {
+			'type': 'int_t',
+			'place': 'var12',
+			'offset': 0,
+		},
+		'var13': {
+			'type': 'int_t',
+			'offset': 4,
+		},
+		'var14': {
+			'type': 'int_t',
+			'offset': 8,
+		},
+	},
+	'global_symbols': ['var12', 'var13', 'var14'],
+	'parent': 5,
+	'extras': {
+	},
+}
+{
+	'table': {
+		'n': {
+			'type': 'int_t',
+			'place': 'var15',
+			'offset': 0,
+		},
+		'var15': {
+			'type': 'int_t',
+			'offset': 4,
+		},
+		'var16': {
+			'type': 'int_t',
+			'offset': 8,
+		},
+		'var17': {
+			'type': 'int_t',
+			'offset': 12,
+		},
+	},
+	'global_symbols': ['n', 'var15', 'var16', 'var17'],
+	'parent': 0,
+	'extras': {
+	},
+}
+9
+{'n': 0, 'var0': 4, 'var1': 4, 'var2': 8, 'var3': 12, 'var4': 16, 'var5': 20, 'var6': 24, 'var7': 28, 'var8': 4, 'var9': 8, 'var10': 12, 'var11': 16, 'var12': 20, 'var13': 24, 'var14': 28, 'var15': 4, 'var16': 8, 'var17': 12} {'label1': 8, 'label2': 32, 'label0': 32}

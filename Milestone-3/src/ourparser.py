@@ -1171,8 +1171,8 @@ def p_unary_expr(p):
             scopeDict[currentScope].insert(newPlace2, 'int_t')
             scopeDict[currentScope].updateArgList(newPlace2, 'offset', scopeDict[currentScope].currOffset + 4)
             scopeDict[currentScope].currOffset += 4
-            p[0].append(['=', newPlace2, 0])
-            p[0].append([p[1][1], newPlace, newPlace2, p[2].placelist[0]])
+            p[0].code.append(['=', newPlace2, 0])
+            p[0].code.append([p[1][1], newPlace, newPlace2, p[2].placelist[0]])
         elif p[1][1] == "&":
             p[0].code.append([p[1][1], newPlace, p[2].placelist[0]])
             p[0].typeList[0] = ('*' + p[0].typeList[0])
