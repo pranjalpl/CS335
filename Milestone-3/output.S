@@ -30,13 +30,13 @@ label0:
 	# Function Prologue
 	pushl %ebp
 	movl %esp,  %ebp
-	sub $28, %esp
+	sub $24, %esp
 	
 #=,var1,3,
 	movl $3, -8(%ebp)
 	
-#=,var2,5,
-	movl $5, -12(%ebp)
+#=,var2,42,
+	movl $42, -12(%ebp)
 	
 #=,var4,0,
 	movl $0, -20(%ebp)
@@ -47,14 +47,8 @@ label0:
 	subl %ebx, %eax
 	movl %eax, -16(%ebp)
 	
-#+,var5,var1,var3,
-	movl -8(%ebp), %eax
-	movl -16(%ebp), %ebx
-	addl %eax, %ebx
-	movl %ebx, -24(%ebp)
-	
-#=,var1,var5,
-	movl -24(%ebp), %eax
+#=,var1,var3,
+	movl -16(%ebp), %eax
 	movl %eax, -8(%ebp)
 	
 #print,var1,

@@ -203,7 +203,9 @@ for instr in IR:
 
     elif instr[0] == '!':
         off = offsets[instr[1]]
-        genInstr('not -%d(%%ebp)' % (off))
+        genInstr('movl -%d(%%ebp), %%eax' % (off))
+        genInstr('not %eax')
+        genInstr('movl %%eax, -%d(%%ebp)' % (off))
 
     elif instr[0] == '+=':
         op1offset = offsets[instr[1]]
