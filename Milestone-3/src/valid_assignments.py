@@ -92,6 +92,8 @@ validBinaryOps = [
 
     newBinaryOp('%', 'int_t', 'int_t', 'int_t'),
     newBinaryOp('|', 'int_t', 'int_t', 'int_t'),
+    newBinaryOp('&', 'int_t', 'int_t', 'int_t'),
+    newBinaryOp('^', 'int_t', 'int_t', 'int_t'),
     newBinaryOp('>>', 'int_t', 'int_t', 'int_t'),
     newBinaryOp('<<', 'int_t', 'int_t', 'int_t'),
 

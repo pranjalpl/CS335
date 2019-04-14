@@ -82,7 +82,7 @@ for instr in IR:
         genInstr('movl -%d(%%ebp), %%eax'%(op1offset))
         genInstr('movl -%d(%%ebp), %%ebx'%(op2offset))
         genInstr('%s %%eax, %%ebx' % (op))
-        genInstr('movl %%eax, -%d(%%ebp)'%(destoffset))
+        genInstr('movl %%ebx, -%d(%%ebp)'%(destoffset))
 
     elif instr[0] in ['&=', '|=', '^=']:
         op = 'and'

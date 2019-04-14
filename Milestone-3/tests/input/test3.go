@@ -24,7 +24,7 @@ func ack(n, m int_t) int_t {
 
 func main() {
 	var a int_t = 1;
-	var b int_t = 2;
+	var b int_t = 1;
 	print(ack(a,b));
 	return 0;
 };

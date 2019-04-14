@@ -211,112 +211,118 @@ label0:
 =, var121, 0
 =, var109, var117
 label, label33
-<=, var122, var109, var103
-=, var124, var122
-=, var125, 1
--, var124, var125, var124
-ifgoto, var124, label34
+=, var122, 1
++, var123, var103, var122
+!=, var124, var109, var123
+=, var126, var124
+=, var127, 1
+-, var126, var127, var126
+ifgoto, var126, label34
 =, var113, var117
 label, label35
-<=, var126, var113, var103
-=, var128, var126
-=, var129, 1
--, var128, var129, var128
-ifgoto, var128, label36
+<=, var128, var113, var103
+=, var130, var128
+=, var131, 1
+-, var130, var131, var130
+ifgoto, var130, label36
 =, var115, var117
 label, label37
-<=, var130, var115, var103
-=, var132, var130
-=, var133, 1
--, var132, var133, var132
-ifgoto, var132, label38
-=, var134, 1
-+, var135, var119, var134
-=, var119, var135
-+, var131, var115, var117
-=, var115, var131
+<=, var132, var115, var103
+=, var134, var132
+=, var135, 1
+-, var134, var135, var134
+ifgoto, var134, label38
+=, var136, 1
++, var137, var119, var136
+=, var119, var137
++, var133, var115, var117
+=, var115, var133
 goto, label37
 label, label38
-+, var127, var113, var117
-=, var113, var127
++, var129, var113, var117
+=, var113, var129
 goto, label35
 label, label36
-+, var123, var109, var117
-=, var109, var123
++, var125, var109, var117
+=, var109, var125
 goto, label33
 label, label34
 print, var119
 =, var109, var117
 label, label39
-<=, var136, var109, var105
-=, var138, var136
-=, var139, 1
--, var138, var139, var138
-ifgoto, var138, label40
-=, var113, var117
-label, label41
-<=, var140, var113, var105
+=, var138, 1
++, var139, var105, var138
+!=, var140, var109, var139
 =, var142, var140
 =, var143, 1
 -, var142, var143, var142
-ifgoto, var142, label42
-=, var115, var117
-label, label43
-<=, var144, var115, var105
+ifgoto, var142, label40
+=, var113, var117
+label, label41
+<=, var144, var113, var105
 =, var146, var144
 =, var147, 1
 -, var146, var147, var146
-ifgoto, var146, label44
-=, var148, 1
-+, var149, var119, var148
-=, var119, var149
-+, var145, var115, var117
-=, var115, var145
+ifgoto, var146, label42
+=, var115, var117
+label, label43
+<=, var148, var115, var105
+=, var150, var148
+=, var151, 1
+-, var150, var151, var150
+ifgoto, var150, label44
+=, var152, 1
++, var153, var119, var152
+=, var119, var153
++, var149, var115, var117
+=, var115, var149
 goto, label43
 label, label44
-+, var141, var113, var117
-=, var113, var141
++, var145, var113, var117
+=, var113, var145
 goto, label41
 label, label42
-+, var137, var109, var117
-=, var109, var137
++, var141, var109, var117
+=, var109, var141
 goto, label39
 label, label40
 print, var119
 =, var109, var117
 label, label45
-<=, var150, var109, var107
-=, var152, var150
-=, var153, 1
--, var152, var153, var152
-ifgoto, var152, label46
+=, var154, 1
++, var155, var107, var154
+!=, var156, var109, var155
+=, var158, var156
+=, var159, 1
+-, var158, var159, var158
+ifgoto, var158, label46
 =, var113, var117
 label, label47
-<=, var154, var113, var107
-=, var156, var154
-=, var157, 1
--, var156, var157, var156
-ifgoto, var156, label48
+<=, var160, var113, var107
+=, var162, var160
+=, var163, 1
+-, var162, var163, var162
+ifgoto, var162, label48
 =, var115, var117
 label, label49
-<=, var158, var115, var107
-=, var160, var158
-=, var161, 1
--, var160, var161, var160
-ifgoto, var160, label50
-=, var162, 1
-+, var163, var119, var162
-=, var119, var163
-+, var159, var115, var117
-=, var115, var159
+<=, var164, var115, var107
+=, var166, var164
+=, var167, 1
+-, var166, var167, var166
+ifgoto, var166, label50
+=, var168, 1
++, var169, var119, var168
+=, var119, var169
++, var165, var115, var117
+=, var115, var165
 goto, label49
 label, label50
-+, var155, var113, var117
-=, var113, var155
++, var161, var113, var117
+=, var113, var161
 goto, label47
 label, label48
-+, var151, var109, var117
-=, var109, var151
++, var157, var109, var117
+=, var109, var157
 goto, label45
 label, label46
 print, var119
@@ -1543,6 +1549,7 @@ retvoid
 	'table': {
 		'var122': {
 			'type': 'int_t',
+			'place': 'var122',
 			'offset': 0,
 		},
 		'var123': {
@@ -1557,8 +1564,16 @@ retvoid
 			'type': 'int_t',
 			'offset': 12,
 		},
+		'var126': {
+			'type': 'int_t',
+			'offset': 16,
+		},
+		'var127': {
+			'type': 'int_t',
+			'offset': 20,
+		},
 	},
-	'global_symbols': ['var122', 'var123', 'var124', 'var125'],
+	'global_symbols': ['var122', 'var123', 'var124', 'var125', 'var126', 'var127'],
 	'parent': 17,
 	'extras': {
 		'beginFor': 'label33',
@@ -1567,24 +1582,24 @@ retvoid
 }
 {
 	'table': {
-		'var126': {
+		'var128': {
 			'type': 'int_t',
 			'offset': 0,
 		},
-		'var127': {
+		'var129': {
 			'type': 'int_t',
 			'offset': 4,
 		},
-		'var128': {
+		'var130': {
 			'type': 'int_t',
 			'offset': 8,
 		},
-		'var129': {
+		'var131': {
 			'type': 'int_t',
 			'offset': 12,
 		},
 	},
-	'global_symbols': ['var126', 'var127', 'var128', 'var129'],
+	'global_symbols': ['var128', 'var129', 'var130', 'var131'],
 	'parent': 18,
 	'extras': {
 		'beginFor': 'label35',
@@ -1593,33 +1608,33 @@ retvoid
 }
 {
 	'table': {
-		'var130': {
+		'var132': {
 			'type': 'int_t',
 			'offset': 0,
 		},
-		'var131': {
+		'var133': {
 			'type': 'int_t',
 			'offset': 4,
 		},
-		'var132': {
+		'var134': {
 			'type': 'int_t',
 			'offset': 8,
 		},
-		'var133': {
+		'var135': {
 			'type': 'int_t',
 			'offset': 12,
 		},
-		'var134': {
+		'var136': {
 			'type': 'int_t',
-			'place': 'var134',
+			'place': 'var136',
 			'offset': 16,
 		},
-		'var135': {
+		'var137': {
 			'type': 'int_t',
 			'offset': 20,
 		},
 	},
-	'global_symbols': ['var130', 'var131', 'var132', 'var133', 'var134', 'var135'],
+	'global_symbols': ['var132', 'var133', 'var134', 'var135', 'var136', 'var137'],
 	'parent': 19,
 	'extras': {
 		'beginFor': 'label37',
@@ -1628,54 +1643,37 @@ retvoid
 }
 {
 	'table': {
-		'var136': {
-			'type': 'int_t',
-			'offset': 0,
-		},
-		'var137': {
-			'type': 'int_t',
-			'offset': 4,
-		},
 		'var138': {
 			'type': 'int_t',
-			'offset': 8,
+			'place': 'var138',
+			'offset': 0,
 		},
 		'var139': {
 			'type': 'int_t',
+			'offset': 4,
+		},
+		'var140': {
+			'type': 'int_t',
+			'offset': 8,
+		},
+		'var141': {
+			'type': 'int_t',
 			'offset': 12,
 		},
+		'var142': {
+			'type': 'int_t',
+			'offset': 16,
+		},
+		'var143': {
+			'type': 'int_t',
+			'offset': 20,
+		},
 	},
-	'global_symbols': ['var136', 'var137', 'var138', 'var139'],
+	'global_symbols': ['var138', 'var139', 'var140', 'var141', 'var142', 'var143'],
 	'parent': 17,
 	'extras': {
 		'beginFor': 'label39',
 		'endFor': 'label40',
-	},
-}
-{
-	'table': {
-		'var140': {
-			'type': 'int_t',
-			'offset': 0,
-		},
-		'var141': {
-			'type': 'int_t',
-			'offset': 4,
-		},
-		'var142': {
-			'type': 'int_t',
-			'offset': 8,
-		},
-		'var143': {
-			'type': 'int_t',
-			'offset': 12,
-		},
-	},
-	'global_symbols': ['var140', 'var141', 'var142', 'var143'],
-	'parent': 21,
-	'extras': {
-		'beginFor': 'label41',
-		'endFor': 'label42',
 	},
 }
 {
@@ -1696,17 +1694,43 @@ retvoid
 			'type': 'int_t',
 			'offset': 12,
 		},
+	},
+	'global_symbols': ['var144', 'var145', 'var146', 'var147'],
+	'parent': 21,
+	'extras': {
+		'beginFor': 'label41',
+		'endFor': 'label42',
+	},
+}
+{
+	'table': {
 		'var148': {
 			'type': 'int_t',
-			'place': 'var148',
-			'offset': 16,
+			'offset': 0,
 		},
 		'var149': {
+			'type': 'int_t',
+			'offset': 4,
+		},
+		'var150': {
+			'type': 'int_t',
+			'offset': 8,
+		},
+		'var151': {
+			'type': 'int_t',
+			'offset': 12,
+		},
+		'var152': {
+			'type': 'int_t',
+			'place': 'var152',
+			'offset': 16,
+		},
+		'var153': {
 			'type': 'int_t',
 			'offset': 20,
 		},
 	},
-	'global_symbols': ['var144', 'var145', 'var146', 'var147', 'var148', 'var149'],
+	'global_symbols': ['var148', 'var149', 'var150', 'var151', 'var152', 'var153'],
 	'parent': 22,
 	'extras': {
 		'beginFor': 'label43',
@@ -1715,34 +1739,9 @@ retvoid
 }
 {
 	'table': {
-		'var150': {
-			'type': 'int_t',
-			'offset': 0,
-		},
-		'var151': {
-			'type': 'int_t',
-			'offset': 4,
-		},
-		'var152': {
-			'type': 'int_t',
-			'offset': 8,
-		},
-		'var153': {
-			'type': 'int_t',
-			'offset': 12,
-		},
-	},
-	'global_symbols': ['var150', 'var151', 'var152', 'var153'],
-	'parent': 17,
-	'extras': {
-		'beginFor': 'label45',
-		'endFor': 'label46',
-	},
-}
-{
-	'table': {
 		'var154': {
 			'type': 'int_t',
+			'place': 'var154',
 			'offset': 0,
 		},
 		'var155': {
@@ -1757,8 +1756,42 @@ retvoid
 			'type': 'int_t',
 			'offset': 12,
 		},
+		'var158': {
+			'type': 'int_t',
+			'offset': 16,
+		},
+		'var159': {
+			'type': 'int_t',
+			'offset': 20,
+		},
 	},
-	'global_symbols': ['var154', 'var155', 'var156', 'var157'],
+	'global_symbols': ['var154', 'var155', 'var156', 'var157', 'var158', 'var159'],
+	'parent': 17,
+	'extras': {
+		'beginFor': 'label45',
+		'endFor': 'label46',
+	},
+}
+{
+	'table': {
+		'var160': {
+			'type': 'int_t',
+			'offset': 0,
+		},
+		'var161': {
+			'type': 'int_t',
+			'offset': 4,
+		},
+		'var162': {
+			'type': 'int_t',
+			'offset': 8,
+		},
+		'var163': {
+			'type': 'int_t',
+			'offset': 12,
+		},
+	},
+	'global_symbols': ['var160', 'var161', 'var162', 'var163'],
 	'parent': 24,
 	'extras': {
 		'beginFor': 'label47',
@@ -1767,33 +1800,33 @@ retvoid
 }
 {
 	'table': {
-		'var158': {
+		'var164': {
 			'type': 'int_t',
 			'offset': 0,
 		},
-		'var159': {
+		'var165': {
 			'type': 'int_t',
 			'offset': 4,
 		},
-		'var160': {
+		'var166': {
 			'type': 'int_t',
 			'offset': 8,
 		},
-		'var161': {
+		'var167': {
 			'type': 'int_t',
 			'offset': 12,
 		},
-		'var162': {
+		'var168': {
 			'type': 'int_t',
-			'place': 'var162',
+			'place': 'var168',
 			'offset': 16,
 		},
-		'var163': {
+		'var169': {
 			'type': 'int_t',
 			'offset': 20,
 		},
 	},
-	'global_symbols': ['var158', 'var159', 'var160', 'var161', 'var162', 'var163'],
+	'global_symbols': ['var164', 'var165', 'var166', 'var167', 'var168', 'var169'],
 	'parent': 25,
 	'extras': {
 		'beginFor': 'label49',
@@ -1801,4 +1834,4 @@ retvoid
 	},
 }
 27
-{'prev': 0, 'var0': 4, 'var1': 8, 'curr': 12, 'var2': 16, 'var3': 20, 'next': 24, 'var4': 28, 'var5': 32, 'n': 36, 'var6': 40, 'var7': 44, 'n1': 48, 'var8': 52, 'var9': 56, 'n2': 60, 'var10': 64, 'var11': 68, 'i': 72, 'var12': 76, 'var13': 80, 'j': 84, 'var14': 88, 'var15': 92, 'k': 96, 'var16': 100, 'var17': 104, 'l': 108, 'var18': 112, 'var19': 116, 'one': 120, 'var20': 124, 'var21': 128, 'sum': 132, 'var22': 136, 'var23': 140, 'sum1': 144, 'var24': 148, 'var25': 152, 'var26': 156, 'var27': 160, 'var28': 164, 'var29': 168, 'var30': 172, 'var31': 176, 'var32': 180, 'var33': 184, 'var34': 188, 'var35': 192, 'var36': 196, 'var37': 200, 'var38': 204, 'var39': 208, 'var40': 212, 'var41': 216, 'var42': 220, 'var43': 224, 'var44': 228, 'var45': 232, 'var46': 236, 'var47': 240, 'var48': 244, 'var49': 248, 'var50': 252, 'var51': 256, 'var52': 260, 'var53': 264, 'var54': 268, 'var55': 272, 'var56': 276, 'var57': 280, 'var58': 284, 'var59': 288, 'var60': 292, 'var61': 296, 'var62': 300, 'var63': 304, 'var64': 308, 'var65': 312, 'var66': 316, 'var67': 320, 'var68': 324, 'var69': 328, 'var70': 332, 'var71': 336, 'var72': 340, 'var73': 344, 'var74': 348, 'var75': 352, 'var76': 356, 'var77': 360, 'var78': 364, 'var79': 368, 'var80': 372, 'var81': 376, 'var82': 380, 'var83': 384, 'var84': 388, 'var85': 392, 'var86': 396, 'var87': 400, 'var88': 404, 'var89': 408, 'var90': 412, 'var91': 416, 'var92': 420, 'var93': 424, 'var94': 428, 'var95': 432, 'var96': 4, 'var97': 8, 'var98': 16, 'var99': 20, 'var100': 28, 'var101': 32, 'var102': 40, 'var103': 44, 'var104': 52, 'var105': 56, 'var106': 64, 'var107': 68, 'var108': 76, 'var109': 80, 'var110': 88, 'var111': 92, 'var112': 100, 'var113': 104, 'var114': 112, 'var115': 116, 'var116': 124, 'var117': 128, 'var118': 136, 'var119': 140, 'var120': 148, 'var121': 152, 'var122': 156, 'var123': 160, 'var124': 164, 'var125': 168, 'var126': 172, 'var127': 176, 'var128': 180, 'var129': 184, 'var130': 188, 'var131': 192, 'var132': 196, 'var133': 200, 'var134': 204, 'var135': 208, 'var136': 212, 'var137': 216, 'var138': 220, 'var139': 224, 'var140': 228, 'var141': 232, 'var142': 236, 'var143': 240, 'var144': 244, 'var145': 248, 'var146': 252, 'var147': 256, 'var148': 260, 'var149': 264, 'var150': 268, 'var151': 272, 'var152': 276, 'var153': 280, 'var154': 284, 'var155': 288, 'var156': 292, 'var157': 296, 'var158': 300, 'var159': 304, 'var160': 308, 'var161': 312, 'var162': 316, 'var163': 320} {'label1': 436, 'label0': 324}
+{'prev': 0, 'var0': 4, 'var1': 8, 'curr': 12, 'var2': 16, 'var3': 20, 'next': 24, 'var4': 28, 'var5': 32, 'n': 36, 'var6': 40, 'var7': 44, 'n1': 48, 'var8': 52, 'var9': 56, 'n2': 60, 'var10': 64, 'var11': 68, 'i': 72, 'var12': 76, 'var13': 80, 'j': 84, 'var14': 88, 'var15': 92, 'k': 96, 'var16': 100, 'var17': 104, 'l': 108, 'var18': 112, 'var19': 116, 'one': 120, 'var20': 124, 'var21': 128, 'sum': 132, 'var22': 136, 'var23': 140, 'sum1': 144, 'var24': 148, 'var25': 152, 'var26': 156, 'var27': 160, 'var28': 164, 'var29': 168, 'var30': 172, 'var31': 176, 'var32': 180, 'var33': 184, 'var34': 188, 'var35': 192, 'var36': 196, 'var37': 200, 'var38': 204, 'var39': 208, 'var40': 212, 'var41': 216, 'var42': 220, 'var43': 224, 'var44': 228, 'var45': 232, 'var46': 236, 'var47': 240, 'var48': 244, 'var49': 248, 'var50': 252, 'var51': 256, 'var52': 260, 'var53': 264, 'var54': 268, 'var55': 272, 'var56': 276, 'var57': 280, 'var58': 284, 'var59': 288, 'var60': 292, 'var61': 296, 'var62': 300, 'var63': 304, 'var64': 308, 'var65': 312, 'var66': 316, 'var67': 320, 'var68': 324, 'var69': 328, 'var70': 332, 'var71': 336, 'var72': 340, 'var73': 344, 'var74': 348, 'var75': 352, 'var76': 356, 'var77': 360, 'var78': 364, 'var79': 368, 'var80': 372, 'var81': 376, 'var82': 380, 'var83': 384, 'var84': 388, 'var85': 392, 'var86': 396, 'var87': 400, 'var88': 404, 'var89': 408, 'var90': 412, 'var91': 416, 'var92': 420, 'var93': 424, 'var94': 428, 'var95': 432, 'var96': 4, 'var97': 8, 'var98': 16, 'var99': 20, 'var100': 28, 'var101': 32, 'var102': 40, 'var103': 44, 'var104': 52, 'var105': 56, 'var106': 64, 'var107': 68, 'var108': 76, 'var109': 80, 'var110': 88, 'var111': 92, 'var112': 100, 'var113': 104, 'var114': 112, 'var115': 116, 'var116': 124, 'var117': 128, 'var118': 136, 'var119': 140, 'var120': 148, 'var121': 152, 'var122': 156, 'var123': 160, 'var124': 164, 'var125': 168, 'var126': 172, 'var127': 176, 'var128': 180, 'var129': 184, 'var130': 188, 'var131': 192, 'var132': 196, 'var133': 200, 'var134': 204, 'var135': 208, 'var136': 212, 'var137': 216, 'var138': 220, 'var139': 224, 'var140': 228, 'var141': 232, 'var142': 236, 'var143': 240, 'var144': 244, 'var145': 248, 'var146': 252, 'var147': 256, 'var148': 260, 'var149': 264, 'var150': 268, 'var151': 272, 'var152': 276, 'var153': 280, 'var154': 284, 'var155': 288, 'var156': 292, 'var157': 296, 'var158': 300, 'var159': 304, 'var160': 308, 'var161': 312, 'var162': 316, 'var163': 320, 'var164': 324, 'var165': 328, 'var166': 332, 'var167': 336, 'var168': 340, 'var169': 344} {'label1': 436, 'label0': 348}
