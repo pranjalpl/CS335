@@ -1601,7 +1601,7 @@ def p_for(p):
     # print(inspect.stack()[0][3])
     p[0] = IRNode()
     label1 = p[3].extra['before']
-    p[0].code = p[3].code + p[4].code
+    p[0].code = p[3].code + p[4].code + p[3].extra['afterCode']
     p[0].code += [['goto', label1]]
     label2 = p[3].extra['after']
     p[0].code += [['label', label2]]
@@ -1611,7 +1611,6 @@ def p_conditionblockopt(p):
     '''ConditionBlockOpt : epsilon
                 | Condition
                 | ForClause'''
-    # print(inspect.stack()[0][3])
     #  | RangeClause'''
     # print(inspect.stack()[0][3])
     p[0] = p[1]
@@ -1647,7 +1646,7 @@ def p_forclause(p):
         scopeDict[currentScope].currOffset += 4
         p[0].code += [['=', newVar, p[3].placelist[0]], ['=', newVar2, '1'],
                       ['-', newVar, newVar2, newVar], ['ifgoto', newVar, label2]]
-    p[0].code += p[5].code
+    p[0].extra['afterCode'] = p[5].code
 
 
 def p_conditionopt(p):

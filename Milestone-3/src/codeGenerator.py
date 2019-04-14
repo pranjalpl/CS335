@@ -37,7 +37,7 @@ for instr in IR:
     estr = '#'
     for i in instr:
         estr += str(i) + ','
-    genInstr(estr)
+    genInstr('\n'+estr)
     if instr[0] == '+':
         op1offset = offsets[instr[2]]
         op2offset = offsets[instr[3]]
