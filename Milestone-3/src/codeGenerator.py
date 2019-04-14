@@ -4,26 +4,11 @@ from utils import *
 
 # Corresponds to 4 operand instructions
 # x is multiply and * is dereference
-type_4 = ['+', '-', 'x', '/', '%', '&', '|', '^', '==', '<', '>', '!=', '<=', '>=']
+type_4 = ['+', '-', 'x', '/', '%', '&', '|', '^', '==', '<', '>', '!=', '<=', '>=', '<<', '>>']
 type_3 = ['=', '+=', '-=', 'x=', '&=',
           '|=', '^=', '<<=', '>>=', 'ifgoto', 'callint', 'load', 'store', 'array', 'pload', 'addr']
 type_2 = ['++', '!', '--', 'label', 'printint', 'printstr', 'scan', 'callvoid', 'goto', 'retint', 'push', 'pop']
 type_1 = ['retvoid']
-
-instr_types = type_4 + type_3 + type_2 + type_1
-
-addrDes = {}        # Address Descriptor
-stack = []          # Stack of symbols to keep track of the function return variables, implemented through list.
-regDes = {          # Register Descriptor
-    'esp': None,
-    'ebp': None,
-    'eax': None,
-    'ebx': None,
-    'ecx': None,
-    'edx': None,
-    'esi': None,
-    'edi': None
-}
 
 def check_int(s):
     if s[0] in ('-', '+'):
@@ -32,7 +17,7 @@ def check_int(s):
 
 initializeGlobals()
 # offsets = get_offset(scopeDict)
-offsets,no_use=get_offset(scopeDict)
+offsets,max_offsets=get_offset(scopeDict)
 for instr in IR:
     estr = '#'
     for i in instr:
@@ -53,8 +38,8 @@ for instr in IR:
         destoffset = offsets[instr[1]]
         genInstr('movl -%d(%%ebp), %%eax'%(op1offset))
         genInstr('movl -%d(%%ebp), %%ebx'%(op2offset))
-        genInstr('subl %eax, %ebx')
-        genInstr('movl %%ebx, -%d(%%ebp)'%(destoffset))
+        genInstr('subl %ebx, %eax')
+        genInstr('movl %%eax, -%d(%%ebp)'%(destoffset))
 
     elif instr[0] == '*':
         op1offset = offsets[instr[2]]
@@ -69,6 +54,7 @@ for instr in IR:
         op1offset = offsets[instr[2]]
         op2offset = offsets[instr[3]]
         destoffset = offsets[instr[1]]
+        genInstr('movl $0, %edx')
         genInstr('movl -%d(%%ebp), %%eax'%(op1offset))
         genInstr('movl -%d(%%ebp), %%ebx'%(op2offset))
         genInstr('idiv %ebx')
@@ -78,6 +64,7 @@ for instr in IR:
         op1offset = offsets[instr[2]]
         op2offset = offsets[instr[3]]
         destoffset = offsets[instr[1]]
+        genInstr('movl $0, %edx')
         genInstr('movl -%d(%%ebp), %%eax'%(op1offset))
         genInstr('movl -%d(%%ebp), %%ebx'%(op2offset))
         genInstr('idiv %ebx')
@@ -96,6 +83,19 @@ for instr in IR:
         genInstr('movl -%d(%%ebp), %%ebx'%(op2offset))
         genInstr('%s %%eax, %%ebx' % (op))
         genInstr('movl %%eax, -%d(%%ebp)'%(destoffset))
+
+    elif instr[0] in ['&=', '|=', '^=']:
+        op = 'and'
+        if instr[0] == '|=':
+            op = 'or'
+        elif instr[0] == '^=':
+            op = 'xor'
+        op1offset = offsets[instr[1]]
+        op2offset = offsets[instr[2]]
+        genInstr('movl -%d(%%ebp), %%eax'%(op1offset))
+        genInstr('movl -%d(%%ebp), %%ebx'%(op2offset))
+        genInstr('%s %%eax, %%ebx' % (op))
+        genInstr('movl %%eax, -%d(%%ebp)'%(op1offset))
     
     elif instr[0] in ['<', '<=', '>', '>=', '==', '!=']:
         d = {
@@ -103,8 +103,8 @@ for instr in IR:
             '<=': 'setl',
             '>': 'setge',
             '>=': 'setg',
-            '==': 'sete',
-            '!=': 'setne',
+            '==': 'setne',
+            '!=': 'sete',
         }
         op1offset = offsets[instr[2]]
         op2offset = offsets[instr[3]]
@@ -193,4 +193,43 @@ for instr in IR:
         genInstr('movl -%d(%%ebp), %%eax' % (off))
         genInstr('cmp $0, %eax')
         genInstr('je %s' % (instr[2]))
+
+    elif instr[0] == '++':
+        off = offsets[instr[1]]
+        genInstr('incl -%d(%%ebp)' % (off))
+
+    elif instr[0] == '--':
+        off = offsets[instr[1]]
+        genInstr('decl -%d(%%ebp)' % (off))
+
+    elif instr[0] == '!':
+        off = offsets[instr[1]]
+        genInstr('not -%d(%%ebp)' % (off))
+
+    elif instr[0] == '+=':
+        op1offset = offsets[instr[1]]
+        op2offset = offsets[instr[2]]
+        genInstr('movl -%d(%%ebp), %%eax'%(op1offset))
+        genInstr('movl -%d(%%ebp), %%ebx'%(op2offset))
+        genInstr('addl %eax, %ebx')
+        genInstr('movl %%ebx, -%d(%%ebp)'%(op1offset))
+
+    elif instr[0] == '-=':
+        op1offset = offsets[instr[1]]
+        op2offset = offsets[instr[2]]
+        genInstr('movl -%d(%%ebp), %%eax'%(op1offset))
+        genInstr('movl -%d(%%ebp), %%ebx'%(op2offset))
+        genInstr('subl %ebx, %eax')
+        genInstr('movl %%eax, -%d(%%ebp)'%(op1offset))
+
+    elif instr[0] == '*=':
+        op1offset = offsets[instr[1]]
+        op2offset = offsets[instr[2]]
+        genInstr('movl -%d(%%ebp), %%eax'%(op1offset))
+        genInstr('movl -%d(%%ebp), %%ebx'%(op2offset))
+        genInstr('imul %eax, %ebx')
+        genInstr('movl %%ebx, -%d(%%ebp)'%(op1offset))
+
+
+
 closeFile()

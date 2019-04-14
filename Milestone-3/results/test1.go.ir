@@ -1,69 +1,37 @@
 goto, label0
-<<<<<<< HEAD
-label0:
-=, var1, 8
-=, var3, 11
-=, var5, 2
-scan, var1
->, var7, var3, var1
-=, var10, var7
-=, var11, 1
--, var10, var11, var10
-ifgoto, var10, label2
-=, var8, 12
-=, var6, var8
-goto, label3
-label, label2
-=, var9, 1872
-=, var6, var9
-label, label3
-print, var3
-print, var6
-=, var12, 1
-retint, var12
-=======
 label1:
 =, var3, 2
 label2:
 =, var7, 2
 label0:
-=, var11, 2
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
+=, var9, 8
+=, var11, 11
+=, var13, 2
+scan, var9
+scan, var11
+>, var15, var11, var9
+=, var18, var15
+=, var19, 1
+-, var18, var19, var18
+ifgoto, var18, label4
+=, var16, 12
+=, var14, var16
+goto, label5
+label, label4
+=, var17, 1872
+=, var14, var17
+label, label5
+-=, var14, var11
+print, var14
+++, var14
+print, var14
+=, var20, 1
+retint, var20
 {
 	'table': {
 		'maie': {
 			'type': 'package',
 		},
-<<<<<<< HEAD
-		'main': {
-			'type': 'func',
-			'retType': 'void',
-			'label': 'label0',
-			'child': {
-				'table': {
-					'a': {
-						'type': 'int_t',
-						'place': 'var1',
-						'offset': 0,
-					},
-					'var0': {
-						'type': 'int_t',
-						'offset': 4,
-					},
-					'var1': {
-						'type': 'int_t',
-						'place': 'var1',
-						'offset': 8,
-					},
-					'b': {
-						'type': 'int_t',
-						'place': 'var3',
-						'offset': 12,
-					},
-					'var2': {
-						'type': 'int_t',
-						'offset': 16,
-=======
 		'ma': {
 			'type': 'func',
 			'retType': 'void',
@@ -100,57 +68,10 @@ label0:
 					'var2': {
 						'type': 'int_t',
 						'offset': 140,
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
 					},
 					'var3': {
 						'type': 'int_t',
 						'place': 'var3',
-<<<<<<< HEAD
-						'offset': 20,
-					},
-					'base': {
-						'type': 'int_t',
-						'place': 'var5',
-						'offset': 24,
-					},
-					'var4': {
-						'type': 'int_t',
-						'offset': 28,
-					},
-					'var5': {
-						'type': 'int_t',
-						'place': 'var5',
-						'offset': 32,
-					},
-					'd': {
-						'type': 'int_t',
-						'place': 'var6',
-						'offset': 36,
-					},
-					'var6': {
-						'type': 'int_t',
-						'offset': 40,
-					},
-					'var7': {
-						'type': 'int_t',
-						'offset': 44,
-					},
-					'var10': {
-						'type': 'int_t',
-						'offset': 48,
-					},
-					'var11': {
-						'type': 'int_t',
-						'offset': 52,
-					},
-					'var12': {
-						'type': 'int_t',
-						'place': 'var12',
-						'offset': 56,
-					},
-				},
-				'global_symbols': ['a', 'var0', 'var1', 'b', 'var2', 'var3', 'base', 'var4', 'var5', 'd', 'var6', 'var7', 'var10', 'var11', 'var12'],
-=======
 						'offset': 144,
 					},
 				},
@@ -205,130 +126,12 @@ label0:
 					},
 				},
 				'global_symbols': ['a', 'var4', 'b', 'var5', 'base', 'var6', 'var7'],
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
 				'parent': 0,
 				'extras': {
 				},
 			},
 			'paramsTypeList': [],
 		},
-<<<<<<< HEAD
-	},
-	'global_symbols': ['maie', 'main'],
-	'parent': None,
-	'extras': {
-	},
-}
-{
-	'table': {
-		'a': {
-			'type': 'int_t',
-			'place': 'var1',
-			'offset': 0,
-		},
-		'var0': {
-			'type': 'int_t',
-			'offset': 4,
-		},
-		'var1': {
-			'type': 'int_t',
-			'place': 'var1',
-			'offset': 8,
-		},
-		'b': {
-			'type': 'int_t',
-			'place': 'var3',
-			'offset': 12,
-		},
-		'var2': {
-			'type': 'int_t',
-			'offset': 16,
-		},
-		'var3': {
-			'type': 'int_t',
-			'place': 'var3',
-			'offset': 20,
-		},
-		'base': {
-			'type': 'int_t',
-			'place': 'var5',
-			'offset': 24,
-		},
-		'var4': {
-			'type': 'int_t',
-			'offset': 28,
-		},
-		'var5': {
-			'type': 'int_t',
-			'place': 'var5',
-			'offset': 32,
-		},
-		'd': {
-			'type': 'int_t',
-			'place': 'var6',
-			'offset': 36,
-		},
-		'var6': {
-			'type': 'int_t',
-			'offset': 40,
-		},
-		'var7': {
-			'type': 'int_t',
-			'offset': 44,
-		},
-		'var10': {
-			'type': 'int_t',
-			'offset': 48,
-		},
-		'var11': {
-			'type': 'int_t',
-			'offset': 52,
-		},
-		'var12': {
-			'type': 'int_t',
-			'place': 'var12',
-			'offset': 56,
-		},
-	},
-	'global_symbols': ['a', 'var0', 'var1', 'b', 'var2', 'var3', 'base', 'var4', 'var5', 'd', 'var6', 'var7', 'var10', 'var11', 'var12'],
-	'parent': 0,
-	'extras': {
-	},
-}
-{
-	'table': {
-		'var8': {
-			'type': 'int_t',
-			'place': 'var8',
-			'offset': 0,
-		},
-	},
-	'global_symbols': ['var8'],
-	'parent': 1,
-	'extras': {
-	},
-}
-{
-	'table': {
-		'var9': {
-			'type': 'int_t',
-			'place': 'var9',
-			'offset': 0,
-		},
-	},
-	'global_symbols': ['var9'],
-	'parent': 1,
-	'extras': {
-	},
-}
-{'a': 0, 'var0': 4, 'var1': 8, 'b': 12, 'var2': 16, 'var3': 20, 'base': 24, 'var4': 28, 'var5': 32, 'd': 36, 'var6': 40, 'var7': 44, 'var10': 48, 'var11': 52, 'var12': 56, 'var8': 156, 'var9': 256}
-{
-	'table': {
-		'maie': {
-			'type': 'package',
-		},
-=======
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
 		'main': {
 			'type': 'func',
 			'retType': 'void',
@@ -336,115 +139,75 @@ label0:
 			'child': {
 				'table': {
 					'a': {
-<<<<<<< HEAD
 						'type': 'int_t',
-						'place': 'var1',
+						'place': 'var9',
 						'offset': 0,
 					},
-					'var0': {
+					'var8': {
 						'type': 'int_t',
 						'offset': 4,
 					},
-					'var1': {
+					'var9': {
 						'type': 'int_t',
-						'place': 'var1',
+						'place': 'var9',
 						'offset': 8,
 					},
 					'b': {
 						'type': 'int_t',
-						'place': 'var3',
+						'place': 'var11',
 						'offset': 12,
 					},
-					'var2': {
+					'var10': {
 						'type': 'int_t',
 						'offset': 16,
 					},
-					'var3': {
+					'var11': {
 						'type': 'int_t',
-						'place': 'var3',
+						'place': 'var11',
 						'offset': 20,
 					},
 					'base': {
 						'type': 'int_t',
-						'place': 'var5',
+						'place': 'var13',
 						'offset': 24,
 					},
-					'var4': {
+					'var12': {
 						'type': 'int_t',
 						'offset': 28,
 					},
-					'var5': {
+					'var13': {
 						'type': 'int_t',
-						'place': 'var5',
+						'place': 'var13',
 						'offset': 32,
 					},
 					'd': {
 						'type': 'int_t',
-						'place': 'var6',
+						'place': 'var14',
 						'offset': 36,
 					},
-					'var6': {
+					'var14': {
 						'type': 'int_t',
 						'offset': 40,
 					},
-					'var7': {
+					'var15': {
 						'type': 'int_t',
 						'offset': 44,
 					},
-					'var10': {
+					'var18': {
 						'type': 'int_t',
 						'offset': 48,
 					},
-					'var11': {
+					'var19': {
 						'type': 'int_t',
 						'offset': 52,
 					},
-					'var12': {
+					'var20': {
 						'type': 'int_t',
-						'place': 'var12',
+						'place': 'var20',
 						'offset': 56,
 					},
 				},
-				'global_symbols': ['a', 'var0', 'var1', 'b', 'var2', 'var3', 'base', 'var4', 'var5', 'd', 'var6', 'var7', 'var10', 'var11', 'var12'],
-=======
-						'type': '*int_t',
-						'place': 'var8',
-						'offset': 0,
-						'size': 10,
-					},
-					'var8': {
-						'type': '*int_t',
-						'offset': 4,
-						'size': 10,
-					},
-					'b': {
-						'type': '*int_t',
-						'place': 'var9',
-						'offset': 48,
-						'size': 20,
-					},
-					'var9': {
-						'type': '*int_t',
-						'offset': 52,
-						'size': 20,
-					},
-					'base': {
-						'type': 'int_t',
-						'place': 'var11',
-						'offset': 136,
-					},
-					'var10': {
-						'type': 'int_t',
-						'offset': 140,
-					},
-					'var11': {
-						'type': 'int_t',
-						'place': 'var11',
-						'offset': 144,
-					},
-				},
-				'global_symbols': ['a', 'var8', 'b', 'var9', 'base', 'var10', 'var11'],
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
+				'global_symbols': ['a', 'var8', 'var9', 'b', 'var10', 'var11', 'base', 'var12', 'var13', 'd', 'var14', 'var15', 'var18', 'var19', 'var20'],
 				'parent': 0,
 				'extras': {
 				},
@@ -452,11 +215,7 @@ label0:
 			'paramsTypeList': [],
 		},
 	},
-<<<<<<< HEAD
-	'global_symbols': ['maie', 'main'],
-=======
 	'global_symbols': ['maie', 'ma', 'mai', 'main'],
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
 	'parent': None,
 	'extras': {
 	},
@@ -464,29 +223,6 @@ label0:
 {
 	'table': {
 		'a': {
-<<<<<<< HEAD
-			'type': 'int_t',
-			'place': 'var1',
-			'offset': 0,
-		},
-		'var0': {
-			'type': 'int_t',
-			'offset': 4,
-		},
-		'var1': {
-			'type': 'int_t',
-			'place': 'var1',
-			'offset': 8,
-		},
-		'b': {
-			'type': 'int_t',
-			'place': 'var3',
-			'offset': 12,
-		},
-		'var2': {
-			'type': 'int_t',
-			'offset': 16,
-=======
 			'type': '*int_t',
 			'place': 'var0',
 			'offset': 0,
@@ -516,57 +252,10 @@ label0:
 		'var2': {
 			'type': 'int_t',
 			'offset': 140,
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
 		},
 		'var3': {
 			'type': 'int_t',
 			'place': 'var3',
-<<<<<<< HEAD
-			'offset': 20,
-		},
-		'base': {
-			'type': 'int_t',
-			'place': 'var5',
-			'offset': 24,
-		},
-		'var4': {
-			'type': 'int_t',
-			'offset': 28,
-		},
-		'var5': {
-			'type': 'int_t',
-			'place': 'var5',
-			'offset': 32,
-		},
-		'd': {
-			'type': 'int_t',
-			'place': 'var6',
-			'offset': 36,
-		},
-		'var6': {
-			'type': 'int_t',
-			'offset': 40,
-		},
-		'var7': {
-			'type': 'int_t',
-			'offset': 44,
-		},
-		'var10': {
-			'type': 'int_t',
-			'offset': 48,
-		},
-		'var11': {
-			'type': 'int_t',
-			'offset': 52,
-		},
-		'var12': {
-			'type': 'int_t',
-			'place': 'var12',
-			'offset': 56,
-		},
-	},
-	'global_symbols': ['a', 'var0', 'var1', 'b', 'var2', 'var3', 'base', 'var4', 'var5', 'd', 'var6', 'var7', 'var10', 'var11', 'var12'],
-=======
 			'offset': 144,
 		},
 	},
@@ -615,82 +304,111 @@ label0:
 		},
 	},
 	'global_symbols': ['a', 'var4', 'b', 'var5', 'base', 'var6', 'var7'],
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
 	'parent': 0,
 	'extras': {
 	},
 }
 {
 	'table': {
-<<<<<<< HEAD
-		'var8': {
-			'type': 'int_t',
-			'place': 'var8',
-			'offset': 0,
-		},
-	},
-	'global_symbols': ['var8'],
-	'parent': 1,
-	'extras': {
-	},
-}
-{
-	'table': {
-		'var9': {
+		'a': {
 			'type': 'int_t',
 			'place': 'var9',
 			'offset': 0,
 		},
-	},
-	'global_symbols': ['var9'],
-	'parent': 1,
-	'extras': {
-	},
-}
-=======
-		'a': {
-			'type': '*int_t',
-			'place': 'var8',
-			'offset': 0,
-			'size': 10,
-		},
 		'var8': {
-			'type': '*int_t',
+			'type': 'int_t',
 			'offset': 4,
-			'size': 10,
+		},
+		'var9': {
+			'type': 'int_t',
+			'place': 'var9',
+			'offset': 8,
 		},
 		'b': {
-			'type': '*int_t',
-			'place': 'var9',
-			'offset': 48,
-			'size': 20,
-		},
-		'var9': {
-			'type': '*int_t',
-			'offset': 52,
-			'size': 20,
-		},
-		'base': {
 			'type': 'int_t',
 			'place': 'var11',
-			'offset': 136,
+			'offset': 12,
 		},
 		'var10': {
 			'type': 'int_t',
-			'offset': 140,
+			'offset': 16,
 		},
 		'var11': {
 			'type': 'int_t',
 			'place': 'var11',
-			'offset': 144,
+			'offset': 20,
+		},
+		'base': {
+			'type': 'int_t',
+			'place': 'var13',
+			'offset': 24,
+		},
+		'var12': {
+			'type': 'int_t',
+			'offset': 28,
+		},
+		'var13': {
+			'type': 'int_t',
+			'place': 'var13',
+			'offset': 32,
+		},
+		'd': {
+			'type': 'int_t',
+			'place': 'var14',
+			'offset': 36,
+		},
+		'var14': {
+			'type': 'int_t',
+			'offset': 40,
+		},
+		'var15': {
+			'type': 'int_t',
+			'offset': 44,
+		},
+		'var18': {
+			'type': 'int_t',
+			'offset': 48,
+		},
+		'var19': {
+			'type': 'int_t',
+			'offset': 52,
+		},
+		'var20': {
+			'type': 'int_t',
+			'place': 'var20',
+			'offset': 56,
 		},
 	},
-	'global_symbols': ['a', 'var8', 'b', 'var9', 'base', 'var10', 'var11'],
+	'global_symbols': ['a', 'var8', 'var9', 'b', 'var10', 'var11', 'base', 'var12', 'var13', 'd', 'var14', 'var15', 'var18', 'var19', 'var20'],
 	'parent': 0,
 	'extras': {
 	},
 }
-4
-{'a': 0, 'var0': 4, 'b': 48, 'var1': 52, 'base': 136, 'var2': 140, 'var3': 144, 'var4': 4, 'var5': 52, 'var6': 140, 'var7': 144, 'var8': 4, 'var9': 52, 'var10': 140, 'var11': 144}
-{'label1': 148, 'label2': 148, 'label0': 148}
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
+{
+	'table': {
+		'var16': {
+			'type': 'int_t',
+			'place': 'var16',
+			'offset': 0,
+		},
+	},
+	'global_symbols': ['var16'],
+	'parent': 3,
+	'extras': {
+	},
+}
+{
+	'table': {
+		'var17': {
+			'type': 'int_t',
+			'place': 'var17',
+			'offset': 0,
+		},
+	},
+	'global_symbols': ['var17'],
+	'parent': 3,
+	'extras': {
+	},
+}
+6
+{'a': 0, 'var0': 4, 'b': 12, 'var1': 52, 'base': 24, 'var2': 140, 'var3': 144, 'var4': 4, 'var5': 52, 'var6': 140, 'var7': 144, 'var8': 4, 'var9': 8, 'var10': 16, 'var11': 20, 'var12': 28, 'var13': 32, 'd': 36, 'var14': 40, 'var15': 44, 'var18': 48, 'var19': 52, 'var20': 56, 'var16': 60, 'var17': 64} {'label1': 148, 'label2': 148, 'label0': 68}

@@ -9,12 +9,6 @@ label1:
 =, var13, 10
 =, var15, 12
 =, var17, 1
-<<<<<<< HEAD
-=, var19, 0
-scan, var13
-=, var21, 5
-print, var21
-=======
 =, var19, 1
 =, var21, 1
 =, var23, 0
@@ -251,6 +245,7 @@ label, label36
 =, var109, var123
 goto, label33
 label, label34
+print, var119
 =, var109, var117
 label, label39
 <=, var136, var109, var105
@@ -287,6 +282,7 @@ label, label42
 =, var109, var137
 goto, label39
 label, label40
+print, var119
 =, var109, var117
 label, label45
 <=, var150, var109, var107
@@ -324,7 +320,6 @@ label, label48
 goto, label45
 label, label46
 print, var119
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
 retvoid
 {
 	'table': {
@@ -477,11 +472,7 @@ retvoid
 						'place': 'var19',
 						'offset': 116,
 					},
-<<<<<<< HEAD
-					'new': {
-=======
 					'one': {
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
 						'type': 'int_t',
 						'place': 'var21',
 						'offset': 120,
@@ -720,11 +711,7 @@ retvoid
 						'offset': 152,
 					},
 				},
-<<<<<<< HEAD
-				'global_symbols': ['prev', 'var0', 'var1', 'curr', 'var2', 'var3', 'next', 'var4', 'var5', 'n', 'var6', 'var7', 'i', 'var8', 'var9', 'j', 'var10', 'var11', 'k', 'var12', 'var13', 'l', 'var14', 'var15', 'one', 'var16', 'var17', 'sum', 'var18', 'var19', 'new', 'var20', 'var21'],
-=======
 				'global_symbols': ['prev', 'var96', 'var97', 'curr', 'var98', 'var99', 'next', 'var100', 'var101', 'n', 'var102', 'var103', 'n1', 'var104', 'var105', 'n2', 'var106', 'var107', 'i', 'var108', 'var109', 'j', 'var110', 'var111', 'k', 'var112', 'var113', 'l', 'var114', 'var115', 'one', 'var116', 'var117', 'sum', 'var118', 'var119', 'sum1', 'var120', 'var121'],
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
 				'parent': 0,
 				'extras': {
 				},
@@ -879,11 +866,7 @@ retvoid
 			'place': 'var19',
 			'offset': 116,
 		},
-<<<<<<< HEAD
-		'new': {
-=======
 		'one': {
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
 			'type': 'int_t',
 			'place': 'var21',
 			'offset': 120,
@@ -926,18 +909,11 @@ retvoid
 			'offset': 152,
 		},
 	},
-<<<<<<< HEAD
-	'global_symbols': ['prev', 'var0', 'var1', 'curr', 'var2', 'var3', 'next', 'var4', 'var5', 'n', 'var6', 'var7', 'i', 'var8', 'var9', 'j', 'var10', 'var11', 'k', 'var12', 'var13', 'l', 'var14', 'var15', 'one', 'var16', 'var17', 'sum', 'var18', 'var19', 'new', 'var20', 'var21'],
-=======
 	'global_symbols': ['prev', 'var0', 'var1', 'curr', 'var2', 'var3', 'next', 'var4', 'var5', 'n', 'var6', 'var7', 'n1', 'var8', 'var9', 'n2', 'var10', 'var11', 'i', 'var12', 'var13', 'j', 'var14', 'var15', 'k', 'var16', 'var17', 'l', 'var18', 'var19', 'one', 'var20', 'var21', 'sum', 'var22', 'var23', 'sum1', 'var24', 'var25'],
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
 	'parent': 0,
 	'extras': {
 	},
 }
-<<<<<<< HEAD
-{'prev': 0, 'var0': 4, 'var1': 8, 'curr': 12, 'var2': 16, 'var3': 20, 'next': 24, 'var4': 28, 'var5': 32, 'n': 36, 'var6': 40, 'var7': 44, 'i': 48, 'var8': 52, 'var9': 56, 'j': 60, 'var10': 64, 'var11': 68, 'k': 72, 'var12': 76, 'var13': 80, 'l': 84, 'var14': 88, 'var15': 92, 'one': 96, 'var16': 100, 'var17': 104, 'sum': 108, 'var18': 112, 'var19': 116, 'new': 120, 'var20': 124, 'var21': 128}
-=======
 {
 	'table': {
 		'var26': {
@@ -1025,182 +1001,12 @@ retvoid
 		'endFor': 'label7',
 	},
 }
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
 {
 	'table': {
 		'var40': {
 			'type': 'int_t',
 			'offset': 0,
 		},
-<<<<<<< HEAD
-		'main': {
-			'type': 'func',
-			'retType': 'void',
-			'label': 'label0',
-			'child': {
-				'table': {
-					'prev': {
-						'type': 'int_t',
-						'place': 'var1',
-						'offset': 0,
-					},
-					'var0': {
-						'type': 'int_t',
-						'offset': 4,
-					},
-					'var1': {
-						'type': 'int_t',
-						'place': 'var1',
-						'offset': 8,
-					},
-					'curr': {
-						'type': 'int_t',
-						'place': 'var3',
-						'offset': 12,
-					},
-					'var2': {
-						'type': 'int_t',
-						'offset': 16,
-					},
-					'var3': {
-						'type': 'int_t',
-						'place': 'var3',
-						'offset': 20,
-					},
-					'next': {
-						'type': 'int_t',
-						'place': 'var5',
-						'offset': 24,
-					},
-					'var4': {
-						'type': 'int_t',
-						'offset': 28,
-					},
-					'var5': {
-						'type': 'int_t',
-						'place': 'var5',
-						'offset': 32,
-					},
-					'n': {
-						'type': 'int_t',
-						'place': 'var7',
-						'offset': 36,
-					},
-					'var6': {
-						'type': 'int_t',
-						'offset': 40,
-					},
-					'var7': {
-						'type': 'int_t',
-						'place': 'var7',
-						'offset': 44,
-					},
-					'i': {
-						'type': 'int_t',
-						'place': 'var9',
-						'offset': 48,
-					},
-					'var8': {
-						'type': 'int_t',
-						'offset': 52,
-					},
-					'var9': {
-						'type': 'int_t',
-						'place': 'var9',
-						'offset': 56,
-					},
-					'j': {
-						'type': 'int_t',
-						'place': 'var11',
-						'offset': 60,
-					},
-					'var10': {
-						'type': 'int_t',
-						'offset': 64,
-					},
-					'var11': {
-						'type': 'int_t',
-						'place': 'var11',
-						'offset': 68,
-					},
-					'k': {
-						'type': 'int_t',
-						'place': 'var13',
-						'offset': 72,
-					},
-					'var12': {
-						'type': 'int_t',
-						'offset': 76,
-					},
-					'var13': {
-						'type': 'int_t',
-						'place': 'var13',
-						'offset': 80,
-					},
-					'l': {
-						'type': 'int_t',
-						'place': 'var15',
-						'offset': 84,
-					},
-					'var14': {
-						'type': 'int_t',
-						'offset': 88,
-					},
-					'var15': {
-						'type': 'int_t',
-						'place': 'var15',
-						'offset': 92,
-					},
-					'one': {
-						'type': 'int_t',
-						'place': 'var17',
-						'offset': 96,
-					},
-					'var16': {
-						'type': 'int_t',
-						'offset': 100,
-					},
-					'var17': {
-						'type': 'int_t',
-						'place': 'var17',
-						'offset': 104,
-					},
-					'sum': {
-						'type': 'int_t',
-						'place': 'var19',
-						'offset': 108,
-					},
-					'var18': {
-						'type': 'int_t',
-						'offset': 112,
-					},
-					'var19': {
-						'type': 'int_t',
-						'place': 'var19',
-						'offset': 116,
-					},
-					'new': {
-						'type': 'int_t',
-						'place': 'var21',
-						'offset': 120,
-					},
-					'var20': {
-						'type': 'int_t',
-						'offset': 124,
-					},
-					'var21': {
-						'type': 'int_t',
-						'place': 'var21',
-						'offset': 128,
-					},
-				},
-				'global_symbols': ['prev', 'var0', 'var1', 'curr', 'var2', 'var3', 'next', 'var4', 'var5', 'n', 'var6', 'var7', 'i', 'var8', 'var9', 'j', 'var10', 'var11', 'k', 'var12', 'var13', 'l', 'var14', 'var15', 'one', 'var16', 'var17', 'sum', 'var18', 'var19', 'new', 'var20', 'var21'],
-				'parent': 0,
-				'extras': {
-				},
-			},
-			'paramsTypeList': [],
-=======
 		'var41': {
 			'type': 'int_t',
 			'offset': 4,
@@ -1499,7 +1305,6 @@ retvoid
 		'var89': {
 			'type': 'int_t',
 			'offset': 12,
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
 		},
 	},
 	'global_symbols': ['var86', 'var87', 'var88', 'var89'],
@@ -1686,11 +1491,7 @@ retvoid
 			'place': 'var115',
 			'offset': 116,
 		},
-<<<<<<< HEAD
-		'new': {
-=======
 		'one': {
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
 			'type': 'int_t',
 			'place': 'var117',
 			'offset': 120,
@@ -1733,17 +1534,11 @@ retvoid
 			'offset': 152,
 		},
 	},
-<<<<<<< HEAD
-	'global_symbols': ['prev', 'var0', 'var1', 'curr', 'var2', 'var3', 'next', 'var4', 'var5', 'n', 'var6', 'var7', 'i', 'var8', 'var9', 'j', 'var10', 'var11', 'k', 'var12', 'var13', 'l', 'var14', 'var15', 'one', 'var16', 'var17', 'sum', 'var18', 'var19', 'new', 'var20', 'var21'],
-=======
 	'global_symbols': ['prev', 'var96', 'var97', 'curr', 'var98', 'var99', 'next', 'var100', 'var101', 'n', 'var102', 'var103', 'n1', 'var104', 'var105', 'n2', 'var106', 'var107', 'i', 'var108', 'var109', 'j', 'var110', 'var111', 'k', 'var112', 'var113', 'l', 'var114', 'var115', 'one', 'var116', 'var117', 'sum', 'var118', 'var119', 'sum1', 'var120', 'var121'],
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb
 	'parent': 0,
 	'extras': {
 	},
 }
-<<<<<<< HEAD
-=======
 {
 	'table': {
 		'var122': {
@@ -2007,4 +1802,3 @@ retvoid
 }
 27
 {'prev': 0, 'var0': 4, 'var1': 8, 'curr': 12, 'var2': 16, 'var3': 20, 'next': 24, 'var4': 28, 'var5': 32, 'n': 36, 'var6': 40, 'var7': 44, 'n1': 48, 'var8': 52, 'var9': 56, 'n2': 60, 'var10': 64, 'var11': 68, 'i': 72, 'var12': 76, 'var13': 80, 'j': 84, 'var14': 88, 'var15': 92, 'k': 96, 'var16': 100, 'var17': 104, 'l': 108, 'var18': 112, 'var19': 116, 'one': 120, 'var20': 124, 'var21': 128, 'sum': 132, 'var22': 136, 'var23': 140, 'sum1': 144, 'var24': 148, 'var25': 152, 'var26': 156, 'var27': 160, 'var28': 164, 'var29': 168, 'var30': 172, 'var31': 176, 'var32': 180, 'var33': 184, 'var34': 188, 'var35': 192, 'var36': 196, 'var37': 200, 'var38': 204, 'var39': 208, 'var40': 212, 'var41': 216, 'var42': 220, 'var43': 224, 'var44': 228, 'var45': 232, 'var46': 236, 'var47': 240, 'var48': 244, 'var49': 248, 'var50': 252, 'var51': 256, 'var52': 260, 'var53': 264, 'var54': 268, 'var55': 272, 'var56': 276, 'var57': 280, 'var58': 284, 'var59': 288, 'var60': 292, 'var61': 296, 'var62': 300, 'var63': 304, 'var64': 308, 'var65': 312, 'var66': 316, 'var67': 320, 'var68': 324, 'var69': 328, 'var70': 332, 'var71': 336, 'var72': 340, 'var73': 344, 'var74': 348, 'var75': 352, 'var76': 356, 'var77': 360, 'var78': 364, 'var79': 368, 'var80': 372, 'var81': 376, 'var82': 380, 'var83': 384, 'var84': 388, 'var85': 392, 'var86': 396, 'var87': 400, 'var88': 404, 'var89': 408, 'var90': 412, 'var91': 416, 'var92': 420, 'var93': 424, 'var94': 428, 'var95': 432, 'var96': 4, 'var97': 8, 'var98': 16, 'var99': 20, 'var100': 28, 'var101': 32, 'var102': 40, 'var103': 44, 'var104': 52, 'var105': 56, 'var106': 64, 'var107': 68, 'var108': 76, 'var109': 80, 'var110': 88, 'var111': 92, 'var112': 100, 'var113': 104, 'var114': 112, 'var115': 116, 'var116': 124, 'var117': 128, 'var118': 136, 'var119': 140, 'var120': 148, 'var121': 152, 'var122': 156, 'var123': 160, 'var124': 164, 'var125': 168, 'var126': 172, 'var127': 176, 'var128': 180, 'var129': 184, 'var130': 188, 'var131': 192, 'var132': 196, 'var133': 200, 'var134': 204, 'var135': 208, 'var136': 212, 'var137': 216, 'var138': 220, 'var139': 224, 'var140': 228, 'var141': 232, 'var142': 236, 'var143': 240, 'var144': 244, 'var145': 248, 'var146': 252, 'var147': 256, 'var148': 260, 'var149': 264, 'var150': 268, 'var151': 272, 'var152': 276, 'var153': 280, 'var154': 284, 'var155': 288, 'var156': 292, 'var157': 296, 'var158': 300, 'var159': 304, 'var160': 308, 'var161': 312, 'var162': 316, 'var163': 320} {'label1': 436, 'label0': 324}
->>>>>>> 46f1afa4fe9c37e6152cc6b7654f2fd18b240cdb

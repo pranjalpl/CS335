@@ -88,7 +88,7 @@ func main() {
 				};
 			};
 		};
-
+	print(sum);
 		for i=one; i<=n1; i = i + one {
 			for k=one; k<=n1; k = k + one {
 				for l=one; l<=n1; l = l + one {
@@ -96,6 +96,7 @@ func main() {
 				};
 			};
 		};
+		print(sum);
 		for i=one; i<=n2; i = i + one {
 			for k=one; k<=n2; k = k + one {
 				for l=one; l<=n2; l = l + one {

@@ -23,12 +23,15 @@ func main() {
 	var base int_t = 2;
 	var d int_t;
 	scan(a);
+	scan(b);
 	if (b > a) {
 		d = 12;
 	} else {
 		d = 1872;
 	};
-	print(b);
+	d-=b;
+	print(d);
+	d++;
 	print(d);
 	return 1;
 };

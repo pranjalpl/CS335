@@ -4,11 +4,26 @@ import (
 	"fmt";
 );
 
-func fact(n int_t, m int_t, k int_t, l int_t) int_t {
-	return n+m+k-l;
+func max(n int_t, m int_t) int_t {
+	if(n>m){
+		return n;
+	}else{
+		return m;
+	};
+};
+
+func fact(n int_t) int_t {
+	if(n == 1) {
+		return 1;
+	}; 
+	return n*fact(n-1);
 };
 
 func main() {
-	var k int_t = fact(1,5,3,4);
-	print(k);
+	var in1, in2 int_t;
+	scan(in1);
+	scan(in2);
+	var k int_t = max(in1,in2);
+	var a int_t = fact(k);
+	print(a);
 };

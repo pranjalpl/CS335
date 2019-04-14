@@ -45,12 +45,21 @@ def get_offset(scopeDict):
             continue
         maxx = 0
         last = {}
+        key = 0
+        if(bool(scopeDict[i].table)==False):
+            continue
         for k , v  in scopeDict[i].table.items():
             var_offset[k] = offset[scopeDict[i].parent]+v['offset']
             maxx = offset[scopeDict[i].parent] + v['offset']
             last = v
+            key = k
         curr = i
         extra = 0
+        print('her',file=sys.__stdout__)
+        print(last,key,i,file=sys.__stdout__)
+
+
+
         if(last['type'] == 'int_t'):
             extra = 4
         if (last['type'] == '*int_t'):

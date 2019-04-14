@@ -817,7 +817,8 @@ def p_func(p):
     p[0] = p[2]
     for x in range(len(p[1].idList)):
         info = find_info(p[1].idList[x])
-        p[0].code = [['pop-param', len(p[1].idList) - x - 1,
+        #replaced reverse order with x
+        p[0].code = [['pop-param', x,
                       info['place']]] + p[0].code
 
     if isUsed(p[-2][1], "signatureType"):
