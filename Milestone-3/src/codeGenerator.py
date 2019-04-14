@@ -114,10 +114,9 @@ for instr in IR:
         genInstr('cmp %eax, %ebx')
         genInstr('%s %%al' % (d[instr[0]]))
         genInstr('movzbl %al, %eax')
-        # if not instr[0] in ['==', '!=']:
-        #     genInstr('movl $1, %ecx')
-        #     genInstr('subl %eax, %ecx')
-        genInstr('movl %%eax, -%d(%%ebp)' % (destoffset))
+        genInstr('movl $1, %ecx')
+        genInstr('subl %eax, %ecx')
+        genInstr('movl %%ecx, -%d(%%ebp)' % (destoffset))
 
     elif instr[0] == '=':
         print(instr)
