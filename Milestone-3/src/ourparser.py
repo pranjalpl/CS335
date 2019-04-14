@@ -212,7 +212,6 @@ def p_type_token(p):
             p[0].typeList.append(find_info(p[2], 0)['type'])
     else:
         p[0].typeList.append(p[1])
-        print('\t\ttypes: ' + str(p[0].typeList))
 
 
 def p_type_lit(p):
@@ -239,6 +238,7 @@ def p_array_type(p):
     p[0] = IRNode()
     # p[0].code = p[2].code
     p[0].typeList.append("*" + p[4].typeList[0])
+    p[0].extra['sizeOfArray'] = int(p[2])
     scopeDict[currentScope].currOffset += 4*int(p[2])
 
 # TODO: Modify this to accept only integers
@@ -281,8 +281,12 @@ def p_field_decl(p):
     ''' FieldDecl : IdentifierList Type'''
     # print(inspect.stack()[0][3])
     p[0] = p[1]
-    for i in p[0].idList:
-        scopeDict[currentScope].updateArgList(i, 'type', p[2].typeList[0])
+    for i in range(0, len(p[0].idList)):
+        scopeDict[currentScope].updateArgList(p[0].idList[i], 'type', p[2].typeList[0])
+        scopeDict[currentScope].updateArgList(p[0].placelist[i], 'type', p[2].typeList[0])
+        if 'sizeOfArray' in dict.keys(p[2].extra):
+            scopeDict[currentScope].updateArgList(p[1].idList[i], 'size', p[2].extra['sizeOfArray'])
+            scopeDict[currentScope].updateArgList(p[1].placelist[i], 'size', p[2].extra['sizeOfArray'])
 
 
 def p_TagOpt(p):
@@ -390,8 +394,13 @@ def p_param_decl(p):
     # print(inspect.stack()[0][3])
     p[0] = p[1]
     if len(p) == 3:
-        for x in p[1].idList:
-            scopeDict[currentScope].updateArgList(x, 'type', p[2].typeList[0])
+        for i in range(len(p[1].idList)):
+            scopeDict[currentScope].updateArgList(p[1].idList[i], 'type', p[2].typeList[0])
+            scopeDict[currentScope].updateArgList(p[1].placelist[i], 'type', p[2].typeList[0])
+            if 'sizeOfArray' in dict.keys(p[2].extra):
+                scopeDict[currentScope].updateArgList(p[1].idList[i], 'size', p[2].extra['sizeOfArray'])
+                scopeDict[currentScope].updateArgList(p[1].placelist[i], 'size', p[2].extra['sizeOfArray'])
+                
             p[0].typeList.append(p[2].typeList[0])
     else:
         p[0].typeList = p[1].typeList
@@ -483,6 +492,11 @@ def p_const_spec(p):
         # type insertion
         scopeDict[scope].updateArgList(
             p[1].idList[x], 'type', p[2].typeList[0])
+        scopeDict[scope].updateArgList(
+            p[1].placelist[x], 'type', p[2].typeList[0])
+        if 'sizeOfArray' in dict.keys(p[2].extra):
+            scopeDict[currentScope].updateArgList(p[1].idList[i], 'size', p[2].extra['sizeOfArray'])
+            scopeDict[currentScope].updateArgList(p[1].placelist[i], 'size', p[2].extra['sizeOfArray'])
     # TODO type checking
 # XXX
 
@@ -502,7 +516,6 @@ def p_identifier_list(p):
     # print(inspect.stack()[0][3])
     p[0] = p[2]
     p[0].idList = [p[1]] + p[0].idList
-    print('\t\ttypes: ' + str(p[2].typeList))
     if isUsed(p[1], "."):
         raise NameError("Error: " + p[1] + " already exists")
     else:
@@ -659,9 +672,16 @@ def p_var_spec(p):
                 p[0].code.append(["=", p[1].placelist[x], p[3].placelist[x]])
                 scopeDict[scope].updateArgList(
                     p[1].idList[x], 'type', p[3].typeList[x][3:])
+                scopeDict[scope].updateArgList(
+                    p[1].placelist[x], 'type', p[3].typeList[x][3:])
             else:
                 scopeDict[scope].updateArgList(
                     p[1].idList[x], 'type', p[3].typeList[x])
+                scopeDict[scope].updateArgList(
+                    p[1].placelist[x], 'type', p[3].typeList[x])
+                if 'sizeOfArray' in dict.keys(p[3].extra):
+                    scopeDict[currentScope].updateArgList(p[1].idList[i], 'size', p[3].extra['sizeOfArray'])
+                    scopeDict[currentScope].updateArgList(p[1].placelist[i], 'size', p[3].extra['sizeOfArray'])
 
             p[1].placelist[x] = p[3].placelist[x]
             scopeDict[scope].updateArgList(
@@ -673,6 +693,11 @@ def p_var_spec(p):
                 scope = find_scope(p[1].idList[x])
                 scopeDict[scope].updateArgList(
                     p[1].idList[x], 'type', p[2].typeList[0])
+                scopeDict[scope].updateArgList(
+                    p[1].placelist[x], 'type', p[2].typeList[0])
+                if 'sizeOfArray' in dict.keys(p[2].extra):
+                    scopeDict[scope].updateArgList(p[1].idList[x], 'size', p[2].extra['sizeOfArray'])
+                    scopeDict[scope].updateArgList(p[1].placelist[x], 'size', p[2].extra['sizeOfArray'])
             return
         p[0] = IRNode()
         p[0].code = p[1].code + p[3].code
@@ -690,6 +715,11 @@ def p_var_spec(p):
                 p[1].idList[x], 'place', p[1].placelist[x])
             scopeDict[scope].updateArgList(
                 p[1].idList[x], 'type', p[2].typeList[0])
+            scopeDict[scope].updateArgList(
+                p[1].placelist[x], 'type', p[2].typeList[0])
+            if 'sizeOfArray' in dict.keys(p[2].extra):
+                scopeDict[scope].updateArgList(p[1].idList[x], 'size', p[2]['sizeOfArray'])
+                scopeDict[scope].updateArgList(p[1].placelist[x], 'size', p[2]['sizeOfArray'])
 
             # TODO typelist check required
             currType = p[2].typeList[0]
@@ -1877,14 +1907,14 @@ def printList(node):
             counter += 1
 
 printList(rootNode)
-for s in scopeDict:
-    print(scopeDict[s])
-
-
-print(get_offset(scopeDict))
 
 for s in scopeDict:
     print(scopeDict[s])
+
+var_offset ,max_size=get_offset(scopeDict) 
+print(var_offset,max_size)
+# print(get_max_offset(scopeDict,var_offset))
+
 sys.stdout = sys.__stdout__
 IR = rootNode.code
 

@@ -14,23 +14,17 @@ def offsetOf(name, l):
             return x['offset']
 
 
-def get_max_offset(scopeDict,var_offset):
-    s = scopeDict[0]
-    max_size = {}
-    last = {}
-    for k , v in s.table.items():
-        if(v['type']=='func'):
-            for k1 , v1 in v['child'].table.items():
-                maxx = var_offset[k1]
-                last = v1
-            extra = 0
-            if(last['type'] == 'int_t'):
-                extra = 4
-            if (last['type'] == '*int_t'):
-                extra = 4*last['size']
-            max_size[v['label']] = maxx+extra
-    print('poiqwnceo', k, v, file=sys.__stdout__)
-    return max_size
+# def get_max_offset(scopeDict,offset,fun_list):
+#     s = scopeDict[0]
+#     max_size = {}
+#     last = {}
+#     cunt = 0
+#     for k , v in s.table.items():
+#         if(v['type']=='func'):
+#             max_size[v['label']] = offset[fun_list[cunt]]
+#             cunt+=1
+#     print('poiqwnceo', k, v, file=sys.__stdout__)
+#     return max_size
 
 
 
@@ -43,7 +37,7 @@ def get_offset(scopeDict):
 
     offset = []
     offset = offset+[0]*(cunt)
-    # print(cunt)
+    fun_list = []
     print(cunt)
     var_offset = {}
     for i in range(cunt):
@@ -61,10 +55,22 @@ def get_offset(scopeDict):
             extra = 4
         if (last['type'] == '*int_t'):
             extra = 4*last['size']
+        if(scopeDict[i].parent==0):
+            fun_list.append(i)
         while(scopeDict[curr].parent != 0):
             offset[scopeDict[curr].parent]=maxx+extra
             curr = scopeDict[curr].parent
         offset[i]=maxx+extra
+
+    s = scopeDict[0]
+    max_size = {}
+    last = {}
+    cunt = 0
+    for k , v in s.table.items():
+        if(v['type']=='func'):
+            max_size[v['label']] = offset[fun_list[cunt]]
+            cunt+=1
+
     print('poiqwnceo', k, v, file=sys.__stdout__) 
     # print(check_unique)       
-    return var_offset
+    return var_offset,max_size
