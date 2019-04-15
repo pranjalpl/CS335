@@ -183,7 +183,6 @@ def p_type(p):
         p[0] = p[2]
     else:
         p[0] = p[1]
-    print('\t\ttypes: ' + str(p[0].typeList))
 
 
 def p_type_name(p):
@@ -191,7 +190,6 @@ def p_type_name(p):
                 | QualifiedIdent'''
     # print(inspect.stack()[0][3])
     p[0] = p[1]
-    print('\t\ttypes: ' + str(p[0].typeList))
 
 
 def p_type_token(p):
@@ -234,13 +232,11 @@ def p_type_opt(p):
 def p_array_type(p):
     '''ArrayType : LEFT_BRACKET ArrayLength RIGHT_BRACKET ElementType'''
     # print(inspect.stack()[0][3])
-    print('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
     p[0] = ["ArrayType", "[", p[2], "]", p[4]]
     p[0] = IRNode()
     # p[0].code = p[2].code
     p[0].typeList.append("*" + p[4].typeList[0])
     p[0].extra['sizeOfArray'] = int(p[2])
-    print(p[4].extra)
     if(p[4].extra =={}):
         scopeDict[currentScope].currOffset += 4*(int(p[2]))
     else:   
@@ -563,7 +559,6 @@ def p_expr_list(p):
     p[0] = p[2]
     p[0].code = p[1].code+p[0].code
     p[0].placelist = p[1].placelist + p[0].placelist
-    print(p.lexer.lineno, 'qwer', p[1].typeList, p[0].typeList)
     p[0].typeList = p[1].typeList + p[0].typeList
     if 'AddrList' not in p[1].extra:
         p[1].extra['AddrList'] = ['None']
@@ -579,7 +574,6 @@ def p_expr_rep(p):
         p[0].code += p[3].code
         p[0].placelist += p[3].placelist
         p[0].typeList += p[3].typeList
-        print('\t\ttypes: ' + str(p[0].typeList))
         if 'AddrList' not in p[3].extra:
             p[3].extra['AddrList'] = ['None']
         p[0].extra['AddrList'] += p[3].extra['AddrList']
@@ -732,17 +726,14 @@ def p_var_spec(p):
                 comp = p[3].typeList[i]
                 if comp.startswith('lit'):
                     comp = comp[3:]
-                print('\tComparing types', currType, comp, isValidAssignment(currType, comp))
                 if not isValidAssignment(currType, comp):
                     raise ValueError("Type of " + comp + " cannot be assigned to " + currType)
-            print('Type Checking:', p[3], currType)
 
 def p_expr_list_opt(p):
     '''ExpressionListOpt : ASSIGN ExpressionList
                          | epsilon'''
     # print(inspect.stack()[0][3])
     if len(p) == 3:
-        print('\t\t' + str(p[2]))
         p[0] = p[2]
     else:
         p[0] = p[1]
@@ -834,10 +825,7 @@ def p_func(p):
 
         info = find_info(p[-2][1])
         info['type'] = 'func'
-        print('inside function->signature body', p.lexer.lineno, p[-1])
     else:
-        print(scopeDict)
-        print(scopeStack)
         raise NameError('no signature for ' + p[-2][1] + '!')
 
 
@@ -889,8 +877,6 @@ def p_basic_lit(p):
     scopeDict[currentScope].updateArgList(name, 'type', p[1])
     scopeDict[currentScope].updateArgList(name, 'offset', scopeDict[currentScope].currOffset + 4)
     scopeDict[currentScope].currOffset += 4
-
-    print('\t\ttypes: ' + str(p[0].typeList))
 
 
 def p_I(p):
@@ -948,7 +934,6 @@ def p_quali_ident(p):
     p[0].typeList.append(p[1] + p[2] + p[3].typeList[0])
     
     # '''QualifiedIdent : IDENTIFIER DOT TypeName'''
-    print(inspect.stack()[0][3])
     # typ = scopeDict[0].getInfo(p[1][4:])
     # a = p[1].idList[0].startswith('type')
     # b = isUsed(p[1], "package")
@@ -972,7 +957,7 @@ def p_prim_expr(p):
                    | PrimaryExpr TypeAssertion
                    | PrimaryExpr LEFT_PARANTHESIS ExpressionListTypeOpt RIGHT_PARANTHESIS
                    | MULT PrimaryExpr'''
-    print(inspect.stack()[0][3], p.lexer.lineno)
+    # print(inspect.stack()[0][3], p.lexer.lineno)
     if p[1] == '*':
         newPlace = new_temp()
         if not p[1].typeList[0].startswith('_ptr_'):
@@ -988,18 +973,15 @@ def p_prim_expr(p):
     elif len(p) == 2:
         p[0] = p[1]
     elif p[2] == '[':
-        print('lololo')
         p[0] = p[1]
         p[0].code += p[3].code
         t = p[1].typeList[0]
         size = 4
         #  TODO: Complete this type checking
-        print(t,"asldfjsdlkjfalsdjglaksdjglkdjglsadjglkjdglkajs")
 
         if t == '*int_t':
 
             if(not('visited' in p[0].extra)):
-                print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
                 size = 4
 
                 newPlace4 = new_temp()
@@ -1040,8 +1022,6 @@ def p_prim_expr(p):
                 p[0].typeList = [p[1].typeList[0][1:]]
 
             else:
-                print('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb')
-                print(scopeDict[currentScope].table)
                 cont = currentScope
                 while(not(p[0].placelist[0] in scopeDict[cont].table) ):
                     cont-=1;
@@ -1107,17 +1087,7 @@ def p_prim_expr(p):
                 p[0].extra['AddrList'] = [newPlace6]
                 p[0].placelist = [newPlace7]
                 p[0].typeList = [p[1].typeList[0][1:]]
-
-
-
-
-                
-
-
         if t == '**int_t':
-            print('heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
-                
-    
             newPlace4 = new_temp()
             size = 4
             p[0].code.append(['=', newPlace4, p[3].placelist[0]])
@@ -1131,8 +1101,6 @@ def p_prim_expr(p):
             p[0].extra['visited'] = True
             p[0].extra['rows'] = [newPlace4]
 
-
-
     elif p[2] == '(':
         p[0] = p[1]
         p[0].code.append(['save_registers'])
@@ -1142,11 +1110,9 @@ def p_prim_expr(p):
         #         p[0].code.append(['push', x])
 
         info = find_info(p[1].idList[0], 0)
-        print(info, p.lexer.lineno, p[-1])
         paramsTypes = info['paramsTypeList']
         # TODO: Overload here
         if len(paramsTypes) != len(p[3].typeList):
-            print(paramsTypes, p[3].typeList, p.lexer.lineno, 'asdf')
             raise Exception('Argument number mismatch: %d v/s %d Line: %d'%(len(paramsTypes), len(p[3].typeList), p.lexer.lineno))
         for i in range(len(paramsTypes)):
             if not isValidAssignment(paramsTypes[i], p[3].typeList[i]):
@@ -1525,10 +1491,8 @@ def p_assignment(p):
             comp = comp[3:]
         if currType.startswith('lit'):
             currType = currType[3:]
-        print('\tComparing types', currType, comp, isValidAssignment(currType, comp))
         if not isValidAssignment(currType, comp):
             raise ValueError("Type of " + comp + " cannot be assigned to " + currType)
-        print('Type Checking:', p[3], currType)
 
 
 def p_assign_op(p):
@@ -1943,7 +1907,8 @@ def p_package_name(p):
     if isUsed(p[1], "."):
         raise NameError("Variable " + p[1] + " already defined")
     else:
-        scopeDict[0].insert(p[1], "package")
+        if p[1] != 'main':
+            scopeDict[0].insert(p[1], "package")
 # -----------------------------------------------
 
 # --------- IMPORT DECLARATIONS ---------------
@@ -2002,26 +1967,23 @@ def p_empty(p):
 
 # Error rule for syntax errors
 def p_error(p):
-    print("Syntax error in input!")
+    print("Syntax error in input on line number %d!" % (p.lexer.lineno))
     print(p)
-    exit()
+    exit(1)
 
 # Build the parser
 parser = yacc.yacc()
 
-try:
-    s = data
-    print(s)
-except EOFError:
-    print("khatam bc")
+s = data
 if not s:
-    print("bas kar")
+    print("Input is empty is this wrong?")
 
-
+print('Parsing...')
 result = parser.parse(s)
 filename = './results/' + input_file.split('/')[-1] + ".ir"
 t = open(filename, 'w+')
-
+print('Parsing completed!')
+print('IR Generated and saved in %s' % (filename), file=sys.__stdout__)
 # print(result)
 # print("-------------------------------------")
 # print(rootNode.code)
@@ -2049,6 +2011,7 @@ def printList(node):
 
 printList(rootNode)
 
+print('################################### SYMBOL TABLE ###################################')
 for s in scopeDict:
     print(scopeDict[s])
 

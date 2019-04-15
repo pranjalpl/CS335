@@ -38,7 +38,7 @@ def get_offset(scopeDict):
     offset = []
     offset = offset+[0]*(cunt)
     fun_list = []
-    print(cunt)
+    # print(cunt)
     var_offset = {}
     for i in range(cunt):
         if(i==0):
@@ -55,8 +55,8 @@ def get_offset(scopeDict):
             key = k
         curr = i
         extra = 0
-        print('her',file=sys.__stdout__)
-        print(last,key,i,file=sys.__stdout__)
+        # print('her',file=sys.__stdout__)
+        # print(last,key,i,file=sys.__stdout__)
 
 
 
@@ -80,6 +80,6 @@ def get_offset(scopeDict):
             max_size[v['label']] = offset[fun_list[cunt]]
             cunt+=1
 
-    print('poiqwnceo', k, v, file=sys.__stdout__) 
+    # print('poiqwnceo', k, v, file=sys.__stdout__) 
     # print(check_unique)       
     return var_offset,max_size

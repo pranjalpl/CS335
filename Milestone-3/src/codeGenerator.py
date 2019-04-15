@@ -15,6 +15,8 @@ def check_int(s):
         return s[1:].isdigit()
     return s.isdigit()
 
+print("Generating code...")
+
 initializeGlobals()
 # offsets = get_offset(scopeDict)
 offsets,max_offsets=get_offset(scopeDict)
@@ -119,9 +121,7 @@ for instr in IR:
         genInstr('movl %%ecx, -%d(%%ebp)' % (destoffset))
 
     elif instr[0] == '=':
-        print(instr)
         destoffset = offsets[instr[1]]
-        print('got', destoffset)
         if str(instr[2]).startswith('var'):
             srcoffset = offsets[instr[2]]
             genInstr('movl -%d(%%ebp), %%eax' % (srcoffset))
@@ -279,7 +279,6 @@ for instr in IR:
         genInstr('movl %%eax, -%d(%%ebp)'%(op1offset))
         genInstr('addl $4, %esp')
 
-
-
-
 closeFile()
+
+print('Code generation completed. Exiting compiler... :)')

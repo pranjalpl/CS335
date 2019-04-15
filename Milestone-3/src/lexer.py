@@ -146,13 +146,18 @@ def t_error(t):
     print("Illegal Character")
     t.lexer.skip(1)
 
-
+print('Constructing lexer')
 lexer = lex.lex()
+print('Lexer built!')
 
 arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument("--input", default="../tests/input/test3.go")
 args = arg_parser.parse_args()
 input_file = args.input
 
-fi=open(input_file,'r')
-data=fi.read()
+try:
+    fi=open(input_file,'r')
+    data=fi.read()
+except:
+    print('File not found')
+    exit(1)
