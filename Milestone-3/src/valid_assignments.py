@@ -20,6 +20,10 @@ validAssignments = [
     newAssignment('float_t', 'int_t'),
     newAssignment('complex_t', 'int_t'),
     newAssignment('complex_t', 'float_t'),
+    newAssignment('_ptr_int_t', '_ptr_int_t'),
+    newAssignment('_ptr_*int_t', '_ptr_int_t'),
+    newAssignment('_ptr_int_t', '_ptr_*int_t'),
+    newAssignment('_ptr_int_t', 'int_t')
 ]
 
 def isValidAssignment(lhs, rhs):
@@ -55,6 +59,8 @@ validBinaryOps = [
     newBinaryOp('+', 'complex_t', 'int_t', 'complex_t'),
     newBinaryOp('+', 'float_t', 'complex_t', 'complex_t'),
     newBinaryOp('+', 'complex_t', 'float_t', 'complex_t'),
+    newBinaryOp('+', '_ptr_int_t', 'int_t', '_ptr_int_t'),
+    newBinaryOp('+', '_ptr_int_t', '_ptr_int_t', 'int_t'),
     
     newBinaryOp('-', 'int_t', 'int_t', 'int_t'),
     newBinaryOp('-', 'float_t', 'float_t', 'float_t'),
@@ -66,6 +72,8 @@ validBinaryOps = [
     newBinaryOp('-', 'complex_t', 'int_t', 'complex_t'),
     newBinaryOp('-', 'float_t', 'complex_t', 'complex_t'),
     newBinaryOp('-', 'complex_t', 'float_t', 'complex_t'),
+    newBinaryOp('-', '_ptr_int_t', 'int_t', '_ptr_int_t'),
+    newBinaryOp('-', '_ptr_int_t', '_ptr_int_t', 'int_t'),
     
     newBinaryOp('*', 'int_t', 'int_t', 'int_t'),
     newBinaryOp('*', 'float_t', 'float_t', 'float_t'),
@@ -78,6 +86,8 @@ validBinaryOps = [
     newBinaryOp('*', 'complex_t', 'int_t', 'complex_t'),
     newBinaryOp('*', 'float_t', 'complex_t', 'complex_t'),
     newBinaryOp('*', 'complex_t', 'float_t', 'complex_t'),
+    newBinaryOp('*', '_ptr_int_t', 'int_t', '_ptr_int_t'),
+    newBinaryOp('*', '_ptr_int_t', '_ptr_int_t', 'int_t'),
     
     newBinaryOp('/', 'int_t', 'int_t', 'int_t'),
     newBinaryOp('/', 'float_t', 'float_t', 'float_t'),

@@ -234,12 +234,17 @@ def p_type_opt(p):
 def p_array_type(p):
     '''ArrayType : LEFT_BRACKET ArrayLength RIGHT_BRACKET ElementType'''
     # print(inspect.stack()[0][3])
+    print('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
     p[0] = ["ArrayType", "[", p[2], "]", p[4]]
     p[0] = IRNode()
     # p[0].code = p[2].code
     p[0].typeList.append("*" + p[4].typeList[0])
     p[0].extra['sizeOfArray'] = int(p[2])
-    scopeDict[currentScope].currOffset += 4*int(p[2])
+    print(p[4].extra)
+    if(p[4].extra =={}):
+        scopeDict[currentScope].currOffset += 4*(int(p[2]))
+    else:   
+        scopeDict[currentScope].currOffset += 4*(int(p[2])*(p[4].extra['sizeOfArray']-1))
 
 # TODO: Modify this to accept only integers
 def p_array_length(p):
@@ -308,7 +313,7 @@ def p_point_type(p):
     '''PointerType : MULT BaseType'''
     # print(inspect.stack()[0][3])
     p[0] = p[2]
-    p[0].typeList[0] = "*" + p[0].typeList[0]
+    p[0].typeList[0] = "_ptr_" + p[0].typeList[0]
 
 
 def p_base_type(p):
@@ -965,50 +970,168 @@ def p_prim_expr(p):
                    | PrimaryExpr LEFT_BRACKET Expression RIGHT_BRACKET
                    | PrimaryExpr Slice
                    | PrimaryExpr TypeAssertion
-                   | PrimaryExpr LEFT_PARANTHESIS ExpressionListTypeOpt RIGHT_PARANTHESIS'''
-    print(inspect.stack()[0][3], p)
-    if len(p) == 2:
-        p[0] = p[1]
-    elif p[2] == '[':
-        p[0] = p[1]
-        p[0].code += p[3].code
-
-        newPlace4 = new_temp()
-        p[0].code.append(['=', newPlace4, '4'])
-
-        newPlace3 = new_temp()
-        p[0].code.append(['x', newPlace3, p[3].placelist[0], newPlace4])
-
+                   | PrimaryExpr LEFT_PARANTHESIS ExpressionListTypeOpt RIGHT_PARANTHESIS
+                   | MULT PrimaryExpr'''
+    print(inspect.stack()[0][3], p.lexer.lineno)
+    if p[1] == '*':
         newPlace = new_temp()
-        p[0].code.append(['+', newPlace, p[0].placelist[0], newPlace3])
+        if not p[1].typeList[0].startswith('_ptr_'):
+            raise TypeError('%s cannot be dereferenced')
 
-        newPlace2 = new_temp()
-        p[0].code.append(['*', newPlace2, newPlace])
+        p[0].code.append(['deref', newPlace, p[2].placelist[0]])
+        p[0].extra['AddrList'] = [p[2].placelist[0]]
+        p[0].placelist = [newPlace]
 
-    
-        scopeDict[currentScope].insert(p[0], 'int_t')
-        scopeDict[currentScope].updateArgList(newPlace4, 'place', newPlace4)
-        scopeDict[currentScope].updateArgList(newPlace4, 'offset', scopeDict[currentScope].currOffset + 4)
-        scopeDict[currentScope].currOffset += 4
-    
-        scopeDict[currentScope].insert(p[0], 'int_t')
-        scopeDict[currentScope].updateArgList(newPlace3, 'place', newPlace3)
-        scopeDict[currentScope].updateArgList(newPlace3, 'offset', scopeDict[currentScope].currOffset + 4)
-        scopeDict[currentScope].currOffset += 4
-
-        scopeDict[currentScope].insert(p[0], 'int_t')
         scopeDict[currentScope].updateArgList(newPlace, 'place', newPlace)
         scopeDict[currentScope].updateArgList(newPlace, 'offset', scopeDict[currentScope].currOffset + 4)
         scopeDict[currentScope].currOffset += 4
-    
-        scopeDict[currentScope].insert(p[0], 'int_t')
-        scopeDict[currentScope].updateArgList(newPlace2, 'place', newPlace2)
-        scopeDict[currentScope].updateArgList(newPlace2, 'offset', scopeDict[currentScope].currOffset + 4)
-        scopeDict[currentScope].currOffset += 4
+    elif len(p) == 2:
+        p[0] = p[1]
+    elif p[2] == '[':
+        print('lololo')
+        p[0] = p[1]
+        p[0].code += p[3].code
+        t = p[1].typeList[0]
+        size = 4
+        #  TODO: Complete this type checking
+        print(t,"asldfjsdlkjfalsdjglaksdjglkdjglsadjglkjdglkajs")
 
-        p[0].extra['AddrList'] = [newPlace]
-        p[0].placelist = [newPlace2]
-        p[0].typeList = [p[1].typeList[0][1:]]
+        if t == '*int_t':
+
+            if(not('visited' in p[0].extra)):
+                print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+                size = 4
+
+                newPlace4 = new_temp()
+                p[0].code.append(['=', newPlace4, str(size)])
+
+                newPlace3 = new_temp()
+                p[0].code.append(['*', newPlace3, p[3].placelist[0], newPlace4])
+
+                newPlace = new_temp()
+                p[0].code.append(['addr+', newPlace, p[0].placelist[0], newPlace3])
+
+                newPlace2 = new_temp()
+                p[0].code.append(['deref', newPlace2, newPlace])
+
+            
+                scopeDict[currentScope].insert(newPlace4, 'int_t')
+                scopeDict[currentScope].updateArgList(newPlace4, 'place', newPlace4)
+                scopeDict[currentScope].updateArgList(newPlace4, 'offset', scopeDict[currentScope].currOffset + 4)
+                scopeDict[currentScope].currOffset += 4
+            
+                scopeDict[currentScope].insert(newPlace3, 'int_t')
+                scopeDict[currentScope].updateArgList(newPlace3, 'place', newPlace3)
+                scopeDict[currentScope].updateArgList(newPlace3, 'offset', scopeDict[currentScope].currOffset + 4)
+                scopeDict[currentScope].currOffset += 4
+
+                scopeDict[currentScope].insert(newPlace, 'int_t')
+                scopeDict[currentScope].updateArgList(newPlace, 'place', newPlace)
+                scopeDict[currentScope].updateArgList(newPlace, 'offset', scopeDict[currentScope].currOffset + 4)
+                scopeDict[currentScope].currOffset += 4
+            
+                scopeDict[currentScope].insert(newPlace2, 'int_t')
+                scopeDict[currentScope].updateArgList(newPlace2, 'place', newPlace2)
+                scopeDict[currentScope].updateArgList(newPlace2, 'offset', scopeDict[currentScope].currOffset + 4)
+                scopeDict[currentScope].currOffset += 4
+
+                p[0].extra['AddrList'] = [newPlace]
+                p[0].placelist = [newPlace2]
+                p[0].typeList = [p[1].typeList[0][1:]]
+
+            else:
+                print('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb')
+                print(scopeDict[currentScope].table)
+                cont = currentScope
+                while(not(p[0].placelist[0] in scopeDict[cont].table) ):
+                    cont-=1;
+                columns = scopeDict[cont].table[p[0].placelist[0]]['size']
+                size = 4
+
+                newPlace1 = new_temp()
+                p[0].code.append(['=', newPlace1, str(size)])
+
+                newPlace2 = new_temp()
+                p[0].code.append(['=', newPlace2, str(columns)])
+
+                newPlace3 = new_temp()
+                p[0].code.append(['*', newPlace3, p[3].placelist[0], newPlace2])
+
+                newPlace4 = new_temp()
+                p[0].code.append(['+', newPlace4, p[0].extra['rows'][0], newPlace3])
+
+                newPlace5 = new_temp()
+                p[0].code.append(['*',newPlace5, newPlace1, newPlace4])
+
+                newPlace6 = new_temp()
+                p[0].code.append(['addr+', newPlace6, p[0].placelist[0], newPlace5])
+
+                newPlace7 = new_temp()
+                p[0].code.append(['deref', newPlace7, newPlace6])
+
+                scopeDict[currentScope].insert(newPlace1, 'int_t')
+                scopeDict[currentScope].updateArgList(newPlace1, 'place', newPlace1)
+                scopeDict[currentScope].updateArgList(newPlace1, 'offset', scopeDict[currentScope].currOffset + 4)
+                scopeDict[currentScope].currOffset += 4
+
+                scopeDict[currentScope].insert(newPlace2, 'int_t')
+                scopeDict[currentScope].updateArgList(newPlace2, 'place', newPlace2)
+                scopeDict[currentScope].updateArgList(newPlace2, 'offset', scopeDict[currentScope].currOffset + 4)
+                scopeDict[currentScope].currOffset += 4
+
+                scopeDict[currentScope].insert(newPlace3, 'int_t')
+                scopeDict[currentScope].updateArgList(newPlace3, 'place', newPlace3)
+                scopeDict[currentScope].updateArgList(newPlace3, 'offset', scopeDict[currentScope].currOffset + 4)
+                scopeDict[currentScope].currOffset += 4
+
+                scopeDict[currentScope].insert(newPlace4, 'int_t')
+                scopeDict[currentScope].updateArgList(newPlace4, 'place', newPlace4)
+                scopeDict[currentScope].updateArgList(newPlace4, 'offset', scopeDict[currentScope].currOffset + 4)
+                scopeDict[currentScope].currOffset += 4
+
+                scopeDict[currentScope].insert(newPlace5, 'int_t')
+                scopeDict[currentScope].updateArgList(newPlace5, 'place', newPlace5)
+                scopeDict[currentScope].updateArgList(newPlace5, 'offset', scopeDict[currentScope].currOffset + 4)
+                scopeDict[currentScope].currOffset += 4
+
+                scopeDict[currentScope].insert(newPlace6, 'int_t')
+                scopeDict[currentScope].updateArgList(newPlace6, 'place', newPlace6)
+                scopeDict[currentScope].updateArgList(newPlace6, 'offset', scopeDict[currentScope].currOffset + 4)
+                scopeDict[currentScope].currOffset += 4
+
+                scopeDict[currentScope].insert(newPlace7, 'int_t')
+                scopeDict[currentScope].updateArgList(newPlace7, 'place', newPlace7)
+                scopeDict[currentScope].updateArgList(newPlace7, 'offset', scopeDict[currentScope].currOffset + 4)
+                scopeDict[currentScope].currOffset += 4
+
+                p[0].extra['AddrList'] = [newPlace6]
+                p[0].placelist = [newPlace7]
+                p[0].typeList = [p[1].typeList[0][1:]]
+
+
+
+
+                
+
+
+        if t == '**int_t':
+            print('heyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
+                
+    
+            newPlace4 = new_temp()
+            size = 4
+            p[0].code.append(['=', newPlace4, p[3].placelist[0]])
+            scopeDict[currentScope].insert(newPlace4, 'int_t')
+            scopeDict[currentScope].updateArgList(newPlace4, 'place', newPlace4)
+            scopeDict[currentScope].updateArgList(newPlace4, 'offset', scopeDict[currentScope].currOffset + 4)
+            scopeDict[currentScope].currOffset += 4
+
+            p[0].placelist = [p[0].placelist[0]]
+            p[0].typeList = [p[1].typeList[0][1:]]
+            p[0].extra['visited'] = True
+            p[0].extra['rows'] = [newPlace4]
+
+
 
     elif p[2] == '(':
         p[0] = p[1]
@@ -1048,6 +1171,7 @@ def p_prim_expr(p):
             p[0] = p[1]
             p[0].placelist = p[2].placelist
             p[0].typeList = p[2].typeList
+
 
 
 def p_selector(p):
@@ -1145,6 +1269,7 @@ def p_expr_opt(p):
     p[0] = p[1]
 
 
+
 def p_unary_expr(p):
     '''UnaryExpr : PrimaryExpr
                  | UnaryOp UnaryExpr
@@ -1174,8 +1299,15 @@ def p_unary_expr(p):
             p[0].code.append(['=', newPlace2, 0])
             p[0].code.append([p[1][1], newPlace, newPlace2, p[2].placelist[0]])
         elif p[1][1] == "&":
-            p[0].code.append([p[1][1], newPlace, p[2].placelist[0]])
-            p[0].typeList[0] = ('*' + p[0].typeList[0])
+            p[0].code.append(['addressOf', newPlace, p[2].placelist[0]])
+            p[0].typeList[0] = ('_ptr_' + p[0].typeList[0])
+        elif p[1][1] == '*':
+            p[0].code.append(['valueAtAddr', newPlace, p[2].placelist[0]])
+            if not p[0].typeList[0].startswith('_ptr_'):
+                raise TypeError('Type of %s cannot be dereferenced' % (p[0].typeList[0]))
+            p[0].typeList[0] = p[0].typeList[0][5:]
+            p[0].extra['AddrList'] = [p[2].placelist[0]]
+
         else:
             p[0].code.append([p[1][1], newPlace, p[2].placelist[0]])
         p[0].placelist = [newPlace]
@@ -1282,6 +1414,7 @@ def p_statement(p):
                  | PrintStmt
                  | IfStmt
                  | SwitchStmt
+                 | MallocStmt
                  | ForStmt '''
     # print(inspect.stack()[0][3])
     if len(p) == 2:
@@ -1302,6 +1435,12 @@ def p_scan_stmt(p):
     # print(inspect.stack()[0][3])
     p[0] = IRNode()
     p[0].code.append(['scan', p[2].placelist[0]])
+
+def p_malloc_stmt(p):
+    ''' MallocStmt : MALLOC LEFT_PARANTHESIS Expression COMMA Expression RIGHT_PARANTHESIS '''
+    # print(inspect.stack()[0][3])
+    p[0] = IRNode()
+    p[0].code.append(['malloc', p[3].placelist[0], p[5].placelist[0]])
 
 
 def p_simple_stmt(p):
@@ -1369,7 +1508,7 @@ def p_assignment(p):
         p[0].code.append([p[2][1][1], p[1].placelist[x], p[3].placelist[x]])
         if p[1].extra['AddrList'][x] != 'None':
             p[0].code.append(
-                ['load', p[1].extra['AddrList'][x], p[1].placelist[x]])
+                ['store', p[1].extra['AddrList'][x], p[1].placelist[x]])
     # TODO type checking
     # for i in range(0, len(p[1].typeList)):
     #     print('\tComparing types', p[1].typeList[i], p[3].typeList[i], p[1].typeList[i] == p[3].typeList[i])

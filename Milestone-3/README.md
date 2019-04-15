@@ -1,11 +1,17 @@
-# Milestone - 3
+# Final Project
 
-## To Run the Parser
+## Group Members
+* Mohammad Asad Karim
+* Pardhu Chowdary Bangarambandi
+* Pranjal Pratik Lal
 
-* `python src/parser.py --input="tests/input/test{no}.html"`
-where no is from 1 to 10
+## To Run a test file
+
+* `./test.sh testfilename.go`
+where testfilename is one of the files in test/input directory
 
 ## References
 
-* [GOtham](https://github.com/pkhrag/cs335)
 * [The Go Programming Language Specification](https://golang.org/ref/spec#Notation)
+* [x86 Assembly Guide](http://flint.cs.yale.edu/cs421/papers/x86-asm/asm.html)
+* [GOtham](https://github.com/pkhrag/cs335)

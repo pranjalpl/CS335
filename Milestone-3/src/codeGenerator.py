@@ -231,6 +231,55 @@ for instr in IR:
         genInstr('imul %eax, %ebx')
         genInstr('movl %%ebx, -%d(%%ebp)'%(op1offset))
 
+    elif instr[0] == 'deref':
+        off1= offsets[instr[1]]
+        off2= offsets[instr[2]]
+        genInstr('movl -%d(%%ebp), %%eax' % (off2))
+        genInstr('movl (%eax), %ebx')
+        genInstr('movl %%ebx, -%d(%%ebp)'%(off1))
+
+    elif instr[0] == 'addr+':
+        arrayBase= offsets[instr[2]]
+        off= offsets[instr[3]]
+        dest = offsets[instr[1]]
+        genInstr('movl $%d, %%eax' % (arrayBase)) 
+        genInstr('movl %ebp, %ebx')
+        genInstr('subl %eax, %ebx')
+        genInstr('movl -%d(%%ebp), %%ecx' % (off))
+        genInstr('addl %ecx, %ebx')
+        genInstr('movl %%ebx, -%d(%%ebp)' % (dest))
+
+    elif instr[0] == 'store':
+        address_offset = offsets[instr[1]]
+        var_offset = offsets[instr[2]]
+        genInstr('movl -%d(%%ebp), %%eax' % (address_offset))
+        genInstr('movl -%d(%%ebp), %%ebx' % (var_offset))
+        genInstr('movl %ebx, (%eax)')
+
+    elif instr[0] == 'addressOf':
+        off = offsets[instr[2]]
+        src = offsets[instr[1]]
+        genInstr('movl %ebp, %eax')
+        genInstr('movl $%d, %%ebx'%(off))
+        genInstr('subl %ebx, %eax')
+        genInstr('movl %%eax, -%d(%%ebp)'%(src))
+
+    elif instr[0] == 'valueAtAddr':
+        off = offsets[instr[2]]
+        src = offsets[instr[1]]
+        genInstr('movl -%d(%%ebp), %%eax'%(off))
+        genInstr('movl 0(%eax), %ebx')
+        genInstr('movl %%ebx, -%d(%%ebp)'%(src))
+
+    elif instr[0] == 'malloc':
+        op1offset = offsets[instr[1]]
+        op2offset = offsets[instr[2]]
+        genInstr('pushl -%d(%%ebp)'%(op2offset))
+        genInstr('call malloc')
+        genInstr('movl %%eax, -%d(%%ebp)'%(op1offset))
+        genInstr('addl $4, %esp')
+
+
 
 
 closeFile()
