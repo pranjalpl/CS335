@@ -81,22 +81,23 @@ func main() {
 	var sum1 int_t = 0;
 
 	// for j = one; j<=n; j = j + one {
-		for i=one; i<=n; i = i + one {
+		for i=one; i!=n+1; i = i + one {
 			for k=one; k<=n; k = k + one {
 				for l=one; l<=n; l = l + one {
 					sum = sum + 1;
 				};
 			};
 		};
-
-		for i=one; i<=n1; i = i + one {
+	print(sum);
+		for i=one; i!=n1+1; i = i + one {
 			for k=one; k<=n1; k = k + one {
 				for l=one; l<=n1; l = l + one {
 					sum = sum + 1;
 				};
 			};
 		};
-		for i=one; i<=n2; i = i + one {
+		print(sum);
+		for i=one; i!=n2+1; i = i + one {
 			for k=one; k<=n2; k = k + one {
 				for l=one; l<=n2; l = l + one {
 					sum = sum + 1;

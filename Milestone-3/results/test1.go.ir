@@ -1,0 +1,414 @@
+goto, label0
+label1:
+=, var3, 2
+label2:
+=, var7, 2
+label0:
+=, var9, 8
+=, var11, 11
+=, var13, 2
+scan, var9
+scan, var11
+>, var15, var11, var9
+=, var18, var15
+=, var19, 1
+-, var18, var19, var18
+ifgoto, var18, label4
+=, var16, 12
+=, var14, var16
+goto, label5
+label, label4
+=, var17, 1872
+=, var14, var17
+label, label5
+-=, var14, var11
+print, var14
+++, var14
+print, var14
+=, var20, 1
+retint, var20
+{
+	'table': {
+		'maie': {
+			'type': 'package',
+		},
+		'ma': {
+			'type': 'func',
+			'retType': 'void',
+			'label': 'label1',
+			'child': {
+				'table': {
+					'a': {
+						'type': '*int_t',
+						'place': 'var0',
+						'offset': 0,
+						'size': 10,
+					},
+					'var0': {
+						'type': '*int_t',
+						'offset': 4,
+						'size': 10,
+					},
+					'b': {
+						'type': '*int_t',
+						'place': 'var1',
+						'offset': 48,
+						'size': 20,
+					},
+					'var1': {
+						'type': '*int_t',
+						'offset': 52,
+						'size': 20,
+					},
+					'base': {
+						'type': 'int_t',
+						'place': 'var3',
+						'offset': 136,
+					},
+					'var2': {
+						'type': 'int_t',
+						'offset': 140,
+					},
+					'var3': {
+						'type': 'int_t',
+						'place': 'var3',
+						'offset': 144,
+					},
+				},
+				'global_symbols': ['a', 'var0', 'b', 'var1', 'base', 'var2', 'var3'],
+				'parent': 0,
+				'extras': {
+				},
+			},
+			'paramsTypeList': [],
+		},
+		'mai': {
+			'type': 'func',
+			'retType': 'void',
+			'label': 'label2',
+			'child': {
+				'table': {
+					'a': {
+						'type': '*int_t',
+						'place': 'var4',
+						'offset': 0,
+						'size': 10,
+					},
+					'var4': {
+						'type': '*int_t',
+						'offset': 4,
+						'size': 10,
+					},
+					'b': {
+						'type': '*int_t',
+						'place': 'var5',
+						'offset': 48,
+						'size': 20,
+					},
+					'var5': {
+						'type': '*int_t',
+						'offset': 52,
+						'size': 20,
+					},
+					'base': {
+						'type': 'int_t',
+						'place': 'var7',
+						'offset': 136,
+					},
+					'var6': {
+						'type': 'int_t',
+						'offset': 140,
+					},
+					'var7': {
+						'type': 'int_t',
+						'place': 'var7',
+						'offset': 144,
+					},
+				},
+				'global_symbols': ['a', 'var4', 'b', 'var5', 'base', 'var6', 'var7'],
+				'parent': 0,
+				'extras': {
+				},
+			},
+			'paramsTypeList': [],
+		},
+		'main': {
+			'type': 'func',
+			'retType': 'void',
+			'label': 'label0',
+			'child': {
+				'table': {
+					'a': {
+						'type': 'int_t',
+						'place': 'var9',
+						'offset': 0,
+					},
+					'var8': {
+						'type': 'int_t',
+						'offset': 4,
+					},
+					'var9': {
+						'type': 'int_t',
+						'place': 'var9',
+						'offset': 8,
+					},
+					'b': {
+						'type': 'int_t',
+						'place': 'var11',
+						'offset': 12,
+					},
+					'var10': {
+						'type': 'int_t',
+						'offset': 16,
+					},
+					'var11': {
+						'type': 'int_t',
+						'place': 'var11',
+						'offset': 20,
+					},
+					'base': {
+						'type': 'int_t',
+						'place': 'var13',
+						'offset': 24,
+					},
+					'var12': {
+						'type': 'int_t',
+						'offset': 28,
+					},
+					'var13': {
+						'type': 'int_t',
+						'place': 'var13',
+						'offset': 32,
+					},
+					'd': {
+						'type': 'int_t',
+						'place': 'var14',
+						'offset': 36,
+					},
+					'var14': {
+						'type': 'int_t',
+						'offset': 40,
+					},
+					'var15': {
+						'type': 'int_t',
+						'offset': 44,
+					},
+					'var18': {
+						'type': 'int_t',
+						'offset': 48,
+					},
+					'var19': {
+						'type': 'int_t',
+						'offset': 52,
+					},
+					'var20': {
+						'type': 'int_t',
+						'place': 'var20',
+						'offset': 56,
+					},
+				},
+				'global_symbols': ['a', 'var8', 'var9', 'b', 'var10', 'var11', 'base', 'var12', 'var13', 'd', 'var14', 'var15', 'var18', 'var19', 'var20'],
+				'parent': 0,
+				'extras': {
+				},
+			},
+			'paramsTypeList': [],
+		},
+	},
+	'global_symbols': ['maie', 'ma', 'mai', 'main'],
+	'parent': None,
+	'extras': {
+	},
+}
+{
+	'table': {
+		'a': {
+			'type': '*int_t',
+			'place': 'var0',
+			'offset': 0,
+			'size': 10,
+		},
+		'var0': {
+			'type': '*int_t',
+			'offset': 4,
+			'size': 10,
+		},
+		'b': {
+			'type': '*int_t',
+			'place': 'var1',
+			'offset': 48,
+			'size': 20,
+		},
+		'var1': {
+			'type': '*int_t',
+			'offset': 52,
+			'size': 20,
+		},
+		'base': {
+			'type': 'int_t',
+			'place': 'var3',
+			'offset': 136,
+		},
+		'var2': {
+			'type': 'int_t',
+			'offset': 140,
+		},
+		'var3': {
+			'type': 'int_t',
+			'place': 'var3',
+			'offset': 144,
+		},
+	},
+	'global_symbols': ['a', 'var0', 'b', 'var1', 'base', 'var2', 'var3'],
+	'parent': 0,
+	'extras': {
+	},
+}
+{
+	'table': {
+		'a': {
+			'type': '*int_t',
+			'place': 'var4',
+			'offset': 0,
+			'size': 10,
+		},
+		'var4': {
+			'type': '*int_t',
+			'offset': 4,
+			'size': 10,
+		},
+		'b': {
+			'type': '*int_t',
+			'place': 'var5',
+			'offset': 48,
+			'size': 20,
+		},
+		'var5': {
+			'type': '*int_t',
+			'offset': 52,
+			'size': 20,
+		},
+		'base': {
+			'type': 'int_t',
+			'place': 'var7',
+			'offset': 136,
+		},
+		'var6': {
+			'type': 'int_t',
+			'offset': 140,
+		},
+		'var7': {
+			'type': 'int_t',
+			'place': 'var7',
+			'offset': 144,
+		},
+	},
+	'global_symbols': ['a', 'var4', 'b', 'var5', 'base', 'var6', 'var7'],
+	'parent': 0,
+	'extras': {
+	},
+}
+{
+	'table': {
+		'a': {
+			'type': 'int_t',
+			'place': 'var9',
+			'offset': 0,
+		},
+		'var8': {
+			'type': 'int_t',
+			'offset': 4,
+		},
+		'var9': {
+			'type': 'int_t',
+			'place': 'var9',
+			'offset': 8,
+		},
+		'b': {
+			'type': 'int_t',
+			'place': 'var11',
+			'offset': 12,
+		},
+		'var10': {
+			'type': 'int_t',
+			'offset': 16,
+		},
+		'var11': {
+			'type': 'int_t',
+			'place': 'var11',
+			'offset': 20,
+		},
+		'base': {
+			'type': 'int_t',
+			'place': 'var13',
+			'offset': 24,
+		},
+		'var12': {
+			'type': 'int_t',
+			'offset': 28,
+		},
+		'var13': {
+			'type': 'int_t',
+			'place': 'var13',
+			'offset': 32,
+		},
+		'd': {
+			'type': 'int_t',
+			'place': 'var14',
+			'offset': 36,
+		},
+		'var14': {
+			'type': 'int_t',
+			'offset': 40,
+		},
+		'var15': {
+			'type': 'int_t',
+			'offset': 44,
+		},
+		'var18': {
+			'type': 'int_t',
+			'offset': 48,
+		},
+		'var19': {
+			'type': 'int_t',
+			'offset': 52,
+		},
+		'var20': {
+			'type': 'int_t',
+			'place': 'var20',
+			'offset': 56,
+		},
+	},
+	'global_symbols': ['a', 'var8', 'var9', 'b', 'var10', 'var11', 'base', 'var12', 'var13', 'd', 'var14', 'var15', 'var18', 'var19', 'var20'],
+	'parent': 0,
+	'extras': {
+	},
+}
+{
+	'table': {
+		'var16': {
+			'type': 'int_t',
+			'place': 'var16',
+			'offset': 0,
+		},
+	},
+	'global_symbols': ['var16'],
+	'parent': 3,
+	'extras': {
+	},
+}
+{
+	'table': {
+		'var17': {
+			'type': 'int_t',
+			'place': 'var17',
+			'offset': 0,
+		},
+	},
+	'global_symbols': ['var17'],
+	'parent': 3,
+	'extras': {
+	},
+}
+6
+{'a': 0, 'var0': 4, 'b': 12, 'var1': 52, 'base': 24, 'var2': 140, 'var3': 144, 'var4': 4, 'var5': 52, 'var6': 140, 'var7': 144, 'var8': 4, 'var9': 8, 'var10': 16, 'var11': 20, 'var12': 28, 'var13': 32, 'd': 36, 'var14': 40, 'var15': 44, 'var18': 48, 'var19': 52, 'var20': 56, 'var16': 60, 'var17': 64} {'label1': 148, 'label2': 148, 'label0': 68}
