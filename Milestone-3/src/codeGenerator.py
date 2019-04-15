@@ -193,4 +193,11 @@ for instr in IR:
         genInstr('movl -%d(%%ebp), %%eax' % (off))
         genInstr('cmp $0, %eax')
         genInstr('je %s' % (instr[2]))
+
+    elif instr[0] == 'deref':
+        off1= offsets[instr[1]]
+        off2= offsets[instr[2]]
+        genInstr('movl -%d(%%ebp), %%eax' % (off2))
+        genInstr('movl (%%eax), %%ebx')
+        genInstr('movl %%ebx, -%d(%%ebp)'%(destoffset))
 closeFile()

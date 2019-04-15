@@ -166,7 +166,7 @@ precedence = (
 
 def p_start(p):
     '''start : SourceFile'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     global rootNode
     p[0] = p[1]
     rootNode = p[0]
@@ -178,7 +178,7 @@ def p_type(p):
     '''Type : TypeName
             | TypeLit
             | LEFT_PARANTHESIS Type RIGHT_PARANTHESIS'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 4:
         p[0] = p[2]
     else:
@@ -189,7 +189,7 @@ def p_type(p):
 def p_type_name(p):
     '''TypeName : TypeToken
                 | QualifiedIdent'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
     print('\t\ttypes: ' + str(p[0].typeList))
 
@@ -203,7 +203,7 @@ def p_type_token(p):
                  | BOOL_T
                  | STRING_T
                  | TYPE IDENTIFIER'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = IRNode()
     if len(p) == 3:
         if not isUsed(p[2], 'all'):
@@ -218,14 +218,14 @@ def p_type_lit(p):
     '''TypeLit : ArrayType
                | StructType
                | PointerType'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 
 
 def p_type_opt(p):
     '''TypeOpt : Type
                | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 # -------------------------------------------------------
 
@@ -233,7 +233,7 @@ def p_type_opt(p):
 # ------------------- ARRAY TYPE -------------------------
 def p_array_type(p):
     '''ArrayType : LEFT_BRACKET ArrayLength RIGHT_BRACKET ElementType'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["ArrayType", "[", p[2], "]", p[4]]
     p[0] = IRNode()
     # p[0].code = p[2].code
@@ -247,12 +247,12 @@ def p_array_length(p):
                     | I OCTAL
                     | I HEX
                     | I RUNE'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = int(p[2])
 
 def p_element_type(p):
     ''' ElementType : Type '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 # --------------------------------------------------------
 
@@ -260,7 +260,7 @@ def p_element_type(p):
 # ----------------- STRUCT TYPE ---------------------------
 def p_struct_type(p):
     '''StructType : CreateFuncScope STRUCT LEFT_BRACES FieldDeclRep RIGHT_BRACES EndScope'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[4]
     p[0].typeList = [find_info(p[-1], 0)]
 
@@ -268,7 +268,7 @@ def p_struct_type(p):
 def p_field_decl_rep(p):
     ''' FieldDeclRep : FieldDeclRep FieldDecl SEMICOLON
                     | epsilon '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) < 4:
         p[0] = p[1]
     else:
@@ -279,7 +279,7 @@ def p_field_decl_rep(p):
 
 def p_field_decl(p):
     ''' FieldDecl : IdentifierList Type'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
     for i in range(0, len(p[0].idList)):
         scopeDict[currentScope].updateArgList(p[0].idList[i], 'type', p[2].typeList[0])
@@ -292,13 +292,13 @@ def p_field_decl(p):
 def p_TagOpt(p):
     ''' TagOpt : Tag
                 | epsilon '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["TagOpt", p[1]]
 
 
 def p_Tag(p):
     ''' Tag : STRING '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["Tag", p[1]]
 # ---------------------------------------------------------
 
@@ -306,14 +306,14 @@ def p_Tag(p):
 # ------------------POINTER TYPES--------------------------
 def p_point_type(p):
     '''PointerType : MULT BaseType'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[2]
     p[0].typeList[0] = "*" + p[0].typeList[0]
 
 
 def p_base_type(p):
     '''BaseType : Type'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 # ---------------------------------------------------------
 
@@ -321,7 +321,7 @@ def p_base_type(p):
 # ---------------FUNCTION TYPES----------------------------
 def p_sign(p):
     '''Signature : Parameters TypeOpt'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
     p[0].paramTypeList = p[1].typeList
     scopeDict[0].insert(p[-2][1], 'signatureType')
@@ -343,7 +343,7 @@ def p_sign(p):
 def p_result_opt(p):
     '''ResultOpt : Result
                  | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["ResultOpt", p[1]]
 
 # XXX
@@ -352,34 +352,34 @@ def p_result_opt(p):
 def p_result(p):
     '''Result : Parameters
               | Type'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["Result", p[1]]
 
 
 def p_params(p):
     '''Parameters : LEFT_PARANTHESIS ParameterListOpt RIGHT_PARANTHESIS'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[2]
 
 
 def p_param_list_opt(p):
     '''ParameterListOpt : ParametersList
                              | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 
 
 def p_param_list(p):
     '''ParametersList : ParameterDecl
                       | ParameterDeclCommaRep'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 
 
 def p_param_decl_comma_rep(p):
     '''ParameterDeclCommaRep : ParameterDeclCommaRep COMMA ParameterDecl
                              | ParameterDecl COMMA ParameterDecl'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
     # XXX: Erroneous code? shouldnt it be p[1].typeList + p[3].typeList instead of p[3].typeList alone
     p[0].idList += p[3].idList
@@ -391,7 +391,7 @@ def p_param_decl(p):
     # '''ParameterDecl : IdentifierList Type'''
     '''ParameterDecl : IdentifierList Type
                      | Type'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
     if len(p) == 3:
         for i in range(len(p[1].idList)):
@@ -410,20 +410,20 @@ def p_param_decl(p):
 # -----------------------BLOCKS---------------------------
 def p_block(p):
     '''Block : LEFT_BRACES StatementList RIGHT_BRACES'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[2]
 
 
 def p_stat_list(p):
     '''StatementList : StatementRep'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 
 
 def p_stat_rep(p):
     '''StatementRep : StatementRep Statement SEMICOLON
                     | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 4:
         p[0] = p[1]
         p[0].code += p[2].code
@@ -437,14 +437,14 @@ def p_decl(p):
     '''Declaration : ConstDecl
                     | TypeDecl
                     | VarDecl'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 
 
 def p_toplevel_decl(p):
     '''TopLevelDecl : Declaration
                     | FunctionDecl'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 # -------------------------------------------------------
 
@@ -453,7 +453,7 @@ def p_toplevel_decl(p):
 def p_const_decl(p):
     '''ConstDecl : CONST ConstSpec
                  | CONST LEFT_PARANTHESIS ConstSpecRep RIGHT_PARANTHESIS'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 3:
         p[0] = p[2]
     else:
@@ -463,7 +463,7 @@ def p_const_decl(p):
 def p_const_spec_rep(p):
     '''ConstSpecRep : ConstSpecRep ConstSpec SEMICOLON
                     | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 4:
         p[0] = p[1]
         p[0].code += p[2].code
@@ -473,7 +473,7 @@ def p_const_spec_rep(p):
 
 def p_const_spec(p):
     '''ConstSpec : IdentifierList Type ASSIGN ExpressionList'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = IRNode()
     p[0].code = p[1].code + p[4].code
 
@@ -504,7 +504,7 @@ def p_const_spec(p):
 def p_type_expr_list(p):
     '''TypeExprListOpt : TypeOpt ASSIGN ExpressionList
                        | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 4:
         p[0] = ["TypeExprListOpt", p[1], "=", p[3]]
     else:
@@ -513,7 +513,7 @@ def p_type_expr_list(p):
 
 def p_identifier_list(p):
     '''IdentifierList : IDENTIFIER IdentifierRep'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[2]
     p[0].idList = [p[1]] + p[0].idList
     if isUsed(p[1], "."):
@@ -533,7 +533,7 @@ def p_identifier_list(p):
 def p_identifier_rep(p):
     '''IdentifierRep : IdentifierRep COMMA IDENTIFIER
                      | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 4:
         if isUsed(p[3], "."):
             raise NameError("ERROR: " + p[3] + " already exists")
@@ -568,7 +568,7 @@ def p_expr_list(p):
 def p_expr_rep(p):
     '''ExpressionRep : ExpressionRep COMMA Expression
                      | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 4:
         p[0] = p[1]
         p[0].code += p[3].code
@@ -588,7 +588,7 @@ def p_expr_rep(p):
 def p_type_decl(p):
     '''TypeDecl : TYPE TypeSpec
                 | TYPE LEFT_PARANTHESIS TypeSpecRep RIGHT_PARANTHESIS'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 5:
         p[0] = p[3]
     else:
@@ -598,7 +598,7 @@ def p_type_decl(p):
 def p_type_spec_rep(p):
     '''TypeSpecRep : TypeSpecRep TypeSpec SEMICOLON
                    | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 4:
         p[0] = IRNode()
     else:
@@ -607,7 +607,7 @@ def p_type_spec_rep(p):
 
 def p_type_spec(p):
     '''TypeSpec : TypeDef'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 
 # XXX
@@ -615,7 +615,7 @@ def p_type_spec(p):
 
 def p_alias_decl(p):
     '''AliasDecl : IDENTIFIER ASSIGN Type'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["AliasDecl", p[1], '=', p[3]]
 # -------------------------------------------------------
 
@@ -623,7 +623,7 @@ def p_alias_decl(p):
 # -------------------TYPE DEFINITIONS--------------------
 def p_type_def(p):
     '''TypeDef : IDENTIFIER Type'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if isUsed(p[1], ".!struct"):
         raise NameError("ERROR: " + p[1] + " already exists, can't redefine")
     else:
@@ -636,7 +636,7 @@ def p_type_def(p):
 def p_var_decl(p):
     '''VarDecl : VAR VarSpec
                | VAR LEFT_PARANTHESIS VarSpecRep RIGHT_PARANTHESIS'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 3:
         p[0] = p[2]
     else:
@@ -646,7 +646,7 @@ def p_var_decl(p):
 def p_var_spec_rep(p):
     '''VarSpecRep : VarSpecRep VarSpec SEMICOLON
                   | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 4:
         p[0] = p[1]
         p[0].code += p[2].code
@@ -657,7 +657,7 @@ def p_var_spec_rep(p):
 def p_var_spec(p):
     '''VarSpec : IdentifierList Type ExpressionListOpt
                | IdentifierList ASSIGN ExpressionList'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if p[2] == '=':
         p[0] = IRNode()
         p[0].code = p[1].code + p[3].code
@@ -735,7 +735,7 @@ def p_var_spec(p):
 def p_expr_list_opt(p):
     '''ExpressionListOpt : ASSIGN ExpressionList
                          | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 3:
         print('\t\t' + str(p[2]))
         p[0] = p[2]
@@ -747,7 +747,7 @@ def p_expr_list_opt(p):
 # ----------------SHORT VARIABLE DECLARATIONS-------------
 def p_short_var_decl(p):
     ''' ShortVarDecl : IDENTIFIER QUICK_ASSIGN Expression '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if isUsed(p[1], "."):
         raise NameError("ERROR: " + p[1] + " already exists")
     else:
@@ -768,7 +768,7 @@ def p_short_var_decl(p):
 def p_func_decl(p):
     '''FunctionDecl : FUNC FunctionName CreateScope Function EndScope
                     | FUNC FunctionName CreateScope Signature EndScope'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if not len(p[4].code):
         p[0] = IRNode()
         return
@@ -788,31 +788,31 @@ def p_func_decl(p):
 
 def p_create_func_scope(p):
     '''CreateFuncScope : '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     add_scope(p[-1])
 
 
 def p_create_scope(p):
     '''CreateScope : '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     add_scope()
 
 
 def p_delete_scope(p):
     '''EndScope : '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     delete_scope()
 
 
 def p_func_name(p):
     '''FunctionName : IDENTIFIER'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["FunctionName", p[1]]
 
 
 def p_func(p):
     '''Function : Signature FunctionBody'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     # DONE typechecking of return type. It should be same as defined in signature
     p[0] = p[2]
     for x in range(len(p[1].idList)):
@@ -837,7 +837,7 @@ def p_func(p):
 
 def p_func_body(p):
     '''FunctionBody : Block'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 # -------------------------------------------------------
 
@@ -847,7 +847,7 @@ def p_operand(p):
     '''Operand : Literal
                | OperandName
                | LEFT_PARANTHESIS Expression RIGHT_PARANTHESIS'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 2:
         p[0] = p[1]
     else:
@@ -856,9 +856,9 @@ def p_operand(p):
 
 def p_literal(p):
     '''Literal : BasicLit'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     # | CompositeLit'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 
 
@@ -870,7 +870,7 @@ def p_basic_lit(p):
                 | C IMAGINARY
                 | I RUNE
                 | S STRING'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["BasicLit", str(p[1])]
     p[0] = IRNode()
     name = new_temp()
@@ -889,31 +889,31 @@ def p_basic_lit(p):
 
 def p_I(p):
     ''' I : '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = 'int_t'
 
 
 def p_F(p):
     ''' F : '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = 'float_t'
 
 
 def p_C(p):
     ''' C : '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = 'complex_t'
 
 
 def p_S(p):
     ''' S : '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = 'string_t'
 
 
 def p_operand_name(p):
     '''OperandName : IDENTIFIER'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if not isUsed(p[1], "all"):
         raise NameError("ERROR: " + p[1] + " not defined")
     p[0] = IRNode()
@@ -935,7 +935,7 @@ def p_operand_name(p):
 # -------------------QUALIFIED IDENTIFIER----------------
 def p_quali_ident(p):
     '''QualifiedIdent : IDENTIFIER DOT TypeName'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if not isUsed(p[1], "package"):
         raise NameError("Package " + p[1] + " not included")
     p[0] = IRNode()
@@ -965,15 +965,20 @@ def p_prim_expr(p):
                    | PrimaryExpr Slice
                    | PrimaryExpr TypeAssertion
                    | PrimaryExpr LEFT_PARANTHESIS ExpressionListTypeOpt RIGHT_PARANTHESIS'''
-    print(inspect.stack()[0][3], p)
+    print(inspect.stack()[0][3], p.lexer.lineno)
     if len(p) == 2:
         p[0] = p[1]
     elif p[2] == '[':
+        print('lololo')
         p[0] = p[1]
         p[0].code += p[3].code
-
+        t = p[1].typeList[0]
+        size - 4
+        #  TODO: Complete this type checking
+        if t == '*int_t':
+            size = 4
         newPlace4 = new_temp()
-        p[0].code.append(['=', newPlace4, '4'])
+        p[0].code.append(['=', newPlace4, str(size)])
 
         newPlace3 = new_temp()
         p[0].code.append(['*', newPlace3, p[3].placelist[0], newPlace4])
@@ -985,22 +990,22 @@ def p_prim_expr(p):
         p[0].code.append(['deref', newPlace2, newPlace])
 
     
-        scopeDict[currentScope].insert(p[0], 'int_t')
+        scopeDict[currentScope].insert(newPlace4, 'int_t')
         scopeDict[currentScope].updateArgList(newPlace4, 'place', newPlace4)
         scopeDict[currentScope].updateArgList(newPlace4, 'offset', scopeDict[currentScope].currOffset + 4)
         scopeDict[currentScope].currOffset += 4
     
-        scopeDict[currentScope].insert(p[0], 'int_t')
+        scopeDict[currentScope].insert(newPlace3, 'int_t')
         scopeDict[currentScope].updateArgList(newPlace3, 'place', newPlace3)
         scopeDict[currentScope].updateArgList(newPlace3, 'offset', scopeDict[currentScope].currOffset + 4)
         scopeDict[currentScope].currOffset += 4
 
-        scopeDict[currentScope].insert(p[0], 'int_t')
+        scopeDict[currentScope].insert(newPlace, 'int_t')
         scopeDict[currentScope].updateArgList(newPlace, 'place', newPlace)
         scopeDict[currentScope].updateArgList(newPlace, 'offset', scopeDict[currentScope].currOffset + 4)
         scopeDict[currentScope].currOffset += 4
     
-        scopeDict[currentScope].insert(p[0], 'int_t')
+        scopeDict[currentScope].insert(newPlace2, 'int_t')
         scopeDict[currentScope].updateArgList(newPlace2, 'place', newPlace2)
         scopeDict[currentScope].updateArgList(newPlace2, 'offset', scopeDict[currentScope].currOffset + 4)
         scopeDict[currentScope].currOffset += 4
@@ -1078,14 +1083,14 @@ def p_selector(p):
 
 def p_index(p):
     '''Index : LEFT_BRACKET Expression RIGHT_BRACKET'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["Index", "[", p[2], "]"]
 
 
 def p_slice(p):
     '''Slice : LEFT_BRACKET ExpressionOpt COLON ExpressionOpt RIGHT_BRACKET
              | LEFT_BRACKET ExpressionOpt COLON Expression COLON Expression RIGHT_BRACKET'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 6:
         p[0] = ["Slice", "[", p[2], ":", p[4], "]"]
     else:
@@ -1094,14 +1099,14 @@ def p_slice(p):
 
 def p_type_assert(p):
     '''TypeAssertion : DOT LEFT_PARANTHESIS Type RIGHT_PARANTHESIS'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["TypeAssertion", ".", "(", p[3], ")"]
 
 
 def p_expr_list_type_opt(p):
     '''ExpressionListTypeOpt : ExpressionList
                              | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 # ---------------------------------------------------------
 
@@ -1110,7 +1115,7 @@ def p_expr_list_type_opt(p):
 def p_expr(p):
     '''Expression : UnaryExpr
                   | Expression BinaryOp Expression'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 4:
         p[0] = p[1]
         p[0].code += p[3].code
@@ -1140,7 +1145,7 @@ def p_expr(p):
 def p_expr_opt(p):
     '''ExpressionOpt : Expression
                      | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 
 
@@ -1148,7 +1153,7 @@ def p_unary_expr(p):
     '''UnaryExpr : PrimaryExpr
                  | UnaryOp UnaryExpr
                  | NOT UnaryExpr'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 2:
         p[0] = p[1]
     elif p[1] == "!":
@@ -1185,7 +1190,7 @@ def p_binary_op(p):
                 | LOG_AND
                 | RelOp
                 | AddMulOp'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if p[1] == "||":
         p[0] = ["BinaryOp", "||"]
     elif p[1] == "&&":
@@ -1201,7 +1206,7 @@ def p_rel_op(p):
              | GT
              | LEQ
              | GEQ'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if p[1] == "==":
         p[0] = ["RelOp", "=="]
     elif p[1] == "!=":
@@ -1224,7 +1229,7 @@ def p_add_mul_op(p):
                 | MOD
                 | LSHIFT
                 | RSHIFT'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if p[1] == "/":
         p[0] = ["AddMulOp", "/"]
     elif p[1] == "%":
@@ -1246,7 +1251,7 @@ def p_unary_op(p):
                | SUB
                | MULT
                | AND '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if p[1] == '+':
         p[0] = ["UnaryOp", "+"]
     elif p[1] == '-':
@@ -1261,7 +1266,7 @@ def p_unary_op(p):
 # -----------------CONVERSIONS-----------------------------
 def p_conversion(p):
     '''Conversion : TYPECAST Type LEFT_PARANTHESIS Expression RIGHT_PARANTHESIS'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[4]
     p[0].typeList = [p[1].typeList[0]]
 # ---------------------------------------------------------
@@ -1282,7 +1287,7 @@ def p_statement(p):
                  | IfStmt
                  | SwitchStmt
                  | ForStmt '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 2:
         p[0] = p[1]
     else:
@@ -1291,14 +1296,14 @@ def p_statement(p):
 
 def p_print_stmt(p):
     ''' PrintStmt : PRINT Expression '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[2]
     p[0].code.append(['print', p[2].placelist[0]])
 
 
 def p_scan_stmt(p):
     ''' ScanStmt : SCAN Expression '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = IRNode()
     p[0].code.append(['scan', p[2].placelist[0]])
 
@@ -1309,13 +1314,13 @@ def p_simple_stmt(p):
                     | IncDecStmt
                     | Assignment
                     | ShortVarDecl '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 
 
 def p_labeled_statements(p):
     ''' LabeledStmt : Label COLON Statement '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if isUsed(p[1][1], "label"):
         raise NameError("Label " + p[1][1] + " already exists")
     newl = ''
@@ -1335,13 +1340,13 @@ def p_labeled_statements(p):
 
 def p_label(p):
     ''' Label : IDENTIFIER '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["Label", p[1]]
 
 
 def p_expression_stmt(p):
     ''' ExpressionStmt : Expression '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = IRNode()
     p[0].code = p[1].code
 
@@ -1349,7 +1354,7 @@ def p_expression_stmt(p):
 def p_inc_dec(p):
     ''' IncDecStmt : Expression INC
                     | Expression DEC '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = IRNode()
     p[0].code = p[1].code
     p[0].code.append([p[2], p[1].placelist[0]])
@@ -1358,7 +1363,7 @@ def p_inc_dec(p):
 def p_assignment(p):
     ''' Assignment : ExpressionList assign_op ExpressionList'''
     global scopeDict
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p[1].placelist) != len(p[3].placelist):
         raise ValueError("Number of expressions are not equal")
     p[0] = IRNode()
@@ -1393,7 +1398,7 @@ def p_assignment(p):
 
 def p_assign_op(p):
     ''' assign_op : AssignOp'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["assign_op", p[1]]
 
 
@@ -1409,13 +1414,13 @@ def p_AssignOp(p):
                  | LSHIFT_ASSIGN
                  | RSHIFT_ASSIGN
                  | ASSIGN '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["AssignOp", p[1]]
 
 
 def p_if_statement(p):
     ''' IfStmt : IF Expression CreateScope Block EndScope ElseOpt'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = IRNode()
     p[0].code = p[2].code
     label1 = new_label()
@@ -1442,7 +1447,7 @@ def p_if_statement(p):
 def p_SimpleStmtOpt(p):
     ''' SimpleStmtOpt : SimpleStmt SEMICOLON
                         | epsilon '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 3:
         p[0] = ["SimpleStmtOpt", p[1], ";"]
     else:
@@ -1453,7 +1458,7 @@ def p_else_opt(p):
     ''' ElseOpt : ELSE IfStmt
                 | ELSE CreateScope Block EndScope
                 | epsilon '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 3:
         p[0] = p[2]
     elif len(p) == 5:
@@ -1467,13 +1472,13 @@ def p_else_opt(p):
 def p_switch_statement(p):
     ''' SwitchStmt : ExprSwitchStmt
                     | TypeSwitchStmt '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 
 
 def p_expr_switch_stmt(p):
     ''' ExprSwitchStmt : SWITCH ExpressionOpt LEFT_BRACES ExprCaseClauseRep RIGHT_BRACES'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[2]
     defaultLabel = None
     labnew = new_label()
@@ -1502,7 +1507,7 @@ def p_expr_switch_stmt(p):
 
 def p_start_switch(p):
     ''' StartSwitch : '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = IRNode()
     label2 = new_label()
     scopeDict[currentScope].updateExtra('endFor', label2)
@@ -1512,7 +1517,7 @@ def p_start_switch(p):
 def p_expr_case_clause_rep(p):
     ''' ExprCaseClauseRep : ExprCaseClauseRep ExprCaseClause
                             | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 3:
         p[0] = p[1]
         p[0].code += p[2].code
@@ -1529,7 +1534,7 @@ def p_expr_case_clause_rep(p):
 
 def p_expr_case_clause(p):
     ''' ExprCaseClause : ExprSwitchCase COLON StatementList'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = IRNode()
     label = new_label()
     p[0].code = [['label', label]]
@@ -1545,7 +1550,7 @@ def p_expr_case_clause(p):
 def p_expr_switch_case(p):
     ''' ExprSwitchCase : CASE ExpressionList
                         | DEFAULT '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 3:
         p[0] = p[2]
         p[0].extra['labelType'] = ['case']
@@ -1559,13 +1564,13 @@ def p_expr_switch_case(p):
 
 def p_type_switch_stmt(p):
     ''' TypeSwitchStmt : SWITCH SimpleStmtOpt TypeSwitchGuard LEFT_BRACES TypeCaseClauseOpt RIGHT_BRACES'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["TypeSwitchStmt", "switch", p[2], p[3], "{", p[5], "}"]
 
 
 def p_type_switch_guard(p):
     ''' TypeSwitchGuard : IdentifierOpt PrimaryExpr DOT LEFT_PARANTHESIS TYPE RIGHT_PARANTHESIS '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
 
     p[0] = ["TypeSwitchGuard", p[1], p[2], ".", "(", "type", ")"]
 
@@ -1573,7 +1578,7 @@ def p_type_switch_guard(p):
 def p_identifier_opt(p):
     ''' IdentifierOpt : IDENTIFIER QUICK_ASSIGN
                       | epsilon '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
 
     if len(p) == 3:
         p[0] = ["IdentifierOpt", p[1], ":="]
@@ -1584,7 +1589,7 @@ def p_identifier_opt(p):
 def p_type_case_clause_opt(p):
     ''' TypeCaseClauseOpt : TypeCaseClauseOpt TypeCaseClause
                           | epsilon '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 3:
         p[0] = ["TypeCaseClauseOpt", p[1], p[2]]
     else:
@@ -1593,14 +1598,14 @@ def p_type_case_clause_opt(p):
 
 def p_type_case_clause(p):
     ''' TypeCaseClause : TypeSwitchCase COLON StatementList'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["TypeCaseClause", p[1], ":", p[3]]
 
 
 def p_type_switch_case(p):
     ''' TypeSwitchCase : CASE TypeList
                        | DEFAULT '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 3:
         p[0] = ["TypeSwitchCase", p[1], p[2]]
     else:
@@ -1609,14 +1614,14 @@ def p_type_switch_case(p):
 
 def p_type_list(p):
     ''' TypeList : Type TypeRep'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["TypeList", p[1], p[2]]
 
 
 def p_type_rep(p):
     ''' TypeRep : TypeRep COMMA Type
                 | epsilon '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 4:
         p[0] = ["TypeRep", p[1], ",", p[3]]
     else:
@@ -1628,7 +1633,7 @@ def p_type_rep(p):
 # --------- FOR STATEMENTS AND OTHERS (MANDAL) ---------------
 def p_for(p):
     '''ForStmt : FOR CreateScope ConditionBlockOpt Block EndScope'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = IRNode()
     label1 = p[3].extra['before']
     p[0].code = p[3].code + p[4].code + p[3].extra['afterCode']
@@ -1642,19 +1647,19 @@ def p_conditionblockopt(p):
                 | Condition
                 | ForClause'''
     #  | RangeClause'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 
 
 def p_condition(p):
     '''Condition : Expression '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 
 
 def p_forclause(p):
     '''ForClause : SimpleStmt SEMICOLON ConditionOpt SEMICOLON SimpleStmt'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
     label1 = new_label()
     p[0].code += [['label', label1]]
@@ -1682,19 +1687,19 @@ def p_forclause(p):
 def p_conditionopt(p):
     '''ConditionOpt : epsilon
             | Condition '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 
 
 def p_expression_ident_listopt(p):
     '''ExpressionIdentListOpt : epsilon
                | ExpressionIdentifier'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = ["ExpressionIdentListOpt", p[1]]
 
 def p_expressionidentifier(p):
     '''ExpressionIdentifier : ExpressionList ASSIGN'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if p[2] == "=":
         p[0] = ["ExpressionIdentifier", p[1], "="]
     else:
@@ -1702,7 +1707,7 @@ def p_expressionidentifier(p):
 
 def p_return(p):
     '''ReturnStmt : RETURN ExpressionListPureOpt'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[2]
     if len(p[2].placelist) != 0:
         p[0].code.append(["retint", p[2].placelist[0]])
@@ -1712,12 +1717,12 @@ def p_return(p):
 def p_expressionlist_pure_opt(p):
     '''ExpressionListPureOpt : ExpressionList
                             | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 
 def p_break(p):
     '''BreakStmt : BREAK LabelOpt'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if type(p[2]) is list:
         if p[2][1] not in labelDict:
             newl = new_label()
@@ -1731,7 +1736,7 @@ def p_break(p):
 
 def p_continue(p):
     '''ContinueStmt : CONTINUE LabelOpt'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if type(p[2]) is list:
         if p[2][1] not in labelDict:
             newl = new_label()
@@ -1746,12 +1751,12 @@ def p_continue(p):
 def p_labelopt(p):
     '''LabelOpt : Label
             | epsilon '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
 
 def p_goto(p):
     '''GotoStmt : GOTO Label '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if p[2][1] not in labelDict:
         newl = new_label()
         labelDict[p[2][1]] = [False, newl]
@@ -1762,7 +1767,7 @@ def p_goto(p):
 # ----------------  SOURCE FILE --------------------------------
 def p_source_file(p):
     '''SourceFile : PackageClause SEMICOLON ImportDeclRep TopLevelDeclRep'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
     p[0].code += p[3].code
     p[0].code += p[4].code
@@ -1770,7 +1775,7 @@ def p_source_file(p):
 def p_import_decl_rep(p):
     '''ImportDeclRep : epsilon
             | ImportDeclRep ImportDecl SEMICOLON'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 4:
         p[0] = p[1]
         p[0].code += p[2].code
@@ -1780,7 +1785,7 @@ def p_import_decl_rep(p):
 def p_toplevel_decl_rep(p):
     '''TopLevelDeclRep : TopLevelDeclRep TopLevelDecl SEMICOLON
                         | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 4:
         p[0] = p[1]
         p[0].code += p[2].code
@@ -1791,12 +1796,12 @@ def p_toplevel_decl_rep(p):
 # ---------- PACKAGE CLAUSE --------------------
 def p_package_clause(p):
     '''PackageClause : PACKAGE PackageName'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[2]
 
 def p_package_name(p):
     '''PackageName : IDENTIFIER'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = IRNode()
     p[0].idList.append(str(p[1]))
     if isUsed(p[1], "."):
@@ -1809,7 +1814,7 @@ def p_package_name(p):
 def p_import_decl(p):
     '''ImportDecl : IMPORT ImportSpec
             | IMPORT LEFT_PARANTHESIS ImportSpecRep RIGHT_PARANTHESIS '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 3:
         p[0] = p[2]
     else:
@@ -1818,7 +1823,7 @@ def p_import_decl(p):
 def p_import_spec_rep(p):
     ''' ImportSpecRep : ImportSpecRep ImportSpec SEMICOLON
                 | epsilon '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if len(p) == 4:
         p[0] = p[1]
         p[0].idList += p[2].idList
@@ -1827,7 +1832,7 @@ def p_import_spec_rep(p):
 
 def p_import_spec(p):
     ''' ImportSpec : PackageNameDotOpt ImportPath '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = p[1]
     if len(p[1].idList) != 0:
         p[0].idList = p[1].idList[0] + " " + p[2].idList[0]
@@ -1838,7 +1843,7 @@ def p_package_name_dot_opt(p):
     ''' PackageNameDotOpt : DOT
                             | PackageName
                             | epsilon'''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     if p[1] == '.':
         p[0] = IRNode()
         p[0].idList.append(".")
@@ -1847,14 +1852,14 @@ def p_package_name_dot_opt(p):
 
 def p_import_path(p):
     ''' ImportPath : STRING '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = IRNode()
     p[0].idList.append(str(p[1]))
 # -------------------------------------------------------
 
 def p_empty(p):
     '''epsilon : '''
-    # print(inspect.stack()[0][3])
+    print(inspect.stack()[0][3])
     p[0] = IRNode()
     pass
 
