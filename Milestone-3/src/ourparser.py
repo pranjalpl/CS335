@@ -495,8 +495,8 @@ def p_const_spec(p):
         scopeDict[scope].updateArgList(
             p[1].placelist[x], 'type', p[2].typeList[0])
         if 'sizeOfArray' in dict.keys(p[2].extra):
-            scopeDict[currentScope].updateArgList(p[1].idList[i], 'size', p[2].extra['sizeOfArray'])
-            scopeDict[currentScope].updateArgList(p[1].placelist[i], 'size', p[2].extra['sizeOfArray'])
+            scopeDict[currentScope].updateArgList(p[1].idList[x], 'size', p[2].extra['sizeOfArray'])
+            scopeDict[currentScope].updateArgList(p[1].placelist[x], 'size', p[2].extra['sizeOfArray'])
     # TODO type checking
 # XXX
 
@@ -680,8 +680,8 @@ def p_var_spec(p):
                 scopeDict[scope].updateArgList(
                     p[1].placelist[x], 'type', p[3].typeList[x])
                 if 'sizeOfArray' in dict.keys(p[3].extra):
-                    scopeDict[currentScope].updateArgList(p[1].idList[i], 'size', p[3].extra['sizeOfArray'])
-                    scopeDict[currentScope].updateArgList(p[1].placelist[i], 'size', p[3].extra['sizeOfArray'])
+                    scopeDict[currentScope].updateArgList(p[1].idList[x], 'size', p[3].extra['sizeOfArray'])
+                    scopeDict[currentScope].updateArgList(p[1].placelist[x], 'size', p[3].extra['sizeOfArray'])
 
             p[1].placelist[x] = p[3].placelist[x]
             scopeDict[scope].updateArgList(
@@ -976,13 +976,13 @@ def p_prim_expr(p):
         p[0].code.append(['=', newPlace4, '4'])
 
         newPlace3 = new_temp()
-        p[0].code.append(['x', newPlace3, p[3].placelist[0], newPlace4])
+        p[0].code.append(['*', newPlace3, p[3].placelist[0], newPlace4])
 
         newPlace = new_temp()
         p[0].code.append(['+', newPlace, p[0].placelist[0], newPlace3])
 
         newPlace2 = new_temp()
-        p[0].code.append(['*', newPlace2, newPlace])
+        p[0].code.append(['deref', newPlace2, newPlace])
 
     
         scopeDict[currentScope].insert(p[0], 'int_t')
