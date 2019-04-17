@@ -1,4 +1,0 @@
-break label0
-break *0x080484be
-break *0x080484de
-
